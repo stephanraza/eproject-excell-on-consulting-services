@@ -17,4 +17,9 @@ public partial class Login : System.Web.UI.Page
     {
 
     }
+
+    public void hoang()
+    { 
+        
+    }
 }
