@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AppConfiguration.cs">
+// <copyright file="CustomizeMembershipProvider.cs">
 //   Copyright 2011 - hoangdp_c00473. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

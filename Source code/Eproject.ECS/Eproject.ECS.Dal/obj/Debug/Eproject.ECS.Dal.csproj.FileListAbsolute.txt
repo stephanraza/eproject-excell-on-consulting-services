@@ -13,3 +13,5 @@ C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Dal\obj\Debug\Eproject.ECS.Dal.pdb
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Dal\bin\Debug\Eproject.ECS.Dal.dll
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Dal\bin\Debug\Eproject.ECS.Dal.pdb
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Dal\bin\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Dal\bin\Debug\Eproject.ECS.Entities.pdb
