@@ -1,0 +1,15 @@
+D:\NEW WORK\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.dll
+D:\NEW WORK\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.pdb
+D:\NEW WORK\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\ResolveAssemblyReference.cache
+D:\NEW WORK\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.dll
+D:\NEW WORK\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\EProject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.pdb
