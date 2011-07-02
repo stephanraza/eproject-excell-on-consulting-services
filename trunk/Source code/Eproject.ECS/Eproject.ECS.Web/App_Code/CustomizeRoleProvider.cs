@@ -10,8 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Security;
 
-namespace Eproject.ECS.Dal.Provider
-{
+
     public class CustomizeRoleProvider : RoleProvider
     {
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -76,4 +75,3 @@ namespace Eproject.ECS.Dal.Provider
             throw new NotImplementedException();
         }
     }
-}
