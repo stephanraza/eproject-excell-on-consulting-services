@@ -7,60 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class Category
     {
-        #region Private Member
-        private string category_id;
-        private string category_name;
-        private bool category_is_delete;
-        #endregion
-
-        #region Properties
-        /// <summary>
-        /// 
-        /// </summary>
-        public string CategoryId
-        {
-            get { return category_id; }
-            set { category_id = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string CategoryName
-        {
-            get { return category_name; }
-            set { category_name = value; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool CategoryIsDelete
-        {
-            get { return category_is_delete; }
-            set { category_is_delete = value; }
-        }
-        #endregion
-
-        #region Constructor
-        /// <summary>
-        /// 
-        /// </summary>
-        public Category()
-        {
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <param name="categoryName"></param>
-        /// <param name="categoryIsDelete"></param>
-        public Category(string categoryId, string categoryName, bool categoryIsDelete)
-        {
-            category_id = categoryId;
-            category_name = categoryName;
-            category_is_delete = categoryIsDelete;
-        }
-
-        #endregion
-
+        public String Category_Id { get; set; }
+        public String Category_Name { get; set; }
+        public bool Category_IsDelete { get; set; }
     }
 }

@@ -54,7 +54,6 @@
     <Compile Include="Dealer.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="Enums\TableType.cs" />
     <Compile Include="News.cs" />
     <Compile Include="OrderOfServiceDetail.cs" />
     <Compile Include="OrderOfService.cs" />
