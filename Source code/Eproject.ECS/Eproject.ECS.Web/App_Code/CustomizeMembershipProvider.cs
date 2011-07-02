@@ -9,11 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Security;
+using Eproject.ECS.Bll;
 
-namespace Eproject.ECS.Dal.Provider
-{
     public class CustomizeMembershipProvider : MembershipProvider
     {
+        AccountBusiness AB = new AccountBusiness();
+
         public override string ApplicationName
         {
             get
@@ -153,7 +154,6 @@ namespace Eproject.ECS.Dal.Provider
 
         public override bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            return AB.ValidateUser(username, password);
         }
     }
-}
