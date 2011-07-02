@@ -33,8 +33,7 @@ namespace Eproject.ECS.Dal
                     instance = new DBHelper();
                 return instance;
             }
-        }
-        
+        }        
         /// <summary>
         /// Constructor of DBHelper class.
         /// </summary>
@@ -54,6 +53,45 @@ namespace Eproject.ECS.Dal
                 con.Close();
             }
             con.Open();
+        }
+        /// <summary>
+        /// Execute SQL query and return SQLDataReader.
+        /// </summary>
+        /// <param name="sql">The SQL query that you want to execute.</param>
+        /// <returns>Return SQLDataReader contains datas or return null if occur exception.</returns>
+        public SqlDataReader ExecuteReaderSQL(string sql)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                return reader;
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// Executes a Transact-SQL statement against the connection and returns the
+        /// number of rows affected.
+        /// </summary>
+        /// <param name="sql">The SQL query that you want to execute.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int ExecuteNonQuerySQL(string sql)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = con;
+                cmd.CommandText = sql;
+                return cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                return -1;
+            }
         }
         /// <summary>
         /// Diconnect connection with database.
