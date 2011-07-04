@@ -7,8 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class Account
     {
-        public String Account_Id { get; set; }
-        public String Employee_Id { get; set; }
+        public Guid Account_Id { get; set; }
+        public Guid Employee_Id { get; set; }
         public String Role_Name { get; set; }
         public String Account_UserName { get; set; }
         public String Account_Password { get; set; }

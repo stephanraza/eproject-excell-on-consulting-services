@@ -7,8 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class OrderOfServiceDetail
     {
-        public String OrderOfService_Id { get; set; }
-        public String Servive_Id { get; set; }
+        public Guid OrderOfService_Id { get; set; }
+        public Guid Servive_Id { get; set; }
         public DateTime OrderOfServiceDetail_FromDate { get; set; }
         public DateTime OrderOfServiceDetail_ToDate { get; set; }
         public int OrderOfServiceDetail_NumberOfEmployee { get; set; }

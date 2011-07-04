@@ -7,7 +7,7 @@ namespace Eproject.ECS.Entities
 {
     public class Company
     {
-        public String Company_Id { get; set; }
+        public Guid Company_Id { get; set; }
         public String Company_Name { get; set; }
         public String Company_Logo { get; set; }
         public String Company_Description { get; set; }

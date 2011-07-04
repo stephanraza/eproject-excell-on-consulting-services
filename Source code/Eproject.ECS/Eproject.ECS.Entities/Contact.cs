@@ -7,7 +7,7 @@ namespace Eproject.ECS.Entities
 {
     public class Contact
     {
-        public String Contact_Id { get; set; }
+        public Guid Contact_Id { get; set; }
         public String Contact_Title { get; set; }
         public String Contact_Content { get; set; }
         public String Contact_Name { get; set; }

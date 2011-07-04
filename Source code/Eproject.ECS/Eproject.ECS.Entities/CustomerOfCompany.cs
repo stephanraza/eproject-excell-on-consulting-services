@@ -7,8 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class CustomerOfCompany
     {
-        public String Customer_Id { get; set; }
-        public String Company_Id { get; set; }
+        public Guid Customer_Id { get; set; }
+        public Guid Company_Id { get; set; }
         public bool CustomerOfCompany_IsDelete { get; set; }
     }
 }

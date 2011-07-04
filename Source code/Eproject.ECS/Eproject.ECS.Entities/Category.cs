@@ -7,7 +7,7 @@ namespace Eproject.ECS.Entities
 {
     public class Category
     {
-        public String Category_Id { get; set; }
+        public Guid Category_Id { get; set; }
         public String Category_Name { get; set; }
         public bool Category_IsDelete { get; set; }
     }
