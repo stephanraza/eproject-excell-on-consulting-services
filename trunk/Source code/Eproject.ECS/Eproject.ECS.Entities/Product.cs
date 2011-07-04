@@ -7,9 +7,9 @@ namespace Eproject.ECS.Entities
 {
     public class Product
     {
-        public String Product_Id { get; set; }
-        public String Company_Id { get; set; }
-        public String Category_Id { get; set; }
+        public Guid Product_Id { get; set; }
+        public Guid Company_Id { get; set; }
+        public Guid Category_Id { get; set; }
         public String Product_Name { get; set; }
         public String Product_Price { get; set; }
         public String Product_Description { get; set; }

@@ -7,7 +7,7 @@ namespace Eproject.ECS.Entities
 {
     public class Customer
     {
-        public String Customer_Id { get; set; }
+        public Guid Customer_Id { get; set; }
         public String Customer_FullName { get; set; }
         public String Customer_Phone { get; set; }
         public String Customer_Address { get; set; }

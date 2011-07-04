@@ -7,8 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class Dealer
     {
-        public String Dealer_Id { get; set; }
-        public String Company_Id { get; set; }
+        public Guid Dealer_Id { get; set; }
+        public Guid Company_Id { get; set; }
         public String Dealer_Name { get; set; }
         public String Dealer_Address { get; set; }
         public String Dealer_Phone { get; set; }

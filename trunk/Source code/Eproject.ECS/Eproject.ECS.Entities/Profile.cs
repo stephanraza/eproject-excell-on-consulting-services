@@ -7,8 +7,8 @@ namespace Eproject.ECS.Entities
 {
     public class Profile
     {
-        public String Profile_Id { get; set; }
-        public String Employee_Id { get; set; }
+        public Guid Profile_Id { get; set; }
+        public Guid Employee_Id { get; set; }
         public String Profile_FirtName { get; set; }
         public String Profile_LastName { get; set; }
         public bool Profile_Gender { get; set; }

@@ -7,7 +7,7 @@ namespace Eproject.ECS.Entities
 {
     public class Service
     {
-        public String Service_Id { get; set; }
+        public Guid Service_Id { get; set; }
         public String Service_Name { get; set; }
         public String Service_Image { get; set; }
         public String Service_Description { get; set; }
