@@ -174,7 +174,7 @@ namespace Eproject.ECS.Dal
                 var type = AppDomain.CurrentDomain.GetAssemblies()
                        .SelectMany(a => a.GetTypes())
                        .FirstOrDefault(t => t.FullName == TypeName);
-                
+
                 Object o = Activator.CreateInstance(type);
 
                 for (int i = 0; i < reader.FieldCount; i++)
@@ -197,60 +197,102 @@ namespace Eproject.ECS.Dal
             CloseConnection();
             return list;
         }
+        /// <summary>
+        /// Insert 1 record to database.
+        /// </summary>
+        /// <param name="obj">The name of Entity whose datas will be insert to database.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int Insert(Object obj)
+        {
+            SqlCommand Command = new SqlCommand();
+            Command.Connection = connection;
 
-       //public bool Insert(String TableName, Object obj)
-       // {
-       //     String query = "Insert into {0} values (";
+            String TableName = obj.GetType().ToString().Split('.')[3];
+            String ParametersString = "";
 
-       //     if (TableName != null && TableName.Trim() != "")
-       //     {
-       //         query = String.Format(query, TableName);
-       //     }
-       //     else
-       //     {
-       //         return false;
-       //     }
+            String query = "Insert into {0} values({1})";
+            String split = ",";
+            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            {
+                String ParameterName = "@" + property.Name;
+                ParametersString += ParameterName + split;
+                Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
+            }
 
-       //     if (obj != null)
-       //     {
-               
-       //     }
+            ParametersString = ParametersString.Substring(0, ParametersString.Length - split.Length);
 
-       //     OpenConnection();
-       //     SqlCommand Command = new SqlCommand();
-       //     Command.Connection = connection;
-       //     Command.CommandText = query;
+            Command.CommandText = String.Format(query, TableName, ParametersString);
 
-       //     SqlDataReader reader = Command.ExecuteReader();
-       //     while (reader.Read())
-       //     {
-       //         String TypeName = "Eproject.ECS.Entities." + TableName;
-       //         // Load all assemblies in project by Linq
-       //         var type = AppDomain.CurrentDomain.GetAssemblies()
-       //                .SelectMany(a => a.GetTypes())
-       //                .FirstOrDefault(t => t.FullName == TypeName);
+            connection.Open();
+            int result = Command.ExecuteNonQuery();
+            connection.Close();
 
-       //         Object o = Activator.CreateInstance(type);
+            return result;
+        }
+        /// <summary>
+        /// Update a record details in database.
+        /// </summary>
+        /// <param name="obj">The name of Entity whose datas will be update in database.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int Update(Object obj)
+        {
+            SqlCommand Command = new SqlCommand();
+            Command.Connection = connection;
 
-       //         for (int i = 0; i < reader.FieldCount; i++)
-       //         {
-       //             string NameCollumn = reader.GetName(i);
-       //             PropertyInfo pi = type.GetProperty(NameCollumn);
-       //             if (!(reader.GetValue(i) is System.DBNull))
-       //             {
-       //                 pi.SetValue(o, reader.GetValue(i), null);
-       //             }
-       //             else
-       //             {
-       //                 pi.SetValue(o, null, null);
-       //             }
-       //         }
+            String query = "Update {0} set {1} where {2}";
 
-       //         list.Add(o);
-       //     }
+            String TableName = obj.GetType().ToString().Split('.')[3];
+            String ParametersString = "";
+            String split = ",";
+            PropertyInfo pi = (PropertyInfo)obj.GetType().GetProperties().GetValue(0);
+            String Where = pi.Name + " = '" + pi.GetValue(obj, null) + "'";
 
-       //     CloseConnection();
-       //     return list;
-       // }
+            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            {
+                String ParameterName = "@" + property.Name;
+                ParametersString += property.Name + " = " + ParameterName + split;
+                Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
+            }
+
+            ParametersString = ParametersString.Substring(0, ParametersString.Length - split.Length);
+
+            Command.CommandText = String.Format(query, TableName, ParametersString, Where);
+
+            connection.Open();
+            int result = Command.ExecuteNonQuery();
+            connection.Close();
+
+            return result;
+        }
+        /// <summary>
+        /// Delete a record in database.
+        /// </summary>
+        /// <param name="Tablename">The name of the table that you want to execute SQL query.</param>
+        /// <param name="Where">The conditions of SQL query.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int Delete(String TableName, String Where)
+        {
+            String query = "Delete from {0} ";
+
+            if (TableName != null && TableName.Trim() != "")
+            {
+                query = String.Format(query, TableName);
+            }
+            else
+            {
+                return -1;
+            }
+
+            if (Where != null && Where.Trim() != "")
+            {
+                query = query + String.Format(" where {0} ", Where);
+            }
+
+            OpenConnection();
+            int result = ExecuteNonQuerySQL(query);
+            CloseConnection();
+
+            return result;
+        }
     }
 }

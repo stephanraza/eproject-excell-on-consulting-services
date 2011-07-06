@@ -12,6 +12,7 @@ namespace Eproject.ECS.Entities
         public String Role_Name { get; set; }
         public String Account_UserName { get; set; }
         public String Account_Password { get; set; }
+        public bool Account_IsLocked { get; set; }
         public bool Account_IsDelete { get; set; }
     }
 }
