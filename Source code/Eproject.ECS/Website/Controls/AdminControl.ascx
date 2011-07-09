@@ -28,9 +28,15 @@
         <li>
         <%
           } %>  
-		    <a href="account/create">Accounts</a></li>
+		    <a href="<%=ResolveUrl("~")%>ManageSystem/Account/Create">Accounts</a></li>
 		    <ucHRManagerTag:HRManagerTag ID="HRManagerTag" runat="server" />
-		    <li><a href="">Roles</a></li>			    
+		    <%if(urlString.Contains("Role"))
+        {%>   
+        <li class="sub_show">
+        <%}else{%>
+        <li>
+        <%
+          } %><a href="<%=ResolveUrl("~")%>ManageSystem/Role/Create">Roles</a></li>			    
 	    </ul>
     </div>
     <!--[if lte IE 6]></td></tr></table></a><![endif]-->

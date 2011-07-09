@@ -38,7 +38,7 @@ namespace Eproject.ECS.Dal
             return (Account)DBHelper.Instance.SelectFirst("Account", String.Format("Account_Id = '{0}'", accountId.ToString()));
         }
         /// <summary>
-        /// Get list of account and its size that you could choose.
+        /// Get list of accounts and its size that you could choose.
         /// </summary>
         /// <param name="pageIndex">Index of page.</param>
         /// <param name="pageSize">Size of page that you want to get.</param>
@@ -93,7 +93,7 @@ namespace Eproject.ECS.Dal
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
         public int UpdateAccount(Account account)
         {
-            return DBHelper.Instance.Update(account);
+            return DBHelper.Instance.Update(account, String.Format("Account_Id = '{0}'", account.Account_Id));
         }
         /// <summary>
         /// Delete an account

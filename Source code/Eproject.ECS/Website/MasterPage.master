@@ -8,18 +8,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="App_Themes/css/screen.css" type="text/css" media="screen" title="default" />
+    <link rel="stylesheet" href="<%=ResolveUrl("~")%>App_Themes/css/screen.css" type="text/css" media="screen" title="default" />
     <!--[if IE]>
     <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
     <![endif]-->
 
     <!--  jquery core -->
-    <script src="App_Themes/js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
      
-    <!--  checkbox styling script -->
-    <script src="App_Themes/js/jquery/ui.core.js" type="text/javascript"></script>
-    <script src="App_Themes/js/jquery/ui.checkbox.js" type="text/javascript"></script>
-    <script src="App_Themes/js/jquery/jquery.bind.js" type="text/javascript"></script>
+   <%-- <!--  checkbox styling script -->
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/ui.core.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/ui.checkbox.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.bind.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(function(){
 	    $('input').checkBox();
@@ -29,31 +29,25 @@
 	    return false;
 	    });
     });
-    </script>  
+    </script>  --%>
 
 
-    <![if !IE 7]>
-    <!--  styled select box script version 1 -->
-    <script src="App_Themes/js/jquery/jquery.selectbox-0.5.js" type="text/javascript"></script>
+    <!--  if !IE 7 styled select box script version 1 -->
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.selectbox-0.5.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
 	    $('.styledselect').selectbox({ inputClass: "selectbox_styled" });
     });
     </script>
-    <![endif]>
+    <!--endif-->
 
 
     <!--  styled select box script version 2 --> 
-    <script src="App_Themes/js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-	    $('.styledselect_form_1').selectbox({ inputClass: "styledselect_form_1" });
-	    $('.styledselect_form_2').selectbox({ inputClass: "styledselect_form_2" });
-    });
-    </script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+
 
     <!--  styled select box script version 3 --> 
-    <script src="App_Themes/js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
 	    $('.styledselect_pages').selectbox({ inputClass: "styledselect_pages" });
@@ -61,7 +55,7 @@
     </script>
 
     <!--  styled file upload script --> 
-    <script src="App_Themes/js/jquery/jquery.filestyle.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.filestyle.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
     $(function() {
 	    $("input.file_1").filestyle({ 
@@ -74,11 +68,11 @@
     </script>
 
     <!-- Custom jquery scripts -->
-    <script src="App_Themes/js/jquery/custom_jquery.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/custom_jquery.js" type="text/javascript"></script>
      
     <!-- Tooltips -->
-    <script src="App_Themes/js/jquery/jquery.tooltip.js" type="text/javascript"></script>
-    <script src="App_Themes/js/jquery/jquery.dimensions.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.tooltip.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.dimensions.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(function() {
 	    $('a.info-tooltip ').tooltip({
@@ -94,9 +88,9 @@
     </script> 
 
     <!--  date picker script -->
-    <link rel="stylesheet" href="App_Themes/css/datePicker.css" type="text/css" />
-    <script src="App_Themes/js/jquery/date.js" type="text/javascript"></script>
-    <script src="App_Themes/js/jquery/jquery.datePicker.js" type="text/javascript"></script>
+    <%--<link rel="stylesheet" href="<%=ResolveUrl("~")%>App_Themes/css/datePicker.css" type="text/css" />
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/date.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.datePicker.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
             $(function()
     {
@@ -163,18 +157,19 @@
     // and update the datePicker to reflect it...
     $('#d').trigger('change');
     });
-    </script>
-
+    </script>--%>
+    
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    
     <!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-    <script src="App_Themes/js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
+  <%--  <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function(){
     $(document).pngFix( );
     });
-    </script>
-
-    <asp:ContentPlaceHolder id="head" runat="server">
-    </asp:ContentPlaceHolder>
+    </script>--%>
+    
 </head>
 <body>
     <form id="form1" runat="server">
@@ -186,7 +181,7 @@
 
 	    <!-- start logo -->
 	    <div id="logo">
-	    <a href=""><img src="/Website/App_Themes/images/shared/logo.png"  alt="" /></a>
+	    <a href=""><img src="<%=ResolveUrl("~")%>App_Themes/images/shared/logo.png"  alt="" /></a>
 	    </div>
 	    <!-- end logo -->
     	
@@ -207,7 +202,7 @@
     		 
 		    </td>
 		    <td>
-		    <input type="image" src="/Website/App_Themes/images/shared/top_search_btn.gif"  />
+		    <input type="image" src="<%=ResolveUrl("~")%>App_Themes/images/shared/top_search_btn.gif"  />
 		    </td>
 		    </tr>
 		    </table>
@@ -232,10 +227,10 @@
 		    <div id="nav-right">
     		
 			    <div class="nav-divider">&nbsp;</div>
-			    <div class="showhide-account"><img src="/Website/App_Themes/images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+			    <div class="showhide-account"><img src="<%=ResolveUrl("~")%>App_Themes/images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 			    <div class="nav-divider">&nbsp;</div>
-			    <a href="" id="logout"><img src="/Website/App_Themes/images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
-			    <div class="clear">&nbsp;</div>
+			    <asp:LoginStatus ID="LoginStatus" runat="server" LogoutText="" LogoutImageUrl="~/App_Themes/images/shared/nav/nav_logout.gif" CssClass="logout"/>
+                <div class="clear">&nbsp;</div>
     		
 			    <!--  start account-content -->	
 			    <div class="account-content">

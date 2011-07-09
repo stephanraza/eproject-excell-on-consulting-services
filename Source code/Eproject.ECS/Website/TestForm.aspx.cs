@@ -21,27 +21,28 @@ public partial class TestForm : System.Web.UI.Page
         if (!IsPostBack)
         {
             RoleBusiness RB = new RoleBusiness();
-            List<Role> roles = RB.GetAllRoles();
+            List<String> roles = RB.GetRoleNames();
 
-            foreach (Role item in roles)
+            foreach (String item in roles)
             {
-                DropDownList1.Items.Add(item.Role_Name);
+                DropDownList1.Items.Add(item);
             }
+
         }
     }
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Account acc = new Account();
-        acc.Role_Name = DropDownList1.Text;
-        acc.Account_UserName = TextBox4.Text.Trim();
-        acc.Account_Password = TextBox5.Text.Trim();
-
-        AccountBusiness AB = new AccountBusiness();
-        if (AB.CreateAccount(acc))
-            Label1.Text = "Create successfully!";
-        else
-            Label1.Text = "Create error";
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            AB.CreateAccount(TextBox2.Text.Trim(), TextBox4.Text.Trim(), TextBox5.Text.Trim(), DropDownList1.Text);
+            Label1.Text = "Create successfull";
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+        }
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
@@ -62,5 +63,85 @@ public partial class TestForm : System.Web.UI.Page
     protected void Button5_Click(object sender, EventArgs e)
     {
         TextBox6.Text = SecurityHelper.Instance.EncryptCryptography(TextBox6.Text, true);
+    }
+    protected void Button9_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            Account acc = AB.GetAccount(TextBox1.Text.Trim());
+            Label1.Text = "";
+            TextBox2.Text = acc.Employee_Id.ToString();
+            DropDownList1.Text = acc.Role_Name;
+            TextBox4.Text = acc.Account_UserName;
+            TextBox5.Text = acc.Account_Password;
+            CheckBox1.Checked = acc.Account_IsLocked;
+            CheckBox2.Checked = acc.Account_IsDelete;
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+            TextBox2.Text = "";
+            DropDownList1.SelectedIndex = 0;
+            TextBox4.Text = "";
+            TextBox5.Text = "";
+        }
+    }
+
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            Account acc = AB.GetAccount(TextBox1.Text.Trim());
+            AB.UpdateAccount(acc.Account_Id, TextBox5.Text, DropDownList1.Text, CheckBox1.Checked, CheckBox2.Checked);
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+        }
+    }
+    protected void Button8_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            Account acc = AB.GetAccount(TextBox1.Text.Trim());
+            AB.RemoveAccount(acc.Account_Id);
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+        }
+    }
+    protected void Button7_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            Account acc = AB.GetAccount(TextBox1.Text.Trim());
+            AB.DeleteAccount(acc.Account_Id);
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+        }
+    }
+    protected void Button10_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            AccountBusiness AB = new AccountBusiness();
+            Account acc = AB.GetAccount(TextBox1.Text.Trim());
+            AB.RestoreAccount(acc.Account_Id);
+        }
+        catch (Exception ex)
+        {
+            Label1.Text = ex.Message;
+        }
+    }
+    protected void RequiredFieldValidator1_DataBinding(object sender, EventArgs e)
+    {
+        TextBox4.CssClass = "inp-form-error";
     }
 }

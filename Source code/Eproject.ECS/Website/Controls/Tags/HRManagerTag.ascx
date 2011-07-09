@@ -1,4 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="HRManagerTag.ascx.cs" Inherits="Controls_Tags_HRManagerTag" %>
-
-<li><a href="#nogo">Departments</a></li>
-<li><a href="#nogo">Employees</a></li>
+<% String urlString = Request.Url.ToString();
+   if(urlString.Contains("Department"))
+        {%>   
+        <li class="sub_show">
+        <%}else{%>
+        <li>
+        <%
+          } %><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Create">Departments</a></li>
+<%if(urlString.Contains("Employee"))
+        {%>   
+        <li class="sub_show">
+        <%}else{%>
+        <li>
+        <%
+          } %><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Create">Employees</a></li>
