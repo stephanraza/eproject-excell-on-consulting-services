@@ -210,13 +210,17 @@ namespace Eproject.ECS.Dal
             String TableName = obj.GetType().ToString().Split('.')[3];
             String ParametersString = "";
 
-            String query = "Insert into {0} values({1})";
+            String query = "Insert into {0} values(NEWID (),{1})";
             String split = ",";
             foreach (PropertyInfo property in obj.GetType().GetProperties())
             {
-                String ParameterName = "@" + property.Name;
-                ParametersString += ParameterName + split;
-                Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
+                if (!property.Name.Equals(TableName + "_Id"))
+                {
+                    String ParameterName = "@" + property.Name;
+                    ParametersString += ParameterName + split;
+
+                    Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
+                }
             }
 
             ParametersString = ParametersString.Substring(0, ParametersString.Length - split.Length);
@@ -233,8 +237,9 @@ namespace Eproject.ECS.Dal
         /// Update a record details in database.
         /// </summary>
         /// <param name="obj">The name of Entity whose datas will be update in database.</param>
+        /// <param name="Where">The condition of the update SQL query.</param>
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
-        public int Update(Object obj)
+        public int Update(Object obj, String Where)
         {
             SqlCommand Command = new SqlCommand();
             Command.Connection = connection;
@@ -245,7 +250,6 @@ namespace Eproject.ECS.Dal
             String ParametersString = "";
             String split = ",";
             PropertyInfo pi = (PropertyInfo)obj.GetType().GetProperties().GetValue(0);
-            String Where = pi.Name + " = '" + pi.GetValue(obj, null) + "'";
 
             foreach (PropertyInfo property in obj.GetType().GetProperties())
             {

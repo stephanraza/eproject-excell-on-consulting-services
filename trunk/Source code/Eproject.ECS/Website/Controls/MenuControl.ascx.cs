@@ -18,40 +18,48 @@ public partial class Controls_MenuControl : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         String userName = this.Page.User.Identity.Name;
-        AccountBusiness AB = new AccountBusiness();
-        String role = AB.GetRole(userName);
-
-        Control myUserControl = new Control();
-        plcMenu.Controls.Clear();
-
-        if (role != null)
+        if (userName.Equals(""))
+        //Response.Redirect(Server.HtmlEncode(Request.PhysicalApplicationPath) + "Login");
         {
-            if (role.Equals("Administrator"))
-            {
-                myUserControl = (Control)Page.LoadControl("~/Controls/AdminControl.ascx");
-            }
-            else if (role.Equals("HR Manager"))
-            {
-                myUserControl = (Control)Page.LoadControl("~/Controls/HRManagerControl.ascx");
-            }
-            else if (role.Equals("Service Manager"))
-            {
-                myUserControl = (Control)Page.LoadControl("~/Controls/ServiceManagerControl.ascx");
-            }
-            else if (role.Equals("Service Employee"))
-            {
-                myUserControl = (Control)Page.LoadControl("~/Controls/ServiceEmployeeControl.ascx");
-            }
-            else if (role.Equals("Employee"))
-            {
-                myUserControl = (Control)Page.LoadControl("~/Controls/EmployeeControl.ascx");
-            }
-            else
-            {
-                return;
-            }
+            Response.Redirect(WebHelper.Instance.GetURL() + "Login");
+        }
+        else
+        {
+            AccountBusiness AB = new AccountBusiness();
+            String role = AB.GetRole(userName);
 
-            plcMenu.Controls.Add(myUserControl);
+            Control myUserControl = new Control();
+            plcMenu.Controls.Clear();
+
+            if (role != null)
+            {
+                if (role.Equals("Administrator"))
+                {
+                    myUserControl = (Control)Page.LoadControl("~/Controls/AdminControl.ascx");
+                }
+                else if (role.Equals("HR Manager"))
+                {
+                    myUserControl = (Control)Page.LoadControl("~/Controls/HRManagerControl.ascx");
+                }
+                else if (role.Equals("Service Manager"))
+                {
+                    myUserControl = (Control)Page.LoadControl("~/Controls/ServiceManagerControl.ascx");
+                }
+                else if (role.Equals("Service Employee"))
+                {
+                    myUserControl = (Control)Page.LoadControl("~/Controls/ServiceEmployeeControl.ascx");
+                }
+                else if (role.Equals("Employee"))
+                {
+                    myUserControl = (Control)Page.LoadControl("~/Controls/EmployeeControl.ascx");
+                }
+                else
+                {
+                    return;
+                }
+
+                plcMenu.Controls.Add(myUserControl);
+            }
         }
     }
 }

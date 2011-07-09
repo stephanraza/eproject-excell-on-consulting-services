@@ -9,6 +9,14 @@ namespace Eproject.ECS.Entities
     {
         public Guid Employee_Id { get; set; }
         public Guid Department_Id { get; set; }
+        public String Employee_FirtName { get; set; }
+        public String Employee_LastName { get; set; }
+        public bool Employee_Gender { get; set; }
+        public DateTime Employee_DateOfBirth { get; set; }
+        public String Employee_Address { get; set; }
+        public String Employee_PhoneNumber { get; set; }
+        public String Employee_Email { get; set; }
+        public String Employee_Avatar { get; set; }
         public bool Employee_IsDelete { get; set; }
     }
 }

@@ -15,8 +15,6 @@ using Eproject.ECS.Bll;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
-    private AccountBusiness AB = new AccountBusiness();
-
     protected void Page_Load(object sender, EventArgs e)
     {
         

@@ -83,7 +83,7 @@ namespace Eproject.ECS.Dal
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
         public int UpdateRole(Role role)
         {
-            return DBHelper.Instance.Update(role);
+            return DBHelper.Instance.Update(role, String.Format("Role_Name = '{0}'", role.Role_Name));
         }
         /// <summary>
         /// Delete a role

@@ -6,7 +6,10 @@
     
     void RegisterRoutes(RouteCollection routes)
     {
-        routes.MapPageRoute("CreateAccount", "ManageSystem/Account/Create", "~/Administrator/CreateAccount.aspx");       
+        routes.MapPageRoute("Default", "Login", "~/Default.aspx");       
+        routes.MapPageRoute("CreateAccount", "ManageSystem/Account/Create", "~/Administrator/CreateAccount.aspx");
+        routes.MapPageRoute("ManageAccount", "ManageSystem/Account/Manage", "~/Administrator/ManageAccount.aspx");
+        routes.MapPageRoute("CreateEmployee", "ManageSystem/Employee/Create", "~/HRManager/CreateEmployee.aspx");
     }
 
     void Application_Start(object sender, EventArgs e)

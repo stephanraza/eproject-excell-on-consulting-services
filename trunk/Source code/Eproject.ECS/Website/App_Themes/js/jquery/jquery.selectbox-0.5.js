@@ -57,7 +57,9 @@ jQuery.SelectBox = function(selectobj, options) {
 	var $input = setupInput(opt);
 	// hide select and append newly created elements
 	$select.hide().before($input).before($container);
-	
+	$("#" + elm_id + "_container_container").remove();
+	$("#" + elm_id + "_input_container").remove();
+	$("#" + elm_id + "_input_input").remove();
 	
 	init();
 	
@@ -112,8 +114,11 @@ jQuery.SelectBox = function(selectobj, options) {
 		var width = $input.css('width');
 		$container.width(width);
     }
-	
-	function setupContainer(options) {
+
+    function setupContainer(options) {
+        var id = "#" + elm_id + "_container";
+        $(id).remove();
+
 		var container = document.createElement("div");
 		$container = $(container);
 		$container.attr('id', elm_id+'_container');
@@ -121,8 +126,11 @@ jQuery.SelectBox = function(selectobj, options) {
 		
 		return $container;
 	}
-	
+
 	function setupInput(options) {
+	    var id = "#" + elm_id + "_input";
+	    $(id).remove();
+
 		var input = document.createElement("input");
 		var $input = $(input);
 		$input.attr("id", elm_id+"_input");

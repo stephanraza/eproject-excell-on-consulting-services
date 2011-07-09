@@ -31,12 +31,29 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
-        /// Get list of all roles.
+        /// Get list name all roles.
         /// </summary>
-        /// <returns>List of all roles.</returns>
-        public List<Role> GetRoles()
+        /// <returns>List name all roles.</returns>
+        public List<String> GetRoleNames()
         {
-            return RD.GetRoles();
+            try
+            {
+                List<String> listName = new List<String>();
+
+                foreach (Role item in RD.GetRoles())
+                {
+                    if (!item.Role_IsDelete)
+                    {
+                        listName.Add(item.Role_Name);
+                    }
+                }
+
+                return listName;
+            }
+            catch (NullReferenceException nre)
+            {
+                return new List<String>();
+            }
         }
         /// <summary>
         /// Create a new role.
