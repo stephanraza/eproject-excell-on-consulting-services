@@ -15,6 +15,6 @@ public partial class Template_TemplateAdd : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        CompareValidator1.ValueToCompare = DateTime.Now.Date.ToShortDateString();
     }
 }
