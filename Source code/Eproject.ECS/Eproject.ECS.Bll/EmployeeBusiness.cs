@@ -34,7 +34,7 @@ namespace Eproject.ECS.Bll
         /// <param name="phone"></param>
         /// <param name="email"></param>
         /// <param name="avatar"></param>
-        public void CreateEmployee(String departmentName, String fName, String lName, String gender, String DOB, String address, String phone, String email, String avatar)
+        public void CreateEmployee(String departmentName, String fName, String lName, String gender, String DOB, String address, String phone, String email, String data)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Eproject.ECS.Bll
                 newEmployee.Employee_PhoneNumber = phone;
                 newEmployee.Employee_Address = address;
                 newEmployee.Employee_Email = email;
-                newEmployee.Employee_Avatar = avatar;
+                newEmployee.Employee_Avatar = data;
                 newEmployee.Employee_IsDelete = false;
 
                 int result = ED.CreateEmployee(newEmployee);
@@ -96,6 +96,21 @@ namespace Eproject.ECS.Bll
                 return employee;
             else
                 throw new Exception(String.Format("Emloyee with email is '{0}' not found!"));
+        }
+
+        public bool IsExist(String email)
+        {
+            try
+            {
+                if (GetEmployee(email) != null)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
