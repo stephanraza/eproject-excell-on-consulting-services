@@ -41,22 +41,33 @@ public partial class HRManager_CreateEmployee : System.Web.UI.Page
             {
                 String script = WebHelper.Instance.GetJqueryScript(Server.MapPath(""), "App_Themes/js/jquery/custom_jquery.js");
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+                
+                EmployeeBusiness EB = new EmployeeBusiness();
 
-                if (ddlDepartment.SelectedIndex == 0)
+                if (EB.IsExist(txtEmail.Text.Trim()))
                 {
                     pnlRed.Visible = true;
-                    lblError.Text = "You must select department for new employee.";
+                    lblError.Text = "This email have already used.";
                     return;
                 }
 
-                // Create an employee
-                String avatar = "";
+                String filePath = "";
                 if (fuAvatar.HasFile)
                 {
-                    avatar = WebHelper.Instance.ByteArrayToStr(fuAvatar.FileBytes);
+                    filePath = fuAvatar.PostedFile.FileName;
                 }
-                EmployeeBusiness EB = new EmployeeBusiness();
-                EB.CreateEmployee(ddlDepartment.Text.Trim(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), txtEmail.Text.Trim(), avatar);
+                else
+                {
+                    if (radListGender.Text.Equals("Male"))
+                        filePath = WebHelper.Instance.GetWebsitePath(Server.MapPath("")) + "App_Themes/images/other/male.png";
+                    else if (radListGender.Text.Equals("Female"))
+                        filePath = WebHelper.Instance.GetWebsitePath(Server.MapPath("")) + "App_Themes/images/other/female.png";
+                 }
+
+                System.Drawing.Image image = System.Drawing.Image.FromFile(filePath);
+                String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
+
+                EB.CreateEmployee(ddlDepartment.Text.Trim(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), txtEmail.Text.Trim(), data);
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new an employee successfully.";

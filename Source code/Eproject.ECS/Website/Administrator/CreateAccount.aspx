@@ -62,7 +62,8 @@
 		            <!--  start step-holder -->
 		            <div id="step-holder">
 			            <div class="step-no">1</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">
+                            Create details</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">2</div>
 			            <div class="step-light-left"><a href="">Manage accounts</a></div>
@@ -96,7 +97,8 @@
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 					            <td class="red-left">
-                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close and try again.</a></td>
+                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
+                                    and try again.</a></td>
 					            <td class="red-right"><asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
@@ -124,7 +126,8 @@
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 				            <td class="green-left">
-                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add new one.</a></td>
+                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add 
+                                    new one.</a></td>
 					            <td class="green-right"><asp:HyperLink ID="HyperLink5" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
@@ -144,7 +147,12 @@
                                     </asp:DropDownList>
                                     </div>
                                 </td>
-			                    <td>&nbsp;</td>
+			                    <td>
+                                    <asp:CompareValidator ID="CompareValidator2" runat="server" 
+                                        ControlToValidate="ddlEmployeeEmail" Display="Dynamic" 
+                                        ErrorMessage="You must select Employee's email to create an account." 
+                                        Operator="NotEqual" ValueToCompare="Select email"></asp:CompareValidator>
+                                </td>
 		                    </tr>
 		                    <tr>
 			                    <th valign="top">User name:</th>
@@ -157,7 +165,9 @@
 		                    </tr>
 		                    <tr>
 		                        <th valign="top">Using default password :</th>
-		                    <td><asp:CheckBox ID="ckbDefaultPassword" runat="server" onclick="ckbDefaultPassword();"/> &nbsp;&nbsp;( Default password : <asp:Label ID="lblDefaultPassword" runat="server" Text="123456 " ForeColor="Red" Font-Bold="True"></asp:Label> )</td>
+		                    <td><asp:CheckBox ID="ckbDefaultPassword" runat="server" onclick="ckbDefaultPassword();"/> 
+                                &nbsp;&nbsp;( Default password : <asp:Label ID="lblDefaultPassword" runat="server" Text="123456 " ForeColor="Red" Font-Bold="True"></asp:Label> 
+                                )</td>
 		                    <td></td>
 		                    </tr>
 		                    <tr>
@@ -194,7 +204,12 @@
 		                    <asp:DropDownList ID="ddlRole" runat="server" CssClass="styledselect_form">
                                 </asp:DropDownList></div>
                             </td>
-		                    <td></td>
+		                    <td>
+                                <asp:CompareValidator ID="CompareValidator3" runat="server" 
+                                    ControlToValidate="ddlRole" Display="Dynamic" 
+                                    ErrorMessage="You must select role for new account." Operator="NotEqual" 
+                                    ValueToCompare="Select role"></asp:CompareValidator>
+                                </td>
 		                    </tr>
 	                    <tr>
 		                    <th>&nbsp;</th>
@@ -209,13 +224,15 @@
 	                    <!-- end id-form  -->
 	            </td>
 	            <td>
-
+	            
+                    <asp:Panel ID="pnlPreview" Visible="false" runat="server">
+                    
 	            <!--  start related-activities -->
 	            <div id="related-activities">
             		
 		            <!--  start related-act-top -->
 		            <div id="related-act-top">
-		            <img src="/Website/App_Themes/images/forms/header_related_act.gif" width="271" height="43" alt="" />
+		            <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/header_related_act.gif" width="271" height="43" alt="" />
 		            </div>
 		            <!-- end related-act-top -->
             		
@@ -224,11 +241,11 @@
             		
 			            <!--  start related-act-inner -->
 			            <div id="related-act-inner">
-			                <div style="text-align:center"><asp:ImageButton ID="imgAvatar" runat="server" /></div>
-			                <br />
+			                <div style="text-align:center"><asp:ImageButton ID="imgAvatar" runat="server" 
+                                    CausesValidation="False" ImageUrl="~/App_Themes/images/other/no_image.png" /></div>
 			                <div class="clear"></div>
 				            <div class="lines-dotted-short"></div>
-				            <div class="left"><a href=""><img src="/Website/App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+				            <div class="left"><a href=""><img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
 				            <div class="right">
 					            <h5>Profile</h5>
                                 <table style="width: 100%;">
@@ -299,7 +316,7 @@
 				            <div class="clear"></div>
 				            <div class="lines-dotted-short"></div>
             				
-				            <div class="left"><a href=""><img src="/Website/App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+				            <div class="left"><a href=""><img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
 				            <div class="right">
 					            <h5>Department</h5>
 					            <table style="width: 100%;">
@@ -336,11 +353,11 @@
             	
 	            </div>
 	            <!-- end related-activities -->
-
+                    </asp:Panel>
             </td>
             </tr>
             <tr>
-            <td><img src="/Website/App_Themes/images/shared/blank.gif" width="695" height="1" alt="blank" /></td>
+            <td><img src="<%=ResolveUrl("~")%>App_Themes/images/shared/blank.gif" width="695" height="1" alt="blank" /></td>
             <td></td>
             </tr>
             </table>             

@@ -10,9 +10,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Web;
+using System.Drawing;
 
-namespace Eproject.ECS.Bll
-{
     /// <summary>
     /// The WebHelper.cs class support some method for controlling the operation of website.
     /// </summary>
@@ -88,17 +87,67 @@ namespace Eproject.ECS.Bll
             return redirect;
         }
 
-        // C# to convert a string to a byte array.
-        public byte[] StrToByteArray(string str)
+        //Image to Base64 String
+        public string ImageToBase64(Image image, System.Drawing.Imaging.ImageFormat format)
         {
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            return encoding.GetBytes(str);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
         }
 
-        public String ByteArrayToStr(byte[] dBytes)
+        //Base64 String to Image
+        public Image Base64ToImage(string base64String)
         {
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            return encoding.GetString(dBytes);
+            // Convert Base64 String to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            MemoryStream ms = new MemoryStream(imageBytes, 0,
+              imageBytes.Length);
+
+            // Convert byte[] to Image
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(ms, true);
+            return image;
+        }
+
+        public String GetImageURL(String data, int width, int height, bool crop)
+        {
+            try
+            {
+                String url = "";
+                String fileName = "Image";
+
+                System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\" + fileName);
+                file.Write(data);
+
+                file.Close();
+
+                url = String.Format("getImageURL.ashx?name={0}&width={1}&height={2}&crop={3}", fileName, width, height, crop);
+
+                return url;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public String GetWebsitePath(String root)
+        {
+            String[] url = root.Split('\\');
+            String redirect = "";
+            foreach (String item in url)
+            {
+                redirect += item + "\\";
+                if (item.Equals("Website"))
+                    break;
+            }
+            return redirect;
         }
     }
-}

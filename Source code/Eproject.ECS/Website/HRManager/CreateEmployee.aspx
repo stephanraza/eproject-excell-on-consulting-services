@@ -53,7 +53,8 @@
 		            <!--  start step-holder -->
 		            <div id="step-holder">
 			            <div class="step-no">1</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">
+                            Create details</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">2</div>
 			            <div class="step-light-left"><a href="">Manage employees</a></div>
@@ -87,7 +88,8 @@
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 					            <td class="red-left">
-                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close and try again.</a></td>
+                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
+                                    and try again.</a></td>
 					            <td class="red-right"><asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
@@ -115,7 +117,8 @@
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 				            <td class="green-left">
-                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add new one.</a></td>
+                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add 
+                                    new one.</a></td>
 					            <td class="green-right"><asp:HyperLink ID="HyperLink5" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
@@ -213,6 +216,10 @@
                                     </asp:DropDownList></div>
                                 </td>
 			                    <td>
+                                    <asp:CompareValidator ID="CompareValidator2" runat="server" 
+                                        ControlToValidate="ddlDepartment" Display="Dynamic" 
+                                        ErrorMessage="You must select department for new employee." Operator="NotEqual" 
+                                        ValueToCompare="Select department"></asp:CompareValidator>
                                 </td>
 		                    </tr>
 	                    <tr>

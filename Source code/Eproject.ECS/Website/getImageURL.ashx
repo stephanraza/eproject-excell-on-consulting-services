@@ -10,9 +10,9 @@ public class getImageURL : System.Web.IHttpHandler {
     
     public void ProcessRequest (System.Web.HttpContext context) {
 
-        String id;
-        if (context.Request.QueryString["id"] != null)
-            id = Convert.ToInt32(context.Request.QueryString["id"]);
+        String fileName;
+        if (context.Request.QueryString["name"] != null)
+            fileName = context.Request.QueryString["name"];
         else
             throw new ArgumentException("No parameter specified");
 
@@ -31,9 +31,33 @@ public class getImageURL : System.Web.IHttpHandler {
         crop = true;
         if (context.Request.QueryString["crop"] != null)
             crop = Convert.ToBoolean(context.Request.QueryString["crop"]);
+
+        String filePath = @"C:\" + fileName;
+        String data = "";
+
+        if (File.Exists(filePath))
+        {
+            StreamReader file = null;
+            try
+            {
+                file = new StreamReader(filePath);
+                while (!file.EndOfStream)
+                {
+                    data += file.ReadToEnd();
+                }
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                    File.Delete(filePath);
+                }
+            }
+        } 
         
         context.Response.ContentType = "image/png";
-        System.IO.Stream strm = ShowImage(photoID, width, height);
+        System.IO.Stream strm = ShowImage(data, width, height);
         strm.Position = 0;
         byte[] buffer = new byte[4096];
         int byteSeq = strm.Read(buffer, 0, 4096);
@@ -46,12 +70,11 @@ public class getImageURL : System.Web.IHttpHandler {
         //context.Response.BinaryWrite(buffer);
     }
 
-    public System.IO.Stream ShowImage(int photoID, int width, int height)
+    public System.IO.Stream ShowImage(String data, int width, int height)
     {
-        AlbumsStoreDataSet.PhotoRow photoRow = (AlbumsStoreDataSet.PhotoRow)photoTable.Select("photo_ID=" + photoID)[0];
         try
         {
-            Image image = Image.FromStream(new MemoryStream(photoRow.photo));
+            Image image = WebHelper.Instance.Base64ToImage(data);
             Image tempImage = ImageHelper.resizeImage(image, new Size(width + 10, image.Height));
 
             if (tempImage.Height < height)
@@ -71,7 +94,7 @@ public class getImageURL : System.Web.IHttpHandler {
                 tempImage = ImageHelper.cropImage(tempImage, rectangle);
             
             MemoryStream ms = new MemoryStream();
-            tempImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            tempImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
             return ms;
         }
         catch(Exception ex)
