@@ -54,10 +54,17 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
         {
             if (((DropDownList)sender).SelectedIndex != 0)
             {
+                pnlPreview.Visible = true;
                 String emailSelected = ((DropDownList)sender).Text;
                 EmployeeBusiness EB = new EmployeeBusiness();
                 Employee employee = EB.GetEmployee(emailSelected);
 
+                String url = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
+                if (url != null)
+                {
+                    imgAvatar.ImageUrl = WebHelper.Instance.GetURL() + url;
+                    imgAvatar.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id;
+                }
                 lblFirstName.Text = employee.Employee_FirtName;
                 lblLastName.Text = employee.Employee_LastName;
                 if (employee.Employee_Gender)
@@ -71,6 +78,8 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
             }
             else
             {
+                imgAvatar.ImageUrl = WebHelper.Instance.GetWebsitePath(Server.MapPath("")+ "App_Themes/images/other/no_image.png");
+                imgAvatar.PostBackUrl = "";
                 lblFirstName.Text = "";
                 lblLastName.Text = "";
                 lblGender.Text = "";
@@ -78,6 +87,7 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
                 lblAddress.Text = "";
                 lblPhoneNumber.Text = "";
                 lblEmail.Text = "";
+                pnlPreview.Visible = false;
             }
             String script = WebHelper.Instance.GetJqueryScript(Server.MapPath(""), "App_Themes/js/jquery/custom_jquery.js");
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
@@ -97,18 +107,6 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
                 String script = WebHelper.Instance.GetJqueryScript(Server.MapPath(""), "App_Themes/js/jquery/custom_jquery.js");
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
 
-                if (ddlEmployeeEmail.SelectedIndex == 0)
-                {
-                    pnlRed.Visible = true;
-                    lblError.Text = "You must select Employee's email to create an account.";
-                    return;
-                }
-                if (ddlRole.SelectedIndex == 0)
-                {
-                    pnlRed.Visible = true;
-                    lblError.Text = "You must select role for new account.";
-                    return;
-                }
                 AccountBusiness AB = new AccountBusiness();
                 EmployeeBusiness EB = new EmployeeBusiness();
                 String emID = EB.GetEmployee(ddlEmployeeEmail.Text).Employee_Id.ToString();

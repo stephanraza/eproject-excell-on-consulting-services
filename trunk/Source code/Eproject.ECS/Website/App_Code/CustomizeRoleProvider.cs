@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Security;
+using Eproject.ECS.Bll;
 
 public class CustomizeRoleProvider : RoleProvider
 {
+    AccountBusiness AB = new AccountBusiness();
+
     public override void AddUsersToRoles(string[] usernames, string[] roleNames)
     {
         throw new NotImplementedException();
@@ -51,7 +54,9 @@ public class CustomizeRoleProvider : RoleProvider
 
     public override string[] GetRolesForUser(string username)
     {
-        throw new NotImplementedException();
+        String role = AB.GetRole(username);
+        string[] roles = {role};
+        return roles;
     }
 
     public override string[] GetUsersInRole(string roleName)
