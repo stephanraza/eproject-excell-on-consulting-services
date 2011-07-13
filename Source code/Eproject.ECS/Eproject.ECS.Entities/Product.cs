@@ -11,6 +11,7 @@ namespace Eproject.ECS.Entities
         public Guid Company_Id { get; set; }
         public Guid Category_Id { get; set; }
         public String Product_Name { get; set; }
+        public String Product_Type { get; set; }
         public String Product_Price { get; set; }
         public String Product_Description { get; set; }
         public String Product_Image { get; set; }
