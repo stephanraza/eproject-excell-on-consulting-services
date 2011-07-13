@@ -25,9 +25,9 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        public int Product_Insert(Product entitys)
+        public bool Product_Insert(Product entitys)
         {
-            return entity.Product_Insert(entitys);
+            return entity.Product_Insert(entitys) > 0;
         }
         /// <summary>
         /// edit a row

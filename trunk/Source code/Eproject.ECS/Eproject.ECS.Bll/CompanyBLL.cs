@@ -63,13 +63,22 @@ namespace Eproject.ECS.Bll
         }
 
         /// <summary>
-        /// Check Company_Id
+        /// Check Company__Name
         /// </summary>
         /// <param name="Company_Id"></param>
         /// <returns></returns>
-        public int Company_Check(string Company_Id)
+        public bool Company_CheckName(string Company_Name)
         {
-            return companyDal.Company_Check(Company_Id);
+            return companyDal.Company_CheckName(Company_Name) > 0;
+        }
+        /// <summary>
+        /// Check Mail
+        /// </summary>
+        /// <param name="Company_Email"></param>
+        /// <returns></returns>
+        public bool Company_CheckEmail(string Company_Email)
+        {
+            return companyDal.Company_CheckEmail(Company_Email) > 0;
         }
 
         /// <summary>
