@@ -23,8 +23,8 @@ namespace Eproject.ECS.Dal
                 command.CommandType = CommandType.StoredProcedure;
                 try
                 {
-                    command.Parameters.Add(new SqlParameter("@Customer_Id", SqlDbType.UniqueIdentifier));
-                    command.Parameters["@Customer_Id"].Value = entity.Customer_Id;
+                    command.Parameters.Add(new SqlParameter("@Problem_Id", SqlDbType.UniqueIdentifier));
+                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;                                       
                     command.Parameters.Add(new SqlParameter("@Problem_Title", SqlDbType.NVarChar));
                     command.Parameters["@Problem_Title"].Value = entity.Problem_Title;
                     command.Parameters.Add(new SqlParameter("@Problem_Content", SqlDbType.NVarChar));
@@ -77,9 +77,7 @@ namespace Eproject.ECS.Dal
                 try
                 {
                     command.Parameters.Add(new SqlParameter("@Problem_Id", SqlDbType.UniqueIdentifier));
-                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;
-                    command.Parameters.Add(new SqlParameter("@Customer_Id", SqlDbType.UniqueIdentifier));
-                    command.Parameters["@Customer_Id"].Value = entity.Customer_Id;
+                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;                                       
                     command.Parameters.Add(new SqlParameter("@Problem_Title", SqlDbType.NVarChar));
                     command.Parameters["@Problem_Title"].Value = entity.Problem_Title;
                     command.Parameters.Add(new SqlParameter("@Problem_Content", SqlDbType.NVarChar));

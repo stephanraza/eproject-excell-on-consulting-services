@@ -22,6 +22,8 @@ namespace Eproject.ECS.Dal
                 command.CommandType = CommandType.StoredProcedure;
                 try
                 {
+                    command.Parameters.Add(new SqlParameter("@Category_Id", SqlDbType.UniqueIdentifier));
+                    command.Parameters["@Category_Id"].Value = entity.Category_Id;
                     command.Parameters.Add(new SqlParameter("@Category_Name", SqlDbType.NVarChar));
                     command.Parameters["@Category_Name"].Value = entity.Category_Name;
                     conn.Open();
@@ -214,6 +216,38 @@ namespace Eproject.ECS.Dal
 
                     command.Parameters.Add("@Category_Id", SqlDbType.UniqueIdentifier);
                     command.Parameters["@Category_Id"].Value = new Guid(Category_Id);
+                    connection.Open();
+
+                    IDataReader dataReader = command.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(dataReader);
+                    if (table.Rows.Count == 0)
+                        return 0;
+                    return table.Rows.Count;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+
+        public int Category_CheckName(string Category_Name)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Category_CheckName", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Category_Name", SqlDbType.NVarChar);
+                    command.Parameters["@Category_Name"].Value = Category_Name;
                     connection.Open();
 
                     IDataReader dataReader = command.ExecuteReader();
