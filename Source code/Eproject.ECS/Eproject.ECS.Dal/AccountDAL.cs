@@ -46,7 +46,7 @@ namespace Eproject.ECS.Dal
         public List<Account> GetAccounts(int pageIndex, int pageSize)
         {
             List<Account> listAccount = new List<Account>();
-            List<Object> listObj = DBHelper.Instance.Select("Account",null , null, pageIndex, pageSize);
+            List<Object> listObj = DBHelper.Instance.Select("Account", null, null, pageIndex, pageSize);
             
             if (listObj.Count != 0)
             {
@@ -65,7 +65,7 @@ namespace Eproject.ECS.Dal
         public List<Account> GetAccounts()
         {
             List<Account> listAccount = new List<Account>();
-            List<Object> listObj = DBHelper.Instance.Select("Account", null , null, -1, -1);
+            List<Object> listObj = DBHelper.Instance.Select("Account", null, null, -1, -1);
 
             if (listObj.Count != 0)
             {

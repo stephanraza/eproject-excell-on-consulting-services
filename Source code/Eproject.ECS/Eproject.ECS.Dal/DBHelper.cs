@@ -210,17 +210,14 @@ namespace Eproject.ECS.Dal
             String TableName = obj.GetType().ToString().Split('.')[3];
             String ParametersString = "";
 
-            String query = "Insert into {0} values(NEWID (),{1})";
+            String query = "Insert into {0} values({1})";
             String split = ",";
             foreach (PropertyInfo property in obj.GetType().GetProperties())
             {
-                if (!property.Name.Equals(TableName + "_Id"))
-                {
-                    String ParameterName = "@" + property.Name;
-                    ParametersString += ParameterName + split;
+                String ParameterName = "@" + property.Name;
+                ParametersString += ParameterName + split;
 
-                    Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
-                }
+                Command.Parameters.AddWithValue(ParameterName, property.GetValue(obj, null));
             }
 
             ParametersString = ParametersString.Substring(0, ParametersString.Length - split.Length);

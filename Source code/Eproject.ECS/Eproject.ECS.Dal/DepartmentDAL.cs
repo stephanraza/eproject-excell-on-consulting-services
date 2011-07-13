@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Eproject.ECS.Entities;
+using System.Data.SqlClient;
 
 namespace Eproject.ECS.Dal
 {
@@ -58,10 +59,10 @@ namespace Eproject.ECS.Dal
         /// Get all departments in database.
         /// </summary>
         /// <returns>List of departments.</returns>
-        public List<Department> GetDepartments()
+        public List<Department> GetDepartments(bool isDelete)
         {
             List<Department> listDepartment = new List<Department>();
-            List<Object> listObject = DBHelper.Instance.Select("Department", null, null, -1, -1);
+            List<Object> listObject = DBHelper.Instance.Select("Department", String.Format("Department_IsDelete = '{0}'", isDelete), null, -1, -1);
 
             foreach (Object item in listObject)
             {
@@ -73,6 +74,7 @@ namespace Eproject.ECS.Dal
         /// <summary>
         /// Create new a department.
         /// </summary>
+        /// <param name="isDelete">True if department is removed, false otherwise.</param>
         /// <param name="department">Department that you want to create.</param>
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
         public int CreateDepartment(Department department)
@@ -96,6 +98,18 @@ namespace Eproject.ECS.Dal
         public int DeleteDepartment(Department department)
         {
             return DBHelper.Instance.Delete("Department", String.Format("Department_Id = '{0}'", department.Department_Id.ToString()));
+        }
+        /// <summary>
+        /// Search departments by anything.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <param name="pageIndex">Index of page.</param>
+        /// <param name="pageSize">Size of page.</param>
+        /// <returns>String to search.</returns>
+        public String Search(String content, int pageIndex, int pageSize, bool isDelete)
+        {
+            String sqlQuery = "SELECT Department_Id, Department_Name, Department_Description FROM Department WHERE Department_Name LIKE '%{0}%' OR Department_Description LIKE '%{0}%' AND Department_IsDelete = '{1}'";
+            return String.Format(sqlQuery, content, isDelete);
         }
     }
 }
