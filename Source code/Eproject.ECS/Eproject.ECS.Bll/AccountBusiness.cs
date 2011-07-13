@@ -31,8 +31,8 @@ namespace Eproject.ECS.Bll
             userName = HttpUtility.HtmlEncode(userName);
             password = HttpUtility.HtmlEncode(password);
 
-            Account acc = GetAccount(userName);
-            if (SecurityHelper.Instance.VerifyMd5Hash(password, acc.Account_Password))
+            Account acc = AD.GetAccount(userName);
+            if (acc!=null && SecurityHelper.Instance.VerifyMd5Hash(password, acc.Account_Password))
             {
                 return true;
             }
@@ -94,11 +94,11 @@ namespace Eproject.ECS.Bll
         /// <param name="UserName">User name of this account.</param>
         /// <param name="password">Password of this account.</param>
         /// <param name="roleName">Role of this account.</param>
-        public void CreateAccount(String emId, String UserName, String password, String roleName)
+        public void CreateAccount(Guid accountId,Guid emId, String UserName, String password, String roleName)
         {
             Account newAcc = new Account();
-            newAcc.Account_Id = new Guid();
-            newAcc.Employee_Id = new Guid(emId);
+            newAcc.Account_Id = accountId;
+            newAcc.Employee_Id = emId;
             newAcc.Account_UserName = UserName;
             newAcc.Account_Password = SecurityHelper.Instance.GetMd5Hash(password);
             newAcc.Role_Name = roleName;
@@ -189,6 +189,30 @@ namespace Eproject.ECS.Bll
         {
             Account unlockAcc = GetAccount(accountId);
             UpdateAccount(unlockAcc.Account_Id, unlockAcc.Account_Password, unlockAcc.Role_Name, false, unlockAcc.Account_IsDelete);
+        }
+
+        public void ChangePassword(String userName,String oldPass, String newPass)
+        {
+            try
+            {
+                if (!ValidateUser(userName, oldPass))
+                    throw new Exception("Your old password is incorrect.");
+                else
+                {
+                    Account account = AD.GetAccount(userName);
+                    account.Account_Password = SecurityHelper.Instance.GetMd5Hash(newPass);
+
+                    int result = AD.UpdateAccount(account);
+                    if (result == -1)
+                    {
+                        throw new Exception("An error occurred while executing this operation.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

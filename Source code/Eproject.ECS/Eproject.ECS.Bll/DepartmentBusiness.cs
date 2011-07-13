@@ -11,6 +11,8 @@ using System.Text;
 using Eproject.ECS.Dal;
 using Eproject.ECS.Entities;
 using System.Web;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Eproject.ECS.Bll
 {
@@ -47,7 +49,7 @@ namespace Eproject.ECS.Bll
             {
                 List<String> listName = new List<String>();
 
-                foreach (Department item in DD.GetDepartments())
+                foreach (Department item in DD.GetDepartments(isDelete))
                 {
                     if (item.Department_IsDelete == isDelete)
                     {
@@ -86,6 +88,104 @@ namespace Eproject.ECS.Bll
             {
                 throw new Exception("The department is not exists.");
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns></returns>
+        public Department GetDepartment(Guid departmentId)
+        {
+            try
+            {
+                Department department = DD.GetDepartment(departmentId);
+                return department;
+            }
+            catch (NullReferenceException nre)
+            {
+                throw new Exception("The department is not exists.");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool IsExist(String name)
+        {
+            Department department = DD.GetDepartment(name);
+            if (department != null)
+                return true;
+            else
+                return false;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        public void CreateDepartment(Guid departmentId, String name, String description)
+        {
+            try
+            {
+                Department department = new Department();
+                department.Department_Id = departmentId;
+                department.Department_Name = name;
+                department.Department_Description = description;
+                department.Department_IsDelete = false;
+
+                int result = DD.CreateDepartment(department);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="isDelete"></param>
+        public void UpdateDepartment(Guid id, String name, String description, bool isDelete)
+        {
+            try
+            {
+                Department department = DD.GetDepartment(id);
+                if (name != null)
+                    department.Department_Name = name;
+                if (description != null)
+                    department.Department_Description = description;
+                department.Department_IsDelete = isDelete;
+
+                int result = DD.UpdateDepartment(department);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Search departments by anything.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <param name="pageIndex">Index of page.</param>
+        /// <param name="pageSize">Size of page.</param>
+        /// <returns>String to search.</returns>
+        public String SearchDepartment(String content, int pageIndex, int pageSize, bool isDelete)
+        {
+            return DD.Search(content, pageIndex, pageSize, isDelete);
         }
     }
 }

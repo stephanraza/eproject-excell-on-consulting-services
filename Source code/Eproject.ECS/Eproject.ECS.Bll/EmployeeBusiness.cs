@@ -22,6 +22,7 @@ namespace Eproject.ECS.Bll
     {
         EmployeeDAL ED = new EmployeeDAL();
         DepartmentBusiness DB = new DepartmentBusiness();
+        AccountBusiness AB = new AccountBusiness();
         /// <summary>
         /// 
         /// </summary>
@@ -34,12 +35,12 @@ namespace Eproject.ECS.Bll
         /// <param name="phone"></param>
         /// <param name="email"></param>
         /// <param name="avatar"></param>
-        public void CreateEmployee(String departmentName, String fName, String lName, String gender, String DOB, String address, String phone, String email, String data)
+        public void CreateEmployee(Guid employeeId, String departmentName, String fName, String lName, String gender, String DOB, String address, String phone, String email, String data)
         {
             try
             {
                 Employee newEmployee = new Employee();
-                newEmployee.Employee_Id = new Guid();
+                newEmployee.Employee_Id = employeeId;
                 newEmployee.Department_Id = DB.GetDepartment(departmentName, false).Department_Id;
                 newEmployee.Employee_FirtName = fName;
                 newEmployee.Employee_LastName = lName;
@@ -88,6 +89,14 @@ namespace Eproject.ECS.Bll
             }
         }
 
+        public Employee GetEmployee(Guid employeeId)
+        {
+            Employee employee = ED.GetEmployee(employeeId);
+            if (employee != null)
+                return employee;
+            else
+                throw new Exception(String.Format("This emloyee is not exists."));
+        }
 
         public Employee GetEmployee(String email)
         {
@@ -110,6 +119,44 @@ namespace Eproject.ECS.Bll
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public void UpdateEmployee(String userName, String fName, String lName, String email, String address, String phone, String gender, String dob, String data)
+        {
+            Account acc = AB.GetAccount(userName);
+            Employee employee = ED.GetEmployee(acc.Employee_Id);
+
+            if (fName != null)
+                employee.Employee_FirtName = fName;
+            if (lName != null)
+                employee.Employee_LastName = lName;
+            if (email != null)
+                employee.Employee_Email = email;
+            if (address != null)
+                employee.Employee_Address = address;
+            if (phone != null)
+                employee.Employee_PhoneNumber = phone;
+            if (gender != null)
+            {
+                if (gender.Equals("Male"))
+                    employee.Employee_Gender = true;
+                else if (gender.Equals("Female"))
+                    employee.Employee_Gender = false;
+            }
+            if (dob != null)
+            {
+                if (dob.Equals(""))
+                    dob = "1/1/1900";
+                employee.Employee_DateOfBirth = DateTime.Parse(dob);
+            }
+            if (data != null)
+                employee.Employee_Avatar = data;
+
+            int result = ED.UpdateEmployee(employee);
+            if (result == -1)
+            {
+                throw new Exception("An error occurred while executing this operation.");
             }
         }
     }
