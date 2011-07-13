@@ -96,3 +96,8 @@ $(document).ready(function () {
  
 // END -----------------------------  6 
   
+$(document).ready(function () {
+	$(".confirm").click(function () {
+    return confirm("Are you sure to remove this department ?");
+	});
+});

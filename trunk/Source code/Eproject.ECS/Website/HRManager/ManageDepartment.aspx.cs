@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using Eproject.ECS.Bll;
+using Eproject.ECS.Entities;
+using System.Collections.Generic;
 
 public partial class HRManager_ManageDepartment : System.Web.UI.Page
 {
@@ -24,13 +26,29 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
         pnlBlue.Visible = false;
 
         DB = new DepartmentBusiness();
-        setEventForDeleteButton();
+        loadData();
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+    }
+
+    private void loadData()
+    {
+        List<Department> listDepartment = DB.GetDepartments(false);
+        grvManage.DataSource = listDepartment;
+        grvManage.DataBind();
     }
 
     protected void grvManage_SelectedIndexChanged(object sender, EventArgs e)
     {
-        frmManage.PageIndex = grvManage.SelectedIndex;
         frmManage.ChangeMode(FormViewMode.Edit);
+        Label lblId = (Label)grvManage.Rows[grvManage.SelectedIndex].FindControl("lblId");
+        Department department = DB.GetDepartment(new Guid(lblId.Text.Trim()));
+
+        List<Department> list = new List<Department>();
+        list.Add(department);
+        frmManage.DataSource = list;
+        frmManage.DataBind();
+        frmManage.PageIndex = 1;
     }
 
     protected void UpdateButton_Click(object sender, EventArgs e)
@@ -47,7 +65,7 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "A department has been modified successfully.";
-                grvManage.DataBind();
+                loadData();
                 frmManage.ChangeMode(frmManage.DefaultMode);
             }
             catch (Exception ex)
@@ -78,7 +96,7 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "A new department has been created successfully.";
-                grvManage.DataBind();
+                loadData();
             }
             catch (Exception ex)
             {
@@ -88,18 +106,6 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
         }
     }
 
-    private void setEventForDeleteButton()
-    {
-        for (int i = 0; i < grvManage.Rows.Count; i++)
-        {
-            foreach (GridViewRow row in grvManage.Rows)
-            {
-                ImageButton lnkRemove = (ImageButton)row.FindControl("imgbtnRemove");
-                lnkRemove.Attributes.Add("onclick", "return confirmRemove();");
-            }
-        }
-
-    }
     protected void grvManage_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         try
@@ -111,7 +117,7 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
 
             pnlGreen.Visible = true;
             lblSuccess.Text = "A department has been removed successfully, this data could be restored from Trash.";
-            grvManage.DataBind();
+            loadData();
         }
         catch (Exception ex)
         {
@@ -121,14 +127,20 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        SqlDataSource1.SelectCommand = DB.SearchDepartment(txtSearch.Text.Trim(), grvManage.PageIndex, grvManage.PageSize, false);
-        grvManage.DataBind();
-        if (grvManage.Rows.Count == 0)
-        {
-            pnlRed.Visible = true;
-            lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.",txtSearch.Text.Trim());
-        }
-        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+        //System.Threading.Thread.Sleep(10000);
+
+        //grvManage.DataBind();
+        //if (grvManage.Rows.Count == 0)
+        //{
+        //    pnlRed.Visible = true;
+        //    lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
+        //}
+        //String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+    }
+    protected void frmManage_ModeChanging(object sender, FormViewModeEventArgs e)
+    {
+        e.Cancel = true;
+        frmManage.ChangeMode(frmManage.DefaultMode);
     }
 }
