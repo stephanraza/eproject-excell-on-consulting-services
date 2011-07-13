@@ -187,5 +187,10 @@ namespace Eproject.ECS.Bll
         {
             return DD.Search(content, pageIndex, pageSize, isDelete);
         }
+
+        public List<Department> GetDepartments(bool isDelete)
+        {
+            return DD.GetDepartments(isDelete);
+        }
     }
 }
