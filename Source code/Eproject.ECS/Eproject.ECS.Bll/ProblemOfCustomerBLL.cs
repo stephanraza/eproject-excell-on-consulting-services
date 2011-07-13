@@ -16,7 +16,7 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool Problem_Insert(ProblemOfCustomer entity)
+        public bool ProblemOfCustomer_Insert(ProblemOfCustomer entity)
         {
             return problemOfCustomer.ProblemOfCustomer_Insert(entity) > 0;
         }

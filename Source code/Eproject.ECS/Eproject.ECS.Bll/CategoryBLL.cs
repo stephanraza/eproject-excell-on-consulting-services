@@ -16,9 +16,9 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public int Category_Insert(Category entity)
+        public bool Category_Insert(Category entity)
         {
-            return _categoryDal.Category_Insert(entity);
+            return _categoryDal.Category_Insert(entity) > 0;
         }
         /// <summary>
         /// Get a table
@@ -74,6 +74,11 @@ namespace Eproject.ECS.Bll
         public int Category_Check(string Category_Id)
         {
             return _categoryDal.Category_Check(Category_Id);
+        }
+
+        public bool Category_CheckName(string Category_Name)
+        {
+            return _categoryDal.Category_CheckName(Category_Name) > 0;
         }
     }
 }

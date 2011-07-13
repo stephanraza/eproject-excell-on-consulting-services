@@ -16,9 +16,9 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public int CustomerOfCompany_Insert(CustomerOfCompany entity)
+        public bool CustomerOfCompany_Insert(CustomerOfCompany entity)
         {
-            return customer.CustomerOfCompany_Insert(entity);
+            return customer.CustomerOfCompany_Insert(entity) > 0;
         }
 
         /// <summary>
@@ -80,9 +80,14 @@ namespace Eproject.ECS.Bll
         /// <param name="Company_Id"></param>
         /// <param name="Customer_Id"></param>
         /// <returns></returns>
-        public int CustomerOfCompany_Check(string Company_Id, string Customer_Id)
+        public bool CustomerOfCompany_Check(string Company_Id, string Customer_Id)
         {
-            return customer.CustomerOfCompany_Check(Company_Id, Customer_Id);
+            return customer.CustomerOfCompany_Check(Company_Id, Customer_Id) > 0;
+        }
+
+        public DataRow CustomerOfCompany_ShowOne(string Customer_Id)
+        {
+            return customer.CustomerOfCompany_ShowOne(Customer_Id);
         }
     }
 }
