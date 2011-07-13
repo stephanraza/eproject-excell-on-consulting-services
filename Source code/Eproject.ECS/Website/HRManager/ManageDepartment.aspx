@@ -19,6 +19,7 @@
     
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
     <ContentTemplate>
+    
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
     <tr>
 	    <th rowspan="3" class="sized"><img src="/Website/App_Themes/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
@@ -125,12 +126,13 @@
 		                <table border="0" width="100%" cellpadding="0" cellspacing="0">
 		            <tr>
                         <th valign="top" style="text-align:right; line-height:28px;padding:5px 15px 8px 0">Search :</th>
-                        <td><asp:TextBox ID="txtSearch" CssClass="inp-form-search" runat="server" 
+                        <td id="searchTD"><asp:TextBox ID="txtSearch" CssClass="inp-form-search" runat="server" 
                                 AutoPostBack="True" ontextchanged="txtSearch_TextChanged"></asp:TextBox>
                         <asp:UpdateProgress ID="UpdateProgress1" runat="server">
                             <ProgressTemplate>
                                 <asp:Label ID="lblLoading" runat="server" CssClass="form-loading" 
-                                    AssociatedControlID="txtSearch" Height="32px" Width="32px">aaaaaaaaaaaaaaaaaaaaaa</asp:Label>
+                                    AssociatedControlID="txtSearch"></asp:Label> 
+                       
                             </ProgressTemplate>
                         </asp:UpdateProgress>
                         </td>     
@@ -143,19 +145,16 @@
                     <tr>
                         <td colspan="2" align="center">
                             <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                DataSourceID="SqlDataSource1" CssClass="product-table"
+                                CssClass="product-table"
                                 onselectedindexchanged="grvManage_SelectedIndexChanged" Width="90%" 
                                 onrowdeleting="grvManage_RowDeleting">
                                 <Columns>
                                     <asp:TemplateField HeaderText="<a hreft>Department Id</a>" HeaderStyle-CssClass="table-header-check" SortExpression="Department_Id"  ItemStyle-Width="40%">
-                                        <EditItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("Department_Id") %>'></asp:Label>
-                                        </EditItemTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("Department_Id") %>'></asp:Label>
+                                       <ItemTemplate>
+                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Department_Id") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("Department_Id") %>'></asp:Label>
+                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Department_Id") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
 
@@ -163,65 +162,31 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" 
                                         SortExpression="Department_Name">
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("Department_Name") %>'></asp:TextBox>
-                                        </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="Label1" runat="server" Text='<%# Bind("Department_Name") %>'></asp:Label>
+                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
-                                            <asp:Label ID="Label1" runat="server" Text='<%# Bind("Department_Name") %>'></asp:Label>
+                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                         <ItemStyle Width="20%" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" 
                                         SortExpression="Department_Description">
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="TextBox2" runat="server" 
-                                                Text='<%# Bind("Department_Description") %>'></asp:TextBox>
-                                        </EditItemTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="Label2" runat="server" 
-                                                Text='<%# Bind("Department_Description") %>'></asp:Label>
+                                                Text='<%# Eval("Department_Description") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
                                             <asp:Label ID="Label2" runat="server" 
-                                                Text='<%# Bind("Department_Description") %>'></asp:Label>
+                                                Text='<%# Eval("Department_Description") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="<a href>Action</a>" HeaderStyle-CssClass="table-header-repeat line-left">
-                                        <ItemTemplate>
-                                            <asp:ImageButton ID="imgbtnSelect" runat="server" CausesValidation="False" 
-                                                CommandName="Select" Text="Select" ImageUrl="../App_Themes/images/table/table_icon_edit.gif"></asp:ImageButton>
-                                            <asp:ImageButton ID="imgbtnRemove" runat="server" CausesValidation="False" 
-                                                CommandName="Delete" Text="Remove" ImageUrl="../App_Themes/images/table/table_icon_remove.gif"></asp:ImageButton>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:ImageButton ID="imgbtnSelect" runat="server" CausesValidation="False" 
-                                                CommandName="Select" Text="Select" ImageUrl="../App_Themes/images/table/table_icon_edit.gif"></asp:ImageButton>
-                                            <asp:ImageButton ID="imgbtnRemove" runat="server" CausesValidation="False" 
-                                                CommandName="Delete" Text="Remove" ImageUrl="../App_Themes/images/table/table_icon_remove.gif"></asp:ImageButton>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
+                                    <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" />
                                 </Columns>
                                 <AlternatingRowStyle CssClass="alternate-row" />
                             </asp:GridView>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-                                ConnectionString="<%$ ConnectionStrings:ECS %>" 
-                                ProviderName="<%$ ConnectionStrings:ECS.ProviderName %>" 
-                                DeleteCommand="DELETE FROM [Department] WHERE [Department_Id] = @Department_Id" 
-                                SelectCommand="SELECT [Department_Id], [Department_Name], [Department_Description] FROM [Department] WHERE ([Department_IsDelete] = @Department_IsDelete)" 
-                                >
-                                <SelectParameters>
-                                    <asp:Parameter DefaultValue="False" Name="Department_IsDelete" Type="Boolean" />
-                                </SelectParameters>
-                                <DeleteParameters>
-                                    <asp:Parameter Name="Department_Id" Type="Object" />
-                                </DeleteParameters>
-                            </asp:SqlDataSource>
                         </td>
                     </tr>
                     <tr>
@@ -231,8 +196,8 @@
                     </tr>
                     <tr>
                         <td colspan="2">                        
-                            <asp:FormView ID="frmManage" runat="server" DataSourceID="SqlDataSource1" 
-                                DefaultMode="Insert" Width="90%">
+                            <asp:FormView ID="frmManage" runat="server"
+                                DefaultMode="Insert" Width="90%" onmodechanging="frmManage_ModeChanging">
                                 <EditItemTemplate>
                                 <!-- START EDIT TEMPLATE -->   
 		                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form" width="100%">
@@ -263,7 +228,7 @@
                                               Department Name :</th>
                                           <td align="left">
                                               <asp:Label ID="Department_NameLabel" runat="server" CssClass="th-label" 
-                                                  Text='<%# Bind("Department_Name") %>'></asp:Label>
+                                                  Text='<%# Eval("Department_Name") %>'></asp:Label>
                                           </td>
                                           <tr>
                                               <th align="right" class="content" style="text-align:right" valign="top" 
@@ -271,7 +236,7 @@
                                                   Description :</th>
                                               <td align="left" valign="top">
                                                   <asp:TextBox ID="Department_DescriptionTextBox" runat="server" 
-                                                      CssClass="form-textarea1" Text='<%# Bind("Department_Description") %>' 
+                                                      CssClass="form-textarea1" Text='<%# Eval("Department_Description") %>' 
                                                       TextMode="MultiLine"></asp:TextBox>
                                               </td>
                                               <tr>
@@ -301,7 +266,7 @@
 		                            <tr>
 			                            <th valign="top">Department Name :</th>
 			                            <td>
-                                            <asp:TextBox ID="Department_NameTextBox" Text='<%# Bind("Department_Name") %>' runat="server" CssClass="inp-form"></asp:TextBox>
+                                            <asp:TextBox ID="Department_NameTextBox" Text='<%# Eval("Department_Name") %>' runat="server" CssClass="inp-form"></asp:TextBox>
                                             <br />
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
                                             ControlToValidate="Department_NameTextBox" Display="Dynamic" CssClass="content" Font-Size="12px"
@@ -311,7 +276,7 @@
 		                            </tr>
 		                            <tr>
 			                            <th valign="top">Description :</th>
-			                            <td><asp:TextBox ID="Department_DescriptionTextBox" runat="server" CssClass="form-textarea" Text='<%# Bind("Department_Description") %>'
+			                            <td><asp:TextBox ID="Department_DescriptionTextBox" runat="server" CssClass="form-textarea" Text='<%# Eval("Department_Description") %>'
                                                 TextMode="MultiLine"></asp:TextBox></td>
 			                            <td>
                                         </td>
@@ -532,6 +497,7 @@
 	    <th class="sized bottomright"></th>
     </tr>
     </table>
+    
     
     </ContentTemplate>
         <Triggers>
