@@ -17,6 +17,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        if (Request.Url.ToString().Contains(".aspx"))
+        {
+            Response.Redirect(WebHelper.Instance.GetURL() + "Login");
+        }
     }
 }

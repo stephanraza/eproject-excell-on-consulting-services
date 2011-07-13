@@ -2,33 +2,22 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <title>Excell-on Consulting Services</title>
-    <%--<script type="text/javascript" language="javascript">
-        function reset()
-        {
-            document.getElementById(<%=ddlEmployeeEmail.ClientID %>).options(0).selected = true;
-            document.<%=Form.ClientID %>.<%=txtUserName.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtConfirmPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=ckbDefaultPassword.ClientID %>.checked = false;
-            document.getElementById(<%=ddlRole.ClientID %>).options(0).selected = true;
-        }
-    </script>--%>
     <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css" rel="stylesheet" type="text/css" />
     <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>    
 	<script type="text/javascript">
 	$(function() {
-		$( <%=txtDOB.ClientID%> ).datepicker({
+		$( "#<%=txtDOB.ClientID%>" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
-			yearRange: '1900:2010'
+			yearRange: '1900:2011'
 		});
 	});
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
 
-<div id="page-heading"><h1>CREATE PROFILE</h1></div>
+    <div id="page-heading"><h1>CREATE PROFILE</h1></div>
 
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
     <tr>
@@ -155,15 +144,17 @@
 		                    <tr>
 		                        <th valign="top">Date Of Birth :</th>
 		                    <td><asp:TextBox ID="txtDOB" runat="server" CssClass="inp-form" 
-                                   ></asp:TextBox></td>
-		                    <td>
+                                   ></asp:TextBox>
+                                   <br />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
-                                    ControlToValidate="txtDOB" Display="Dynamic" 
+                                    ControlToValidate="txtDOB" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="Date of birth is required."></asp:RequiredFieldValidator>
                                 <asp:CompareValidator ID="CompareValidator1" runat="server" 
-                                    ControlToValidate="txtDOB" Display="Dynamic" 
+                                    ControlToValidate="txtDOB" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="Your date of birth is invalid." Operator="LessThanEqual" 
-                                    Type="Date"></asp:CompareValidator>
+                                    Type="Date"></asp:CompareValidator></td>
+		                    <td>
+                                
                                 </td>
 		                    </tr>
 		                    <tr>
@@ -176,50 +167,54 @@
 		                    <th valign="top">Phone Number :</th>
 		                    <td>
                                 <asp:TextBox ID="txtPhoneNumber" runat="server" CssClass="inp-form"></asp:TextBox>
-                            </td>
-		                    <td>
+                                <br />
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" 
+                                CssClass="content" Font-Size="12px"
                                     ControlToValidate="txtPhoneNumber" ErrorMessage="Phone number is invalid." 
                                     ValidationExpression="^[0-9]{6,15}"></asp:RegularExpressionValidator>
-                                </td>
+                            </td>
+		                    <td> </td>
 		                    </tr>
 		                    <tr>
 		                    <th valign="top">Email :</th>
 		                    <td>
                                 <asp:TextBox ID="txtEmail" runat="server" CssClass="inp-form"></asp:TextBox>
-                            </td>
-		                    <td>
+                                <br />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                    ControlToValidate="txtEmail" Display="Dynamic" 
+                                    ControlToValidate="txtEmail" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="Email is required."></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
-                                    ErrorMessage="Email is invalid." ControlToValidate="txtEmail" Display="Dynamic" 
+                                    ErrorMessage="Email is invalid." ControlToValidate="txtEmail" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
-                                                        </td>
+                                                       
+                            </td>
+		                    <td> </td>
 		                    </tr>
 		                    <tr>
 		                    <th valign="top">Avatar :</th>
 		                    <td>
-                                <asp:FileUpload ID="fuAvatar" runat="server" />
-                            </td>
-		                    <td>
+                                <asp:FileUpload ID="fuAvatar" CssClass="file_1" runat="server" />
+                                <br />
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
-                                    ControlToValidate="fuAvatar" Display="Dynamic" 
+                                    ControlToValidate="fuAvatar" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="Your file is not invalid. It only supports image type." 
                                     ValidationExpression="^.+\.(([jJ][pP][eE]?[gG])|([gG][iI][fF])|([pP][nN][gG])|([bB][mM][pP])|([iI][cC][oO]))$"></asp:RegularExpressionValidator>
-                                </td>
+                                
+                            </td>
+		                    <td></td>
 		                    </tr>
 		                    <tr>
 			                    <th valign="top">Department:</th>
 			                    <td><div class="inp-form">
                                     <asp:DropDownList ID="ddlDepartment" CssClass="styledselect_form" runat="server">
                                     </asp:DropDownList></div>
-                                </td>
-			                    <td>
+                                    <br />
                                     <asp:CompareValidator ID="CompareValidator2" runat="server" 
-                                        ControlToValidate="ddlDepartment" Display="Dynamic" 
+                                        ControlToValidate="ddlDepartment" Display="Dynamic"  CssClass="content" Font-Size="12px"
                                         ErrorMessage="You must select department for new employee." Operator="NotEqual" 
                                         ValueToCompare="Select department"></asp:CompareValidator>
+                                </td>
+			                    <td>
                                 </td>
 		                    </tr>
 	                    <tr>
@@ -235,7 +230,135 @@
 	                    <!-- end id-form  -->
 	            </td>
 	            <td>
-
+<asp:Panel ID="pnlPreview" Visible="false" runat="server">
+                    
+	            <!--  start related-activities -->
+	            <div id="related-activities">
+            		
+		            <!--  start related-act-top -->
+		            <div id="related-act-top">
+		            <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/header_preview_act.gif" width="271" height="43" alt="" />
+		            </div>
+		            <!-- end related-act-top -->
+            		
+		            <!--  start related-act-bottom -->
+		            <div id="related-act-bottom">
+            		
+			            <!--  start related-act-inner -->
+			            <div id="related-act-inner">
+			                <div style="text-align:center"><asp:ImageButton ID="imgAvatar" runat="server" 
+                                    CausesValidation="False" ImageUrl="~/App_Themes/images/other/no_image.png" /></div>
+			                <div class="clear"></div>
+				            <div class="lines-dotted-short"></div>
+				            <div class="left"><a href=""><img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+				            <div class="right">
+					            <h5>Profile</h5>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 40%;" valign="top">
+                                            First name                               
+                                        </td>
+                                        <td style="width: 5%;" valign="top"> : </td>
+                                        <td><asp:Label ID="lblFirstName" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Last name                               
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td valign="top"><asp:Label ID="lblLastName" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Gender                               
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td><asp:Label ID="lblGender" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Date of birth
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td><asp:Label ID="lblDOB" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Address
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td valign="top">
+                                           <asp:Label ID="lblAddress" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Phone number
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td valign="top"><asp:Label ID="lblPhoneNumber" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Email
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td valign="top"><asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>                
+        					    <br />
+					            <ul class="greyarrow"> 
+						            <li><a href="">Click here modify profile</a> </li>
+					            </ul>
+				            </div>
+            				
+				            <div class="clear"></div>
+				            <div class="lines-dotted-short"></div>
+            				
+				            <div class="left"><a href=""><img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+				            <div class="right">
+					            <h5>Department</h5>
+					            <table style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 40%;" valign="top">
+                                            Name
+                                        </td>
+                                        <td style="width: 5%;" valign="top"> : </td>
+                                        <td valign="top"><asp:Label ID="lblDepartmentName" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            Description
+                                        </td>
+                                        <td valign="top"> : </td>
+                                        <td valign="top"><asp:Label ID="lblDescription" runat="server" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br />
+					            <ul class="greyarrow"> 
+						            <li><a href="">Click here modify department</a> </li>
+					            </ul>
+				            </div>
+				            <div class="clear"></div>
+            				
+			            </div>
+			            <!-- end related-act-inner -->
+			            <div class="clear"></div>
+            		
+		            </div>
+		            <!-- end related-act-bottom -->
+            	
+	            </div>
+	            <!-- end related-activities -->
+                    </asp:Panel>
             </td>
             </tr>
             <tr>

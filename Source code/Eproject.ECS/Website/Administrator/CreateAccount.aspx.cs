@@ -16,12 +16,22 @@ using Eproject.ECS.Entities;
 
 public partial class Administrator_CreateAccount : System.Web.UI.Page
 {
+    private EmployeeBusiness EB;
+    private RoleBusiness RB;
+    private AccountBusiness AB;
+    private DepartmentBusiness DB;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         pnlRed.Visible = false;
         pnlGreen.Visible = false;
         pnlYellow.Visible = false;
         pnlBlue.Visible = false;
+
+        EB = new EmployeeBusiness();
+        RB = new RoleBusiness();
+        AB = new AccountBusiness();
+        DB = new DepartmentBusiness();
 
         if (!IsPostBack)
         {
@@ -31,7 +41,6 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
 
     private void loadData()
     {
-        EmployeeBusiness EB = new EmployeeBusiness();
         List<String> listEmail = EB.GetEmailNotRegister();
         ddlEmployeeEmail.Items.Add("Select email");
         foreach (String item in listEmail)
@@ -39,7 +48,6 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
             ddlEmployeeEmail.Items.Add(item);
         }
 
-        RoleBusiness RB = new RoleBusiness();
         List<String> listRole = RB.GetRoleNames();
         ddlRole.Items.Add("Select role");
         foreach (String item in listRole)
@@ -50,53 +58,66 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
 
     protected void ddlEmployeeEmail_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (((DropDownList)sender).SelectedIndex != 0)
+        {
+            String emailSelected = ((DropDownList)sender).Text;
+            DisplayPanelPreview(emailSelected);
+        }
+        else
+        {
+            ResetPanelPreview();
+        }
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+    }
+
+    private void DisplayPanelPreview(String emailSelected)
+    {
         try
         {
-            if (((DropDownList)sender).SelectedIndex != 0)
-            {
-                pnlPreview.Visible = true;
-                String emailSelected = ((DropDownList)sender).Text;
-                EmployeeBusiness EB = new EmployeeBusiness();
-                Employee employee = EB.GetEmployee(emailSelected);
+            pnlPreview.Visible = true;
+            Employee employee = EB.GetEmployee(emailSelected);
 
-                String url = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
-                if (url != null)
-                {
-                    imgAvatar.ImageUrl = WebHelper.Instance.GetURL() + url;
-                    imgAvatar.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id;
-                }
-                lblFirstName.Text = employee.Employee_FirtName;
-                lblLastName.Text = employee.Employee_LastName;
-                if (employee.Employee_Gender)
-                    lblGender.Text = "Male";
-                else
-                    lblGender.Text = "Female";
-                lblDOB.Text = employee.Employee_DateOfBirth.ToShortDateString();
-                lblAddress.Text = employee.Employee_Address;
-                lblPhoneNumber.Text = employee.Employee_PhoneNumber;
-                lblEmail.Text = employee.Employee_Email;
-            }
+            imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
+            imgAvatar.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id;
+            lblFirstName.Text = employee.Employee_FirtName;
+            lblLastName.Text = employee.Employee_LastName;
+            if (employee.Employee_Gender)
+                lblGender.Text = "Male";
             else
-            {
-                imgAvatar.ImageUrl = WebHelper.Instance.GetWebsitePath(Server.MapPath("")+ "App_Themes/images/other/no_image.png");
-                imgAvatar.PostBackUrl = "";
-                lblFirstName.Text = "";
-                lblLastName.Text = "";
-                lblGender.Text = "";
+                lblGender.Text = "Female";
+            if (employee.Employee_DateOfBirth.ToShortDateString().Equals("1/1/1900"))
                 lblDOB.Text = "";
-                lblAddress.Text = "";
-                lblPhoneNumber.Text = "";
-                lblEmail.Text = "";
-                pnlPreview.Visible = false;
-            }
-            String script = WebHelper.Instance.GetJqueryScript(Server.MapPath(""), "App_Themes/js/jquery/custom_jquery.js");
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+            else
+                lblDOB.Text = employee.Employee_DateOfBirth.ToShortDateString();
+            lblAddress.Text = employee.Employee_Address;
+            lblPhoneNumber.Text = employee.Employee_PhoneNumber;
+            lblEmail.Text = employee.Employee_Email;
+
+            Department department = DB.GetDepartment(employee.Department_Id);
+            lblDepartmentName.Text = department.Department_Name;
+            lblDescription.Text = department.Department_Description;
         }
         catch (NullReferenceException nre)
         {
-            pnlRed.Visible = true;
-            lblError.Text = "Information of this employee not found !"; 
+            ResetPanelPreview();
         }
+    }
+
+    private void ResetPanelPreview()
+    {
+        imgAvatar.ImageUrl = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/no_image.png";
+        imgAvatar.PostBackUrl = "";
+        lblFirstName.Text = "";
+        lblLastName.Text = "";
+        lblGender.Text = "";
+        lblDOB.Text = "";
+        lblAddress.Text = "";
+        lblPhoneNumber.Text = "";
+        lblEmail.Text = "";
+        lblDepartmentName.Text = "";
+        lblDescription.Text = "";
+        pnlPreview.Visible = false;
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -104,21 +125,20 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
         {
             try
             {
-                String script = WebHelper.Instance.GetJqueryScript(Server.MapPath(""), "App_Themes/js/jquery/custom_jquery.js");
+                String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
 
-                AccountBusiness AB = new AccountBusiness();
-                EmployeeBusiness EB = new EmployeeBusiness();
-                String emID = EB.GetEmployee(ddlEmployeeEmail.Text).Employee_Id.ToString();
-
-                AB.CreateAccount(emID, txtUserName.Text.Trim(), txtPassword.Text.Trim(), ddlRole.Text.Trim());
+                AB.CreateAccount(Guid.NewGuid(), EB.GetEmployee(ddlEmployeeEmail.Text).Employee_Id, txtUserName.Text.Trim(), txtPassword.Text.Trim(), ddlRole.Text.Trim());
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new an account successfully.";
+                ResetPanelPreview();
             }
             catch (Exception ex)
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
+                ckbDefaultPassword.Checked = false;
+                DisplayPanelPreview(ddlEmployeeEmail.Text);
             }
         }
     }

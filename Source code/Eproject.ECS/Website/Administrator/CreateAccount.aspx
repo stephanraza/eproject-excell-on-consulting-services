@@ -39,11 +39,11 @@
 
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
     <tr>
-	    <th rowspan="3" class="sized"><img src="/Website/App_Themes/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+	    <th rowspan="3" class="sized"><img src="<%=ResolveUrl("~")%>App_Themes/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 	    <th class="topleft"></th>
 	    <td id="tbl-border-top">&nbsp;</td>
 	    <th class="topright"></th>
-	    <th rowspan="3" class="sized"><img src="/Website/App_Themes/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+	    <th rowspan="3" class="sized"><img src="<%=ResolveUrl("~")%>App_Themes/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
     </tr>
     <tr>
 	    <td id="tbl-border-left"></td>
@@ -62,19 +62,23 @@
 		            <!--  start step-holder -->
 		            <div id="step-holder">
 			            <div class="step-no">1</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Account/Create">
                             Create details</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">2</div>
-			            <div class="step-light-left"><a href="">Manage accounts</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Account/Manage">
+                            Manage accounts</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">3</div>
-			            <div class="step-light-left"><a href="">Modify details</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Account/Modify">
+                            Modify details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">4</div>
-			            <div class="step-light-left"><a href="">Trash</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Account/Trash">
+                            Trash</a></div>
 			            <div class="step-light-round">&nbsp;</div>
 			            <div class="clear"></div>
+		            </div>
 		            </div>
 		            <!--  end step-holder -->
             	
@@ -146,21 +150,23 @@
                                         onselectedindexchanged="ddlEmployeeEmail_SelectedIndexChanged">
                                     </asp:DropDownList>
                                     </div>
-                                </td>
-			                    <td>
+                                    <br />
                                     <asp:CompareValidator ID="CompareValidator2" runat="server" 
-                                        ControlToValidate="ddlEmployeeEmail" Display="Dynamic" 
+                                        ControlToValidate="ddlEmployeeEmail" Display="Dynamic" CssClass="content" Font-Size="12px"
                                         ErrorMessage="You must select Employee's email to create an account." 
                                         Operator="NotEqual" ValueToCompare="Select email"></asp:CompareValidator>
+                                
                                 </td>
+			                    <td></td>
 		                    </tr>
 		                    <tr>
 			                    <th valign="top">User name:</th>
-			                    <td><asp:TextBox ID="txtUserName" runat="server" CssClass="inp-form"></asp:TextBox></td>
-			                    <td>
+			                    <td><asp:TextBox ID="txtUserName" runat="server" CssClass="inp-form"></asp:TextBox>
+			                    <br />
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                        ControlToValidate="txtUserName" Display="Dynamic" 
-                                        ErrorMessage="User name is required."></asp:RequiredFieldValidator>
+                                        ControlToValidate="txtUserName" Display="Dynamic" CssClass="content" Font-Size="12px"
+                                        ErrorMessage="User name is required."></asp:RequiredFieldValidator></td>
+			                    <td>
                                 </td>
 		                    </tr>
 		                    <tr>
@@ -173,29 +179,31 @@
 		                    <tr>
 		                        <th valign="top">Password :</th>
 		                    <td><asp:TextBox ID="txtPassword" runat="server" CssClass="inp-form" 
-                                    TextMode="Password"></asp:TextBox></td>
-		                    <td>
+                                    TextMode="Password"></asp:TextBox>
+                                    <br />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
-                                    ControlToValidate="txtPassword" Display="Dynamic" 
+                                    ControlToValidate="txtPassword" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="Password is required."></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
-                                    ControlToValidate="txtPassword" Display="Dynamic" 
-                                    ErrorMessage="Password minimum length is 6 character." 
-                                    ValidationExpression="^.{6,}$"></asp:RegularExpressionValidator>
+                                    ControlToValidate="txtPassword" Display="Dynamic" CssClass="content" Font-Size="12px"
+                                    ErrorMessage="Password minimum length is 6 characters." 
+                                    ValidationExpression="^.{6,}$"></asp:RegularExpressionValidator></td>
+		                    <td>
                                 </td>
 		                    </tr>
 		                    <tr>
 		                        <th valign="top">Confirm Password :</th>
 		                    <td><asp:TextBox ID="txtConfirmPassword" runat="server" CssClass="inp-form" 
-                                    TextMode="Password"></asp:TextBox></td>
-		                    <td>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
-                                    ErrorMessage="Confirm password is required." 
-                                    ControlToValidate="txtConfirmPassword" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    TextMode="Password"></asp:TextBox><br />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
+                                    ControlToValidate="txtConfirmPassword" Display="Dynamic" CssClass="content" Font-Size="12px"
+                                    ErrorMessage="Confirm password is required."></asp:RequiredFieldValidator>
                                 <asp:CompareValidator ID="CompareValidator1" runat="server" 
                                     ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword" 
-                                    Display="Dynamic" ErrorMessage="Password and confirm password must match."></asp:CompareValidator>
+                                    Display="Dynamic" CssClass="content" Font-Size="12px" ErrorMessage="Password and confirm password must match."></asp:CompareValidator>
                                 </td>
+                                    
+		                    <td></td>
 		                    </tr>
 		                    <tr>
 		                    <th valign="top">Role :</th>
@@ -203,12 +211,14 @@
 		                    <div class="inp-form">
 		                    <asp:DropDownList ID="ddlRole" runat="server" CssClass="styledselect_form">
                                 </asp:DropDownList></div>
-                            </td>
-		                    <td>
+                                <br />
                                 <asp:CompareValidator ID="CompareValidator3" runat="server" 
-                                    ControlToValidate="ddlRole" Display="Dynamic" 
+                                    ControlToValidate="ddlRole" Display="Dynamic" CssClass="content" Font-Size="12px"
                                     ErrorMessage="You must select role for new account." Operator="NotEqual" 
                                     ValueToCompare="Select role"></asp:CompareValidator>
+                            </td>
+		                    <td>
+                                
                                 </td>
 		                    </tr>
 	                    <tr>
@@ -324,7 +334,7 @@
                                         <td style="width: 40%;" valign="top">
                                             Name
                                         </td>
-                                        <td valign="top"> : </td>
+                                        <td style="width: 5%;" valign="top"> : </td>
                                         <td valign="top"><asp:Label ID="lblDepartmentName" runat="server" Text=""></asp:Label>
                                         </td>
                                     </tr>

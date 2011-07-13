@@ -39,17 +39,9 @@ using System.Drawing;
             
         }
 
-        public String GetJqueryScript(String root, String path)
+        public String GetJqueryScript(String path)
         {
-            String[] url = root.Split('\\');
-            String redirect = "";
-            foreach (String item in url)
-            {
-                redirect += item + "\\";
-                if (item.Equals("Website"))
-                    break;
-            }
-            String filePath = redirect + path;
+            String filePath = GetWebsitePath() + path;
             String script = "";
             
             if (File.Exists(filePath))
@@ -121,14 +113,14 @@ using System.Drawing;
             try
             {
                 String url = "";
-                String fileName = "Image";
+                String fileName = Guid.NewGuid().ToString();
 
-                System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\" + fileName);
+                System.IO.StreamWriter file = new System.IO.StreamWriter(GetWebsitePath() + fileName);
                 file.Write(data);
 
                 file.Close();
 
-                url = String.Format("getImageURL.ashx?name={0}&width={1}&height={2}&crop={3}", fileName, width, height, crop);
+                url = GetURL() + String.Format("getImageURL.ashx?name={0}&width={1}&height={2}&crop={3}", fileName, width, height, crop);
 
                 return url;
             }
@@ -138,8 +130,9 @@ using System.Drawing;
             }
         }
 
-        public String GetWebsitePath(String root)
+        public String GetWebsitePath()
         {
+            String root = HttpContext.Current.Server.MapPath("");
             String[] url = root.Split('\\');
             String redirect = "";
             foreach (String item in url)
