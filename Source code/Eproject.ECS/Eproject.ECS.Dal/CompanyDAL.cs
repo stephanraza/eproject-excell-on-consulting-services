@@ -206,17 +206,53 @@ namespace Eproject.ECS.Dal
         /// </summary>
         /// <param name="Company_Id"></param>
         /// <returns></returns>
-        public int Company_Check(string Company_Id)
+        public int Company_CheckName(string Company_Name)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("Company_Check", connection);
+                    SqlCommand command = new SqlCommand("Company_CheckName", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add("@Company_Id", SqlDbType.UniqueIdentifier);
-                    command.Parameters["@Company_Id"].Value = new Guid(Company_Id);
+                    command.Parameters.Add("@Company_Name", SqlDbType.NVarChar);
+                    command.Parameters["@Company_Name"].Value = Company_Name;
+                    connection.Open();
+
+                    IDataReader dataReader = command.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(dataReader);
+                    if (table.Rows.Count == 0)
+                        return 0;
+                    return table.Rows.Count;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+        /// <summary>
+        /// Check Mail
+        /// </summary>
+        /// <param name="Company_Email"></param>
+        /// <returns></returns>
+        public int Company_CheckEmail(string Company_Email)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Company_CheckEmail", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Company_Email", SqlDbType.NVarChar);
+                    command.Parameters["@Company_Email"].Value = Company_Email;
                     connection.Open();
 
                     IDataReader dataReader = command.ExecuteReader();

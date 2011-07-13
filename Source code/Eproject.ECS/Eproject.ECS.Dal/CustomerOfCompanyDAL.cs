@@ -253,5 +253,38 @@ namespace Eproject.ECS.Dal
                 }
             }
         }
+
+        public DataRow CustomerOfCompany_ShowOne(string Customer_Id)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("CustomerOfCompany_ShowOne", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@Customer_Id", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@Customer_Id"].Value = new Guid(Customer_Id);
+                    connection.Open();
+
+                    IDataReader reader = command.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(reader);
+                    if (table.Rows.Count == 0)
+                        return null;
+                    DataRow row = table.Rows[0];
+                    return row;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+
     }
 }
