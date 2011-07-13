@@ -342,7 +342,7 @@ a:hover.icon-5	{
 	text-decoration: underline;
 	}
 .product-table	th	{
-	height: 50px;
+	height: 38px;
 	text-align: left;
 	}
 .product-table	.minwidth-1	{
@@ -657,6 +657,17 @@ a:hover.action-delete	{
 	padding: 6px 6px 0 6px;
 	width: 378px;
 	}
+.form-textarea1	{
+	background: url(../images/forms/form_textarea1.gif) no-repeat;
+	border: none;
+	color: #393939;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 97px;
+	overflow: auto;
+	padding: 6px 6px 0 6px;
+	width: 188px;
+	}
 #id-form td	{
 	padding: 0 0 10px 0;
 	}
@@ -857,7 +868,7 @@ font-family: Tahoma;
 	margin: 20px auto 0 auto;
 	width: 140px;
 	}
-.showhide-account	{
+.account	{
 	cursor: pointer;
 	display: block;
 	float: left;
@@ -1565,3 +1576,87 @@ a:hover.back-login	{
 	background: url(../images/login/submit_login.gif) no-repeat 0 -29px;
 	}
  
+ 
+ /*CUSTOMIZE--------------------------------------------------------------------------------*/
+ .content {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000;
+}
+.title {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #493E2B;
+}
+.form-change	{
+	background: url(../images/forms/form_change.png) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	height: 30px;
+	margin: 0 4px 0 0;
+	padding: 0;
+	text-indent: -3000px;
+	width: 80px;
+	}
+.form-reset-center	{
+	background: url(../images/forms/form_reset.gif) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	height: 30px;
+	margin: 0 4px 0 0;
+	padding: 0;
+	text-indent: -3000px;
+	width: 80px;
+	}
+.form-change-left	{
+	background: url(../images/forms/form_change.png) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	float:left;
+	height: 30px;
+	margin: 0 4px 0 0;
+	padding: 0;
+	text-indent: -3000px;
+	width: 80px;
+	}
+.form-cancel	{
+	background: url(../images/forms/form_cancel.gif) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	float:left;
+	height: 30px;
+	margin: 0 4px 0 0;
+	padding: 0;
+	text-indent: -3000px;
+	width: 80px;
+	}
+.th-label	{
+	line-height: 28px;
+	padding: 0 15px 10px 0;
+	text-align: left;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000;
+	}
+.inp-form-search	{
+	background: url(../images/forms/form_search.gif) right no-repeat;
+	border: none;
+	color: #393939;
+	height: 25px;
+	float:left;
+	padding: 6px 6px 0 6px;
+	width: 488px;
+	}
+.form-loading
+{
+	background: url(../images/other/loading.gif) no-repeat;
+	width: 32px;
+	height: 32px;
+	margin-left: 505px;
+	text-indent: -3000px;
+}

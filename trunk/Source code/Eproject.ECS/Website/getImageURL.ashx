@@ -9,65 +9,71 @@ public class getImageURL : System.Web.IHttpHandler {
     bool crop;
     
     public void ProcessRequest (System.Web.HttpContext context) {
-
-        String fileName;
-        if (context.Request.QueryString["name"] != null)
-            fileName = context.Request.QueryString["name"];
-        else
-            throw new ArgumentException("No parameter specified");
-
-        int width;
-        if (context.Request.QueryString["width"] != null)
-            width = Convert.ToInt32(context.Request.QueryString["width"]);
-        else
-            throw new ArgumentException("No parameter specified");
-
-        int height;
-        if (context.Request.QueryString["height"] != null)
-            height = Convert.ToInt32(context.Request.QueryString["height"]);
-        else
-            throw new ArgumentException("No parameter specified");
-
-        crop = true;
-        if (context.Request.QueryString["crop"] != null)
-            crop = Convert.ToBoolean(context.Request.QueryString["crop"]);
-
-        String filePath = @"C:\" + fileName;
-        String data = "";
-
-        if (File.Exists(filePath))
+        try
         {
-            StreamReader file = null;
-            try
+            String fileName;
+            if (context.Request.QueryString["name"] != null)
+                fileName = context.Request.QueryString["name"];
+            else
+                throw new ArgumentException("No parameter specified");
+
+            int width;
+            if (context.Request.QueryString["width"] != null)
+                width = Convert.ToInt32(context.Request.QueryString["width"]);
+            else
+                throw new ArgumentException("No parameter specified");
+
+            int height;
+            if (context.Request.QueryString["height"] != null)
+                height = Convert.ToInt32(context.Request.QueryString["height"]);
+            else
+                throw new ArgumentException("No parameter specified");
+
+            crop = true;
+            if (context.Request.QueryString["crop"] != null)
+                crop = Convert.ToBoolean(context.Request.QueryString["crop"]);
+
+            String filePath = WebHelper.Instance.GetWebsitePath() + fileName;
+            String data = "";
+
+            if (File.Exists(filePath))
             {
-                file = new StreamReader(filePath);
-                while (!file.EndOfStream)
+                StreamReader file = null;
+                try
                 {
-                    data += file.ReadToEnd();
+                    file = new StreamReader(filePath);
+                    while (!file.EndOfStream)
+                    {
+                        data += file.ReadToEnd();
+                    }
+                }
+                finally
+                {
+                    if (file != null)
+                    {
+                        file.Close();
+                        File.Delete(filePath);
+                    }
                 }
             }
-            finally
-            {
-                if (file != null)
-                {
-                    file.Close();
-                    File.Delete(filePath);
-                }
-            }
-        } 
-        
-        context.Response.ContentType = "image/png";
-        System.IO.Stream strm = ShowImage(data, width, height);
-        strm.Position = 0;
-        byte[] buffer = new byte[4096];
-        int byteSeq = strm.Read(buffer, 0, 4096);
 
-        while (byteSeq > 0)
-        {
-            context.Response.OutputStream.Write(buffer, 0, byteSeq);
-            byteSeq = strm.Read(buffer, 0, 4096);
+            context.Response.ContentType = "image/png";
+            System.IO.Stream strm = ShowImage(data, width, height);
+            strm.Position = 0;
+            byte[] buffer = new byte[4096];
+            int byteSeq = strm.Read(buffer, 0, 4096);
+
+            while (byteSeq > 0)
+            {
+                context.Response.OutputStream.Write(buffer, 0, byteSeq);
+                byteSeq = strm.Read(buffer, 0, 4096);
+            }
+            //context.Response.BinaryWrite(buffer);
         }
-        //context.Response.BinaryWrite(buffer);
+        catch (Exception ex)
+        { 
+            
+        }
     }
 
     public System.IO.Stream ShowImage(String data, int width, int height)

@@ -40,6 +40,14 @@ public static class RouteCollectionExtensions
         route.Add(routeName, item);
         return item;
     }
+
+    public static System.Web.Routing.RouteData RouteData
+    {
+        get
+        {
+            return HttpContext.Current.Items["RouteData"] as System.Web.Routing.RouteData;
+        }
+    }
 }
  
 public class RouteHandler : IRouteHandler
