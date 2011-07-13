@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="CreateDealer.aspx.cs" Inherits="Administrator_CreateDealer" Title="Untitled Page" %>
+    CodeFile="CreateCompany.aspx.cs" Inherits="ServiceEmployee_CreateCompany" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <title>Excell-on Consulting Services</title>
@@ -25,7 +25,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            CREATE PROFILE</h1>
+            CREATE COMPANY</h1>
     </div>
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
         <tr>
@@ -154,26 +154,25 @@
                                 <table border="0" cellpadding="0" cellspacing="0" id="id-form">
                                     <tr>
                                         <th valign="top">
-                                            Dealer Name :
+                                            Name :
                                         </th>
                                         <td>
-                                            <asp:TextBox ID="txtName" runat="server" CssClass="inp-form"></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" CssClass="inp-form" ValidationGroup="9"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtName"
-                                                Display="Dynamic" ErrorMessage="Name is required."></asp:RequiredFieldValidator>
+                                                Display="Dynamic" ErrorMessage="Name is required." ValidationGroup="9"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th valign="top">
-                                            Phone Number :
+                                            Description :
                                         </th>
                                         <td>
-                                            <asp:TextBox ID="txtPhoneNumber" runat="server" CssClass="inp-form"></asp:TextBox>
+                                            <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" CssClass="form-textarea"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtPhoneNumber"
-                                                ErrorMessage="Phone number is invalid." ValidationExpression="^[0-9]{6,15}"></asp:RegularExpressionValidator>
+                                            &nbsp;
                                         </td>
                                     </tr>
                                     <tr>
@@ -188,29 +187,43 @@
                                     </tr>
                                     <tr>
                                         <th valign="top">
-                                            Email :
+                                            Phone Number :
                                         </th>
                                         <td>
-                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="inp-form"></asp:TextBox>
+                                            <asp:TextBox ID="txtPhoneNumber" runat="server" CssClass="inp-form" ValidationGroup="9"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmail"
-                                                Display="Dynamic" ErrorMessage="Email is required."></asp:RequiredFieldValidator>
-                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Email is invalid."
-                                                ControlToValidate="txtEmail" Display="Dynamic" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtPhoneNumber"
+                                                ErrorMessage="Phone number is invalid." ValidationExpression="^[0-9]{6,15}" ValidationGroup="9"></asp:RegularExpressionValidator>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th valign="top">
-                                            Company:
+                                            Email :
                                         </th>
                                         <td>
-                                            <div class="inp-form">
-                                                <asp:DropDownList ID="ddlCompany" CssClass="styledselect_form" runat="server">
-                                                </asp:DropDownList>
-                                            </div>
+                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="inp-form" ValidationGroup="9"></asp:TextBox>
                                         </td>
                                         <td>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmail"
+                                                Display="Dynamic" ErrorMessage="Email is required." ValidationGroup="9"></asp:RequiredFieldValidator>
+                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Email is invalid."
+                                                ControlToValidate="txtEmail" Display="Dynamic" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+                                                ValidationGroup="9"></asp:RegularExpressionValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th valign="top">
+                                            Logo :
+                                        </th>
+                                        <td>
+                                            <asp:FileUpload ID="fuLogo" runat="server" />
+                                        </td>
+                                        <td>
+                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="fuLogo"
+                                                Display="Dynamic" ErrorMessage="Your file is not invalid. It only supports image type."
+                                                ValidationExpression="^.+\.(([jJ][pP][eE]?[gG])|([gG][iI][fF])|([pP][nN][gG])|([bB][mM][pP])|([iI][cC][oO]))$"
+                                                ValidationGroup="9"></asp:RegularExpressionValidator>
                                         </td>
                                     </tr>
                                     <tr>
@@ -218,7 +231,8 @@
                                             &nbsp;
                                         </th>
                                         <td valign="top">
-                                            <asp:Button ID="btnSubmit" runat="server" Text="" CssClass="form-submit" OnClick="btnSubmit_Click" />
+                                            <asp:Button ID="btnSubmit" runat="server" Text="" CssClass="form-submit" OnClick="btnSubmit_Click"
+                                                ValidationGroup="9" />
                                             <input id="btnReset" type="button" value="Reset" onclick='reset();' class="form-reset" />
                                         </td>
                                         <td>
@@ -254,28 +268,28 @@
                                                             alt="" /></a></div>
                                                 <div class="right">
                                                     <h5>
-                                                        Profile</h5>
+                                                        Company</h5>
                                                     <table style="width: 100%;">
                                                         <tr>
                                                             <td style="width: 40%;" valign="top">
-                                                                Dealer name
+                                                                Name
                                                             </td>
                                                             <td style="width: 5%;" valign="top">
                                                                 :
                                                             </td>
                                                             <td>
-                                                                <asp:Literal ID="ltrName" runat="server"></asp:Literal>
+                                                                <asp:Literal ID="ltrName" runat="server" Text=""></asp:Literal>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top">
-                                                                Phone number
+                                                                Description
                                                             </td>
                                                             <td valign="top">
                                                                 :
                                                             </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrPhoneNumber" runat="server"></asp:Literal>
+                                                            <td>
+                                                                <asp:Literal ID="ltrDescription" runat="server" Text=""></asp:Literal>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -286,7 +300,18 @@
                                                                 :
                                                             </td>
                                                             <td valign="top">
-                                                                <asp:Literal ID="ltrAddress" runat="server"></asp:Literal>
+                                                                <asp:Literal ID="ltrAddress" runat="server" Text=""></asp:Literal>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top">
+                                                                Phone number
+                                                            </td>
+                                                            <td valign="top">
+                                                                :
+                                                            </td>
+                                                            <td valign="top">
+                                                                <asp:Literal ID="ltrPhone" runat="server" Text=""></asp:Literal>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -297,54 +322,18 @@
                                                                 :
                                                             </td>
                                                             <td valign="top">
-                                                                <asp:Literal ID="ltrEmail" runat="server"></asp:Literal>
+                                                                <asp:Literal ID="ltrEmail" runat="server" Text=""></asp:Literal>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                     <br />
                                                     <ul class="greyarrow">
-                                                        <li><a href="">Click here modify profile</a> </li>
+                                                        <li><a href="">Click here modify company</a> </li>
                                                     </ul>
                                                 </div>
                                                 <div class="clear">
                                                 </div>
                                                 <div class="lines-dotted-short">
-                                                </div>
-                                                <div class="left">
-                                                    <a href="">
-                                                        <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21"
-                                                            alt="" /></a></div>
-                                                <div class="right">
-                                                    <h5>
-                                                        Dealer</h5>
-                                                    <table style="width: 100%;">
-                                                        <tr>
-                                                            <td style="width: 40%;" valign="top">
-                                                                Name
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrCompanyName" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top">
-                                                                Description
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrDescription" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <br />
-                                                    <ul class="greyarrow">
-                                                        <li><a href="">Click here modify department</a> </li>
-                                                    </ul>
                                                 </div>
                                                 <div class="clear">
                                                 </div>
