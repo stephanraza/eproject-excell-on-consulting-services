@@ -62,7 +62,7 @@ namespace Eproject.ECS.Dal
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("Category_Update", connection);
+                    SqlCommand command = new SqlCommand("Company_Update", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@Company_Id", SqlDbType.UniqueIdentifier);
@@ -100,7 +100,7 @@ namespace Eproject.ECS.Dal
         /// Get a DataTable
         /// </summary>
         /// <returns></returns>
-        public DataTable Company_ShowAllDisplay()
+        public DataTable Company_ShowAllDisplay(string SearchKey)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -108,6 +108,8 @@ namespace Eproject.ECS.Dal
                 {
                     SqlCommand command = new SqlCommand("Company_ShowAllDisplay", connection);
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@SearchKey", SqlDbType.NVarChar);
+                    command.Parameters["@SearchKey"].Value = SearchKey;
 
                     connection.Open();
                     IDataReader dataReader = command.ExecuteReader();
@@ -166,12 +168,49 @@ namespace Eproject.ECS.Dal
             }
         }
         /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="Company_Id"></param>
+        /// <returns></returns>
+        public DataTable Company_ShowOnewDisplayForm(string Company_Id)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Company_ShowOnewDisplayForm", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Company_Id", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@Company_Id"].Value = new Guid(Company_Id);
+                    connection.Open();
+
+                    IDataReader reader = command.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(reader);
+                    if (table.Rows.Count == 0)
+                        return null;
+
+                    return table;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+        /// <summary>
         /// Update Isdelete
         /// </summary>
         /// <param name="Company_Id"></param>
         /// <param name="Company_IsDelete"></param>
         /// <returns></returns>
-        public int Company_UpdateStatus(string Company_Id, bool Company_IsDelete)
+        public int Company_UpdateStatus(string Company_Id)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -181,9 +220,7 @@ namespace Eproject.ECS.Dal
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@Company_Id", SqlDbType.UniqueIdentifier);
-                    command.Parameters["@Company_Id"].Value = new Guid(Company_Id);
-                    command.Parameters.Add("@Company_IsDelete", SqlDbType.Bit);
-                    command.Parameters["@Company_IsDelete"].Value = Company_IsDelete;
+                    command.Parameters["@Company_Id"].Value = new Guid(Company_Id);                    
 
                     connection.Open();
 
@@ -296,6 +333,66 @@ namespace Eproject.ECS.Dal
                 {
 
                     throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+
+            }
+        }
+
+        public DataTable Company_ShowAllDisplayRemove(string SearchKey)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Company_ShowAllDisplayRemove", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@SearchKey", SqlDbType.NVarChar);
+                    command.Parameters["@SearchKey"].Value = SearchKey;
+
+                    connection.Open();
+                    IDataReader dataReader = command.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(dataReader);
+                    if (table.Rows.Count == 0)
+                        return null;
+                    return table;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+
+        public int Company_UpdateStatusRemove(string Company_Id)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Company_UpdateStatusRemove", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Company_Id", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@Company_Id"].Value = new Guid(Company_Id);
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                    throw new Exception(ex.Message);
                 }
                 finally
                 {

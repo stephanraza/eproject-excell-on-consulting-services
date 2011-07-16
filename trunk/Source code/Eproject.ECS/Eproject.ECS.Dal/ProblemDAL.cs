@@ -24,7 +24,7 @@ namespace Eproject.ECS.Dal
                 try
                 {
                     command.Parameters.Add(new SqlParameter("@Problem_Id", SqlDbType.UniqueIdentifier));
-                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;                                       
+                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;
                     command.Parameters.Add(new SqlParameter("@Problem_Title", SqlDbType.NVarChar));
                     command.Parameters["@Problem_Title"].Value = entity.Problem_Title;
                     command.Parameters.Add(new SqlParameter("@Problem_Content", SqlDbType.NVarChar));
@@ -50,12 +50,16 @@ namespace Eproject.ECS.Dal
         /// get all rows
         /// </summary>
         /// <returns></returns>
-        public DataTable Problem_ShowAllDisplay()
+        public DataTable Problem_ShowAllDisplay(string KeyWord)
         {
             using (SqlConnection conn = new SqlConnection(AppConfiguration.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("Problem_ShowAllDisplay", conn);
                 command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@SearchKey", SqlDbType.NVarChar));
+                command.Parameters["@SearchKey"].Value = KeyWord;
+
                 conn.Open();
                 DataTable table = new DataTable();
                 table.Load(command.ExecuteReader());
@@ -77,7 +81,7 @@ namespace Eproject.ECS.Dal
                 try
                 {
                     command.Parameters.Add(new SqlParameter("@Problem_Id", SqlDbType.UniqueIdentifier));
-                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;                                       
+                    command.Parameters["@Problem_Id"].Value = entity.Problem_Id;
                     command.Parameters.Add(new SqlParameter("@Problem_Title", SqlDbType.NVarChar));
                     command.Parameters["@Problem_Title"].Value = entity.Problem_Title;
                     command.Parameters.Add(new SqlParameter("@Problem_Content", SqlDbType.NVarChar));
@@ -107,7 +111,7 @@ namespace Eproject.ECS.Dal
         /// <param name="Problem_Id"></param>
         /// <param name="Problem_IsDelete"></param>
         /// <returns></returns>
-        public int Problem_UpdateStatus(string Problem_Id, bool Problem_IsDelete)
+        public int Problem_UpdateStatus(string Problem_Id)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -117,9 +121,7 @@ namespace Eproject.ECS.Dal
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@Problem_Id", SqlDbType.UniqueIdentifier);
-                    command.Parameters["@Problem_Id"].Value = new Guid(Problem_Id);
-                    command.Parameters.Add("@Problem_IsDelete", SqlDbType.Bit);
-                    command.Parameters["@Problem_IsDelete"].Value = Problem_IsDelete;
+                    command.Parameters["@Problem_Id"].Value = new Guid(Problem_Id);                   
 
                     connection.Open();
 
@@ -173,7 +175,7 @@ namespace Eproject.ECS.Dal
         /// </summary>
         /// <param name="Problem_Id"></param>
         /// <returns></returns>
-        public DataRow Problem_ShowOnewDisplay(string Problem_Id)
+        public DataTable Problem_ShowOnewDisplay(string Problem_Id)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -190,9 +192,8 @@ namespace Eproject.ECS.Dal
                     DataTable table = new DataTable();
                     table.Load(reader);
                     if (table.Rows.Count == 0)
-                        return null;
-                    DataRow row = table.Rows[0];
-                    return row;
+                        return null;                    
+                    return table;
                 }
                 catch (Exception)
                 {
@@ -240,6 +241,51 @@ namespace Eproject.ECS.Dal
                     connection.Dispose();
                 }
             }
+        }
+
+        public int Problem_DeleteRemove(string Problem_Id)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Problem_DeleteRemove", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Problem_Id", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@Problem_Id"].Value = new Guid(Problem_Id);
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+
+            }
+        }
+
+        public DataTable Problem_ShowAllDisplayRemove(string KeyWord)
+        {
+            using (SqlConnection conn = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                SqlCommand command = new SqlCommand("Problem_ShowAllDisplayRemove", conn);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@SearchKey", SqlDbType.NVarChar));
+                command.Parameters["@SearchKey"].Value = KeyWord;
+
+                conn.Open();
+                DataTable table = new DataTable();
+                table.Load(command.ExecuteReader());
+                return table;
+            }
+
         }
     }
 }
