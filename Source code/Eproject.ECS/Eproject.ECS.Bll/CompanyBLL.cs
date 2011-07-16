@@ -36,9 +36,9 @@ namespace Eproject.ECS.Bll
         /// Get a DataTable
         /// </summary>
         /// <returns></returns>
-        public DataTable Company_ShowAllDisplay()
+        public DataTable Company_ShowAllDisplay(string SearchKey)
         {
-            return companyDal.Company_ShowAllDisplay();
+            return companyDal.Company_ShowAllDisplay(SearchKey);
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Eproject.ECS.Bll
         /// <param name="Company_Id"></param>
         /// <param name="Company_IsDelete"></param>
         /// <returns></returns>
-        public int Company_UpdateStatus(string Company_Id, bool Company_IsDelete)
+        public int Company_UpdateStatus(string Company_Id)
         {
-            return companyDal.Company_UpdateStatus(Company_Id, Company_IsDelete);
+            return companyDal.Company_UpdateStatus(Company_Id);
         }
 
         /// <summary>
@@ -86,9 +86,25 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="Company_Id"></param>
         /// <returns></returns>
-        public int Company_Delete(string Company_Id)
+        public bool Company_Delete(string Company_Id)
         {
-            return companyDal.Company_Delete(Company_Id);
+            return companyDal.Company_Delete(Company_Id) > 0;
+
+        }
+
+        public DataTable Company_ShowOnewDisplayForm(string Company_Id)
+        {
+            return companyDal.Company_ShowOnewDisplayForm(Company_Id);
+        }
+
+        public DataTable Company_ShowAllDisplayRemove(string SearchKey)
+        {
+            return companyDal.Company_ShowAllDisplayRemove(SearchKey);
+        }
+
+        public bool Company_UpdateStatusRemove(string Company_Id)
+        {
+            return companyDal.Company_UpdateStatusRemove(Company_Id) > 0;
         }
     }
 }
