@@ -44,7 +44,7 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
             ddlCategory.Items.Add(item);
         }
 
-        DataTable dataTable = companyBll.Company_ShowAllDisplay();
+        DataTable dataTable = companyBll.Company_ShowAllDisplay("");
         ddlCompany.Items.Clear();
         // ddlCategory.Items.Add("New category");
         for (int i = 0; i < dataTable.Rows.Count; i++)
@@ -125,7 +125,7 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
         }
         else
         {
-            filePath = WebHelper.Instance.GetWebsitePath(Server.MapPath("")) + "App_Themes/images/other/no_image.png";
+            filePath = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/no_image.png";
             image = System.Drawing.Image.FromFile(filePath);
         }
         String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);

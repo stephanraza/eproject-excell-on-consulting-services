@@ -59,33 +59,24 @@
                                     <td>
                                         <!--  start step-holder -->
                                         <div id="step-holder">
-                                            <div class="step-no">
-                                                1</div>
-                                            <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
-                                            <div class="step-dark-right">
-                                                &nbsp;</div>
-                                            <div class="step-no-off">
-                                                2</div>
-                                            <div class="step-light-left">
-                                                <a href="">Manage employees</a></div>
-                                            <div class="step-light-right">
-                                                &nbsp;</div>
-                                            <div class="step-no-off">
-                                                3</div>
-                                            <div class="step-light-left">
-                                                <a href="">Modify details</a></div>
-                                            <div class="step-light-right">
-                                                &nbsp;</div>
-                                            <div class="step-no-off">
-                                                4</div>
-                                            <div class="step-light-left">
-                                                <a href="">Trash</a></div>
-                                            <div class="step-light-round">
-                                                &nbsp;</div>
-                                            <div class="clear">
-                                            </div>
-                                        </div>
+			                                <div class="step-no">1</div>
+			                                <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Create">
+                                                Create details</a></div>
+			                                <div class="step-dark-right">&nbsp;</div>
+			                                <div class="step-no-off">2</div>
+			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Manage">
+                                                Manage employees</a></div>
+			                                <div class="step-light-right">&nbsp;</div>
+			                                <div class="step-no-off">3</div>
+			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Modify">
+                                                Modify details</a></div>
+			                                <div class="step-light-right">&nbsp;</div>
+			                                <div class="step-no-off">4</div>
+			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Trash">
+                                                Trash</a></div>
+			                                <div class="step-light-round">&nbsp;</div>
+			                                <div class="clear"></div>
+		                                </div>
                                         <!--  end step-holder -->
                                         <!--  start message-yellow -->
                                         <asp:Panel ID="pnlYellow" runat="server" Visible="false">

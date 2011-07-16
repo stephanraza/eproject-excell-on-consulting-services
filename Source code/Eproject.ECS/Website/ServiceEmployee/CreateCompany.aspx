@@ -3,17 +3,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <title>Excell-on Consulting Services</title>
-    <%--<script type="text/javascript" language="javascript">
-        function reset()
-        {
-            document.getElementById(<%=ddlEmployeeEmail.ClientID %>).options(0).selected = true;
-            document.<%=Form.ClientID %>.<%=txtUserName.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtConfirmPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=ckbDefaultPassword.ClientID %>.checked = false;
-            document.getElementById(<%=ddlRole.ClientID %>).options(0).selected = true;
-        }
-    </script>--%>
     <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
         rel="stylesheet" type="text/css" />
 
@@ -59,25 +48,25 @@
                                     <div class="step-no">
                                         1</div>
                                     <div class="step-dark-left">
-                                        <a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Company/Create">Create details</a></div>
                                     <div class="step-dark-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         2</div>
                                     <div class="step-light-left">
-                                        <a href="">Manage employees</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Company/Manage">Manage companies</a></div>
                                     <div class="step-light-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         3</div>
                                     <div class="step-light-left">
-                                        <a href="">Modify details</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Company/Modify">Modify details</a></div>
                                     <div class="step-light-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         4</div>
                                     <div class="step-light-left">
-                                        <a href="">Trash</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Company/Trash">Trash</a></div>
                                     <div class="step-light-round">
                                         &nbsp;</div>
                                     <div class="clear">

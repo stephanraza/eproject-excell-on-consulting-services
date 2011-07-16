@@ -61,7 +61,7 @@ public partial class ServiceEmployee_CreateProblem : System.Web.UI.Page
             ddlCustomer.Items.Add(item);
         }
 
-        DataTable dataTable = company.Company_ShowAllDisplay();
+        DataTable dataTable = company.Company_ShowAllDisplay("");
         ddlCompany.Items.Clear();
         for (int i = 0; i < dataTable.Rows.Count; i++)
         {
@@ -137,19 +137,21 @@ public partial class ServiceEmployee_CreateProblem : System.Web.UI.Page
 
         if (customerOfCompanyBll.CustomerOfCompany_Check(problemOfCustomer.Company_Id.ToString(), problemOfCustomer.Customer_Id.ToString()))
         {
-            pnlRed.Visible = true;
-            lblError.Text = "Da ton tai";
-            return;
+            pnlRed.Visible = false;
+            pnlGreen.Visible = true;
+            lblSuccess.Text = "Create successfully!";
+            BindDataDropDownList();
         }
         CustomerOfCompany customerOfCompany = new CustomerOfCompany();
         customerOfCompany.Customer_Id = problemOfCustomer.Customer_Id;
         customerOfCompany.Company_Id = problemOfCustomer.Company_Id;
-        if (!customerOfCompanyBll.CustomerOfCompany_Insert(customerOfCompany))
+        if (customerOfCompanyBll.CustomerOfCompany_Check(customerOfCompany.Company_Id.ToString(), customerOfCompany.Customer_Id.ToString()))
         {
             pnlRed.Visible = true;
             lblError.Text = "Do not Insert CustomerOfCompany";
             return;
         }
+        customerOfCompanyBll.CustomerOfCompany_Insert(customerOfCompany);      
         pnlRed.Visible = false;
         pnlGreen.Visible = true;
         lblSuccess.Text = "Create successfully!";
