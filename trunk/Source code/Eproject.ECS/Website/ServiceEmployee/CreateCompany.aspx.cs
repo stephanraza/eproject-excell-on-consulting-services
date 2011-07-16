@@ -45,7 +45,7 @@ public partial class ServiceEmployee_CreateCompany : System.Web.UI.Page
         }
         else
         {
-            filePath = WebHelper.Instance.GetWebsitePath(Server.MapPath("")) + "App_Themes/images/other/no_image.png";
+            filePath = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/no_image.png";
             image = System.Drawing.Image.FromFile(filePath);
         }
         String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);

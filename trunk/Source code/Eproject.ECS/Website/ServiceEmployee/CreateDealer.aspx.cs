@@ -77,7 +77,7 @@ public partial class Administrator_CreateDealer : System.Web.UI.Page
     protected void BindDataDropDownList()
     {
 
-        DataTable table = company.Company_ShowAllDisplay();
+        DataTable table = company.Company_ShowAllDisplay("");
         ddlCompany.Items.Clear();
         for (int i = 0; i < table.Rows.Count; i++)
         {
