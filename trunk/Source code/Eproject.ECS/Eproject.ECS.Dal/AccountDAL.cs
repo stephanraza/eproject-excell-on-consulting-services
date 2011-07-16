@@ -38,6 +38,15 @@ namespace Eproject.ECS.Dal
             return (Account)DBHelper.Instance.SelectFirst("Account", String.Format("Account_Id = '{0}'", accountId.ToString()));
         }
         /// <summary>
+        /// Get account by id.
+        /// </summary>
+        /// <param name="employeeId">Id of the account.</param>
+        /// <returns>Return an account if it exists, null otherwise.</returns>
+        public Account GetAccountOfEmployee(Guid employeeId)
+        {
+            return (Account)DBHelper.Instance.SelectFirst("Account", String.Format("Employee_Id = '{0}'", employeeId.ToString()));
+        }
+        /// <summary>
         /// Get list of accounts and its size that you could choose.
         /// </summary>
         /// <param name="pageIndex">Index of page.</param>
@@ -78,6 +87,35 @@ namespace Eproject.ECS.Dal
             return listAccount;
         }
         /// <summary>
+        /// Get accounts of employees.
+        /// </summary>
+        /// <returns>List of accounts.</returns>
+        public List<Account> GetAccountsOfEmployees(List<Employee> listEmployee)
+        {
+            String ids = "";
+            foreach (Employee item in listEmployee)
+            {
+                ids += "'";
+                ids += item.Employee_Id.ToString();
+                ids += "',";
+            }
+            ids = ids.Substring(0, ids.Length - 1);
+            String where = String.Format("Employee_Id IN ({0})", ids);
+
+            List<Account> listAccount = new List<Account>();
+            List<Object> listObj = DBHelper.Instance.Select("Account", where, null, -1, -1);
+
+            if (listObj.Count != 0)
+            {
+                foreach (Object item in listObj)
+                {
+                    Account acc = (Account)item;
+                    listAccount.Add(acc);
+                }
+            }
+            return listAccount;
+        }
+        /// <summary>
         /// Create new an account.
         /// </summary>
         /// <param name="account">Account that you want to create.</param>
@@ -100,9 +138,9 @@ namespace Eproject.ECS.Dal
         /// </summary>
         /// <param name="account">Account that you want to delete.</param>
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
-        public int DeleteAccount(Guid accountId)
+        public int DeleteAccount(Account account)
         {
-            return DBHelper.Instance.Delete("Account", String.Format("Account_Id = '{0}'", accountId.ToString()));
+            return DBHelper.Instance.Delete("Account", String.Format("Account_Id = '{0}'", account.Account_Id.ToString()));
         }
     }
 }

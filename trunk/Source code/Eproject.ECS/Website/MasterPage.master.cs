@@ -12,6 +12,7 @@ using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
 using Eproject.ECS.Entities;
 using Eproject.ECS.Bll;
+using System.IO;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -20,6 +21,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if (Request.Url.ToString().Contains(".aspx"))
         {
             Response.Redirect(WebHelper.Instance.GetURL() + "Login");
+        }
+    }
+    protected void LoginStatus_LoggedOut(object sender, EventArgs e)
+    {
+        DirectoryInfo di = new DirectoryInfo(WebHelper.Instance.GetWebsitePath() + @"Temp\");
+        foreach (FileInfo item in di.GetFiles())
+        {
+            item.Delete();
         }
     }
 }

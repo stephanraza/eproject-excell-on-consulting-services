@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ManageDepartment.aspx.cs" Inherits="HRManager_ManageDepartment" Title="Excell-on Consulting Services" %>
-<%@ Register src="~/Controls/PersonalInfoControl.ascx" tagname="PersonalInfoControl" tagprefix="ucPersonalInfoControl" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ManageOrder.aspx.cs" Inherits="ServiceEmployee_ManageOrder" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <!--[if IE]>
@@ -38,19 +37,19 @@
 		            <!--  start step-holder -->
 		            <div id="step-holder">
 			            <div class="step-no-off">1</div>
-			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Create">
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Order/Create">
                             Create details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no">2</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">
-                            Manage departments</a></div>
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageService/Order/Manage">
+                            Manage orders</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">3</div>
-			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Modify">
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Order/Modify">
                             Modify details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">4</div>
-			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Trash">
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Order/Trash">
                             Trash</a></div>
 			            <div class="step-light-round">&nbsp;</div>
 			            <div class="clear"></div>
@@ -146,39 +145,107 @@
                                 onrowdeleting="grvManage_RowDeleting" AllowSorting="True" 
                                 onsorting="grvManage_Sorting">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Department Id&lt;/a&gt;" 
-                                        HeaderStyle-CssClass="table-header-check" SortExpression="Department_Id"  
-                                        ItemStyle-Width="40%">
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Order Id&lt;/a&gt;" 
+                                        HeaderStyle-CssClass="table-header-check" SortExpression="OrderOfService_Id" >
                                        <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Department_Id") %>'></asp:Label>
+                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("OrderOfService_Id") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Department_Id") %>'></asp:Label>
+                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("OrderOfService_Id") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
-
-                                    <ItemStyle Width="40%"></ItemStyle>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" 
-                                        SortExpression="Department_Name">
+                                    </asp:TemplateField>                                    
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Company Name&lt;/a&gt;" 
+                                        SortExpression="Company_Name">
                                         <ItemTemplate>
-                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                            <asp:Label ID="Company_Name" runat="server" 
+                                                Text='<%# Eval("Company_Name") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
-                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                            <asp:Label ID="Company_Name" runat="server" 
+                                                Text='<%# Eval("Company_Name") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
-                                        <ItemStyle Width="20%" />
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" 
-                                        SortExpression="Department_Description">
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Employee Account&lt;/a&gt;" 
+                                        SortExpression="Account_UserName">
                                         <ItemTemplate>
-                                            <asp:Label ID="Label2" runat="server" 
-                                                Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                            <asp:Label ID="Account_UserName" runat="server" 
+                                                Text='<%# Eval("Account_UserName") %>'></asp:Label>
                                         </ItemTemplate>
                                         <AlternatingItemTemplate>
-                                            <asp:Label ID="Label2" runat="server" 
-                                                Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                            <asp:Label ID="Account_UserName" runat="server" 
+                                                Text='<%# Eval("Account_UserName") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Bill Date&lt;/a&gt;" 
+                                        SortExpression="OrderOfService_BillDate">
+                                        <ItemTemplate>
+                                            <asp:Label ID="OrderOfService_BillDate" runat="server" Text='<%# Eval("OrderOfService_BillDate") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="OrderOfService_BillDate" runat="server" Text='<%# Eval("OrderOfService_BillDate") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Payment Date&lt;/a&gt;" 
+                                        SortExpression="OrderOfService_PaymentDate">
+                                        <ItemTemplate>
+                                            <asp:Label ID="OrderOfService_PaymentDate" runat="server" 
+                                                Text='<%# Eval("OrderOfService_PaymentDate") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="OrderOfService_PaymentDate" runat="server" 
+                                                Text='<%# Eval("OrderOfService_PaymentDate") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Payment Method&lt;/a&gt;" 
+                                        SortExpression="OrderOfService_PaymentMethod">
+                                        <ItemTemplate>
+                                            <asp:Label ID="OrderOfService_PaymentMethod" runat="server" 
+                                                Text='<%# Eval("OrderOfService_PaymentMethod") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="OrderOfService_PaymentMethod" runat="server" 
+                                                Text='<%# Eval("OrderOfService_PaymentMethod") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Total Services&lt;/a&gt;" 
+                                        SortExpression="">
+                                        <ItemTemplate>
+                                            <asp:Label ID="Total_Service" runat="server" 
+                                                Text='<%# Eval("Total_Service") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="Total_Service" runat="server" 
+                                                Text='<%# Eval("Total_Service") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Total Charge&lt;/a&gt;" 
+                                        SortExpression="">
+                                        <ItemTemplate>
+                                            <asp:Label ID="Total_Charge" runat="server" 
+                                                Text='<%# Eval("Total_Charge") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="Total_Charge" runat="server" 
+                                                Text='<%# Eval("Total_Charge") %>'></asp:Label>
+                                        </AlternatingItemTemplate>
+                                        <HeaderStyle CssClass="table-header-repeat line-left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="&lt;a href&gt;Status&lt;/a&gt;" 
+                                        SortExpression="OrderOfService_Status">
+                                        <ItemTemplate>
+                                            <asp:Label ID="OrderOfService_Status" runat="server" 
+                                                Text='<%# Eval("OrderOfService_Status") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <AlternatingItemTemplate>
+                                            <asp:Label ID="OrderOfService_Status" runat="server" 
+                                                Text='<%# Eval("OrderOfService_Status") %>'></asp:Label>
                                         </AlternatingItemTemplate>
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                     </asp:TemplateField>
@@ -197,7 +264,7 @@
                     <tr>
                         <td colspan="2" style="padding-right: 10px;">
                             <!--  start paging..................................................... -->
-			                            <table border="0" cellpadding="0" cellspacing="0" id="paging-table">
+			                            <%--<table border="0" cellpadding="0" cellspacing="0" id="paging-table">
 			                                <tr>
 			                                    <td style="border:none">
                                                     <asp:ImageButton ID="imgbtnFirst" runat="server" CssClass="page-far-left" 
@@ -229,129 +296,8 @@
                                                 </div>
 			                                    </td>
 			                                </tr>
-			                            </table>
+			                            </table>--%>
 			                        <!--  end paging................ -->
-                        </td>
-                    </tr>                                    
-                    <tr>
-                        <td colspan="2" style="padding:10px">
-                            &nbsp;
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">                        
-                            <asp:FormView ID="frmManage" runat="server"
-                                DefaultMode="Insert" Width="90%" onmodechanging="frmManage_ModeChanging">
-                                <EditItemTemplate>
-                                <!-- START EDIT TEMPLATE -->   
-		                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form" width="100%">
-	                    <tr>
-	                        <td>
-		                    <div >
-                              <div style="margin:0px 100px 0px 100px">
-                                    
-                                  <div style="padding:5px; border:solid 1px #CCC;">
-	                              <div style="background:#ECECEC">
-	                                <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
-	                                  <tr>
-	                                    <td colspan="2" class="title" align="left" style="padding:10px 0px 10px 10px">
-                                            Department information<br />
-	                                      </td>
-                                      </tr>
-	                                  <tr>
-	                                    <td colspan="2" >
-	                                      <hr />
-	                                      <br />
-               	                          <p class="content" style="font-size:12px">- Change information of the department 
-                                              that is selected.</p></td>
-                                      </tr>
-	                                  <tr>
-	                                    <td align="center" class="content" colspan="2"><hr /></td>
-                                      </tr>
-	                                  <tr>
-	                                      <th align="right" class="content" style="text-align:right" valign="top" 
-                                              width="50%">
-                                              Department Name :</th>
-                                          <td align="left">
-                                              <asp:Label ID="Department_NameLabel" runat="server" CssClass="th-label" 
-                                                  Text='<%# Eval("Department_Name") %>'></asp:Label>
-                                          </td>
-                                          <tr>
-                                              <th align="right" class="content" style="text-align:right" valign="top" 
-                                                  width="50%">
-                                                  Description :</th>
-                                              <td align="left" valign="top">
-                                                  <asp:TextBox ID="Department_DescriptionTextBox" runat="server" 
-                                                      CssClass="form-textarea1" Text='<%# Eval("Department_Description") %>' 
-                                                      TextMode="MultiLine"></asp:TextBox>
-                                              </td>
-                                              <tr>
-                                                  <th>
-                                                      &nbsp;</th>
-                                                  <td align="center" class="content">
-                                                      <asp:Button ID="UpdateButton" runat="server" CssClass="form-change-left" 
-                                                          onclick="UpdateButton_Click" Text="" />
-                                                      <asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" 
-                                                          CommandName="Cancel" CssClass="form-cancel" Text="" />
-                                                  </td>
-                                              </tr>
-                                          </tr>
-	                                  </tr>
-                                    </table>
-                                  </div>
-                                  </div>
-                                </div>
-	                                        </div>
-                                            </td>
-                                        </tr>
-	                                </table>
-	                <!-- END EDIT TEMPLATE  -->
-                                </EditItemTemplate>
-                                <InsertItemTemplate>
-                                <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-		                            <tr>
-			                            <th valign="top">Department Name :</th>
-			                            <td>
-                                            <asp:TextBox ID="Department_NameTextBox" Text='<%# Eval("Department_Name") %>' runat="server" CssClass="inp-form"></asp:TextBox>
-                                            <br />
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                            ControlToValidate="Department_NameTextBox" Display="Dynamic" CssClass="content" Font-Size="12px"
-                                            ErrorMessage="Name of department is required."></asp:RequiredFieldValidator>
-                                        </td>
-			                            <td>&nbsp;</td>
-		                            </tr>
-		                            <tr>
-			                            <th valign="top">Description :</th>
-			                            <td><asp:TextBox ID="Department_DescriptionTextBox" runat="server" CssClass="form-textarea" Text='<%# Eval("Department_Description") %>'
-                                                TextMode="MultiLine"></asp:TextBox></td>
-			                            <td>
-                                        </td>
-		                            </tr>
-	                                <tr>
-		                                <th>&nbsp;</th>
-		                                <td valign="top">
-                                            <asp:Button ID="InsertButton" runat="server" Text="" CssClass="form-submit" 
-                                                onclick="InsertButton_Click" />
-                                            <asp:Button ID="InsertCancelButton" runat="server" Text="" CssClass="form-reset" CausesValidation="False" CommandName="Cancel"/>
-		                                </td>
-		                                <td></td>
-	                                </tr>
-	                            </table>
-                                </InsertItemTemplate>
-                                <ItemTemplate>
-                                    <%--Department_Name:
-                                    <asp:Label ID="Department_NameLabel" runat="server" 
-                                        Text='<%# Bind("Department_Name") %>' />
-                                    <br />
-                                    Department_Description:
-                                    <asp:Label ID="Department_DescriptionLabel" runat="server" 
-                                        Text='<%# Bind("Department_Description") %>' />
-                                    <br />--%>
-                                </ItemTemplate>
-                            </asp:FormView>
-                        
-                            
-                        
                         </td>
                     </tr>
                     </table>
@@ -361,9 +307,7 @@
 	                    
 	            </td>
 	            <td>
-                    <asp:Panel ID="pnlPersonalInfo" runat="server">
-                        <ucPersonalInfoControl:PersonalInfoControl ID="PersonalInfoControl" runat="server"/>
-                    </asp:Panel>
+                    
                 </td>
                 </tr>
                 <tr>

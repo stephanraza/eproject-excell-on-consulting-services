@@ -33,7 +33,7 @@ public class getImageURL : System.Web.IHttpHandler {
             if (context.Request.QueryString["crop"] != null)
                 crop = Convert.ToBoolean(context.Request.QueryString["crop"]);
 
-            String filePath = WebHelper.Instance.GetWebsitePath() + fileName;
+            String filePath = WebHelper.Instance.GetWebsitePath() + @"Temp\" + fileName;
             String data = "";
 
             if (File.Exists(filePath))

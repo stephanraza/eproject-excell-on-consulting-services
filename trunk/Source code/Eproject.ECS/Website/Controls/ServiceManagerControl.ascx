@@ -20,7 +20,7 @@
       } %>  
 	    <ul class="sub">
 		    <ucServiceEmployeeTag:ServiceEmployeeTag ID="ServiceEmployeeTag" runat="server" />
-		    <%if(urlString.Contains("Service"))
+		    <%if(urlString.Contains("/Service/"))
         {%>   
         <li class="sub_show">
         <%}else{%>

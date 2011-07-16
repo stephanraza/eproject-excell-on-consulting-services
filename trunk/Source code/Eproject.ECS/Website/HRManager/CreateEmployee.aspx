@@ -1,16 +1,13 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="CreateEmployee.aspx.cs" Inherits="HRManager_CreateEmployee" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <title>Excell-on Consulting Services</title>
-    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css" rel="stylesheet" type="text/css" />
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>    
+    <title>Excell-on Consulting Services</title>  
 	<script type="text/javascript">
 	$(function() {
 		$( "#<%=txtDOB.ClientID%>" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
-			yearRange: '1900:2011'
+			yearRange: '1960:2011'
 		});
 	});
 	</script>
@@ -42,17 +39,20 @@
 		            <!--  start step-holder -->
 		            <div id="step-holder">
 			            <div class="step-no">1</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Create">
                             Create details</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">2</div>
-			            <div class="step-light-left"><a href="">Manage employees</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Manage">
+                            Manage employees</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">3</div>
-			            <div class="step-light-left"><a href="">Modify details</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Modify">
+                            Modify details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">4</div>
-			            <div class="step-light-left"><a href="">Trash</a></div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Trash">
+                            Trash</a></div>
 			            <div class="step-light-round">&nbsp;</div>
 			            <div class="clear"></div>
 		            </div>
@@ -115,7 +115,7 @@
 				            </div>
 				        </asp:Panel>
 				        <!--  end message-green -->
-		            <!-- start id-form -->   
+		                <!-- start id-form -->   
 		                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 		                    <tr>
 			                    <th valign="top">First Name :</th>

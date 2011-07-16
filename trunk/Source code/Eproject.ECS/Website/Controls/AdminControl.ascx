@@ -21,7 +21,7 @@
     <%
       } %>    
 	    <ul class="sub">
-	    <%if(urlString.Contains("Account"))
+	    <%if(urlString.Contains("/Account/"))
         {%>   
         <li class="sub_show">
         <%}else{%>

@@ -7,24 +7,43 @@
     void RegisterRoutes(RouteCollection routes)
     {      
         routes.MapPageRoute("Default", "Login", "~/Default.aspx");
-        routes.MapPageRoute("MyAccount", "Account", "~/MyAccount.aspx");      
+        routes.MapPageRoute("MyAccount", "Account", "~/MyAccount.aspx"); 
+             
         routes.MapPageRoute("CreateAccount", "ManageSystem/Account/Create", "~/Administrator/CreateAccount.aspx");
         routes.MapPageRoute("ManageAccount", "ManageSystem/Account/Manage", "~/Administrator/ManageAccount.aspx");
         routes.MapPageRoute("ModifyAccount", "ManageSystem/Account/Modify/{id}", "~/Administrator/ModifyAccount.aspx",
             new RouteValueDictionary { { "id", "" }});
-        routes.MapPageRoute("CreateDeparment", "ManageSystem/Department/Create", "~/HRManager/CreateDepartment.aspx");
-        routes.MapPageRoute("ManageDeparment", "ManageSystem/Department/Manage", "~/HRManager/ManageDepartment.aspx");
+        
+        routes.MapPageRoute("CreateDepartment", "ManageSystem/Department/Create", "~/HRManager/CreateDepartment.aspx");
+        routes.MapPageRoute("ManageDepartment", "ManageSystem/Department/Manage", "~/HRManager/ManageDepartment.aspx");
+        routes.MapPageRoute("TrashDepartment", "ManageSystem/Department/Trash", "~/HRManager/TrashDepartment.aspx");
+        
         routes.MapPageRoute("CreateEmployee", "ManageSystem/Employee/Create", "~/HRManager/CreateEmployee.aspx");
-        routes.MapPageRoute("CreateCompany", "ManageService/Company/Create", "~/ServiceManager/CreateCompany.aspx");
-        routes.MapPageRoute("ManageCompany", "ManageService/Company/Manage", "~/ServiceManager/ManageCompany.aspx");
-        routes.MapPageRoute("CreateCustomer", "ManageService/Customer/Create", "~/ServiceManager/CreateCustomer.aspx");
-        routes.MapPageRoute("ManageCustomer", "ManageService/Customer/Manage", "~/ServiceManager/ManageCustomer.aspx");
-        routes.MapPageRoute("CreateDealer", "ManageService/Dealer/Create", "~/ServiceManager/CreateDealer.aspx");
-        routes.MapPageRoute("ManageDealer", "ManageService/Dealer/Manage", "~/ServiceManager/ManageDealer.aspx");
-        routes.MapPageRoute("CreateProduct", "ManageService/Product/Create", "~/ServiceManager/CreateProduct.aspx");
-        routes.MapPageRoute("ManageProduct", "ManageService/Product/Manage", "~/ServiceManager/ManageProduct.aspx");
-        routes.MapPageRoute("CreateProblem", "ManageService/Problem/Create", "~/ServiceManager/CreateProblem.aspx");
-        routes.MapPageRoute("ManageProblem", "ManageService/Problem/Manage", "~/ServiceManager/ManageProblem.aspx");
+        routes.MapPageRoute("ManageEmployee", "ManageSystem/Employee/Manage", "~/HRManager/ManageEmployee.aspx");
+        routes.MapPageRoute("TrashEmployee", "ManageSystem/Employee/Trash", "~/HRManager/TrashEmployee.aspx");
+
+        routes.MapPageRoute("CreateService", "ManageService/Service/Create", "~/ServiceManager/CreateService.aspx");
+        routes.MapPageRoute("ManageService", "ManageService/Service/Manage", "~/ServiceManager/ManageService.aspx");
+        routes.MapPageRoute("TrashService", "ManageService/Service/Trash", "~/ServiceManager/TrashService.aspx");
+
+        routes.MapPageRoute("CreateOrder", "ManageService/Order/Create", "~/ServiceEmployee/CreateOrder.aspx");
+        routes.MapPageRoute("ManageOrder", "ManageService/Order/Manage", "~/ServiceEmployee/ManageOrder.aspx");
+        routes.MapPageRoute("TrashOrder", "ManageService/Order/Trash", "~/ServiceEmployee/TrashOrder.aspx");
+        
+        routes.MapPageRoute("CreateCompany", "ManageService/Company/Create", "~/ServiceEmployee/CreateCompany.aspx");
+        routes.MapPageRoute("ManageCompany", "ManageService/Company/Manage", "~/ServiceEmployee/ManageCompany.aspx");
+        
+        routes.MapPageRoute("CreateCustomer", "ManageService/Customer/Create", "~/ServiceEmployee/CreateCustomer.aspx");
+        routes.MapPageRoute("ManageCustomer", "ManageService/Customer/Manage", "~/ServiceEmployee/ManageCustomer.aspx");
+        
+        routes.MapPageRoute("CreateDealer", "ManageService/Dealer/Create", "~/ServiceEmployee/CreateDealer.aspx");
+        routes.MapPageRoute("ManageDealer", "ManageService/Dealer/Manage", "~/ServiceEmployee/ManageDealer.aspx");
+        
+        routes.MapPageRoute("CreateProduct", "ManageService/Product/Create", "~/ServiceEmployee/CreateProduct.aspx");
+        routes.MapPageRoute("ManageProduct", "ManageService/Product/Manage", "~/ServiceEmployee/ManageProduct.aspx");
+        
+        routes.MapPageRoute("CreateProblem", "ManageService/Problem/Create", "~/ServiceEmployee/CreateProblem.aspx");
+        routes.MapPageRoute("ManageProblem", "ManageService/Problem/Manage", "~/ServiceEmployee/ManageProblem.aspx");
     }
 
     void Application_Start(object sender, EventArgs e)

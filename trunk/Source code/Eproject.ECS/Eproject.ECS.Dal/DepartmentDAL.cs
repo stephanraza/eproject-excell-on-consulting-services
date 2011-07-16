@@ -103,13 +103,18 @@ namespace Eproject.ECS.Dal
         /// Search departments by anything.
         /// </summary>
         /// <param name="content">Content for searching.</param>
-        /// <param name="pageIndex">Index of page.</param>
-        /// <param name="pageSize">Size of page.</param>
-        /// <returns>String to search.</returns>
-        public String Search(String content, int pageIndex, int pageSize, bool isDelete)
+        /// <returns>List of department.</returns>
+        public List<Department> Search(String content, bool isDelete)
         {
-            String sqlQuery = "SELECT Department_Id, Department_Name, Department_Description FROM Department WHERE Department_Name LIKE '%{0}%' OR Department_Description LIKE '%{0}%' AND Department_IsDelete = '{1}'";
-            return String.Format(sqlQuery, content, isDelete);
+            List<Department> listDepartment = new List<Department>();
+            List<Object> listObject = DBHelper.Instance.Select("Department", String.Format("(Department_Name LIKE N'%{0}%' OR Department_Description LIKE N'%{0}%') AND Department_IsDelete = '{1}'",content, isDelete), null, -1, -1);
+
+            foreach (Object item in listObject)
+            {
+                Department depratment = (Department)item;
+                listDepartment.Add(depratment);
+            }
+            return listDepartment;
         }
     }
 }

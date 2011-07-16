@@ -175,22 +175,137 @@ namespace Eproject.ECS.Bll
                 throw new Exception(ex.Message);
             }
         }
-
         /// <summary>
         /// Search departments by anything.
         /// </summary>
         /// <param name="content">Content for searching.</param>
-        /// <param name="pageIndex">Index of page.</param>
-        /// <param name="pageSize">Size of page.</param>
-        /// <returns>String to search.</returns>
-        public String SearchDepartment(String content, int pageIndex, int pageSize, bool isDelete)
+        /// <returns>List of department.</returns>
+        public List<Department> SearchDepartment(String content, bool isDelete)
         {
-            return DD.Search(content, pageIndex, pageSize, isDelete);
+            try
+            {
+                return DD.Search(content, isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<Department>();
+            }
         }
-
+        /// <summary>
+        /// Get all department.
+        /// </summary>
+        /// <param name="isDelete">True if department is deleted, false otherwise.</param>
+        /// <returns>List of department.</returns>
         public List<Department> GetDepartments(bool isDelete)
         {
-            return DD.GetDepartments(isDelete);
+            try
+            {
+                return DD.GetDepartments(isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<Department>();
+            }
+        }
+        /// <summary>
+        /// Get number of employees in department.
+        /// </summary>
+        /// <param name="departmentId">Id of the department.</param>
+        /// <param name="isDelete">True if list of employee is deleted, false otherwise.</param>
+        /// <returns>Number of employees.</returns>
+        public int GetNumberOfEmployees(Guid departmentId, bool isDelete)
+        {
+            EmployeeBusiness EB = new EmployeeBusiness();
+            List<Employee> listEmployee = EB.GetEmployees(departmentId, isDelete);
+            return listEmployee.Count;
+        }
+        /// <summary>
+        /// Delete permanently a department.
+        /// </summary>
+        /// <param name="departmentId">Id of the department that you want to delete.</param>
+        public void DeleteDepartment(Guid departmentId)
+        {
+            try
+            {
+                if (GetNumberOfEmployees(departmentId, false) == 0)
+                {
+                    EmployeeBusiness EB = new EmployeeBusiness();
+                    List<Employee> listEmployee = EB.GetEmployees(departmentId, true);
+                    if (listEmployee.Count > 0)
+                    {
+                        foreach (Employee item in listEmployee)
+                        {
+                            EB.DeleteEmployee(item.Employee_Id);
+                        }
+                    }
+
+                    Department department = DD.GetDepartment(departmentId);
+                    int result = DD.DeleteDepartment(department);
+                    if (result == -1)
+                    {
+                        throw new Exception("An error occurred while executing this operation.");
+                    }
+                }
+                else
+                {
+                    throw new Exception(String.Format("Remaining {0} employees in this department. You could not delete it.", GetNumberOfEmployees(departmentId,false)));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Remove an department to trash.
+        /// </summary>
+        /// <param name="departmentId">Id of the department that you want to remove.</param>
+        public void RemoveDepartment(Guid departmentId)
+        {
+            try
+            {
+                Department department = GetDepartment(departmentId);
+                int numberEmployee = GetNumberOfEmployees(departmentId, false);
+                if (numberEmployee == 0)
+                {
+                    department.Department_IsDelete = true;
+                    int result = DD.UpdateDepartment(department);
+                    if (result == -1)
+                    {
+                        throw new Exception("An error occurred while executing this operation.");
+                    }
+                }
+                else
+                {
+                    throw new Exception(String.Format("Remaining {0} employees in this department. You could not delete it.", numberEmployee));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Restore an department from trash.
+        /// </summary>
+        /// <param name="departmentId">Id of the department that you want to restore.</param>
+        public void RestoreDepartment(Guid departmentId)
+        {
+            try
+            {
+                Department department = GetDepartment(departmentId);
+                //Restore department first.
+                department.Department_IsDelete = false;
+                int result = DD.UpdateDepartment(department);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

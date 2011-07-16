@@ -33,8 +33,11 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
 
     private void loadData()
     {
-        List<Department> listDepartment = DB.GetDepartments(false);
+        List<Department> listDepartment = DB.SearchDepartment(txtSearch.Text.Trim(), false);
         grvManage.DataSource = listDepartment;
+        //lblCurrentPage.Text = grvManage.PageIndex.ToString();
+        //lblTotalPage.Text = grvManage.PageCount.ToString();
+        //grvManage.PageSize = Int32.Parse(ddlPagesize.SelectedValue);
         grvManage.DataBind();
     }
 
@@ -111,9 +114,10 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
         try
         {
             e.Cancel = true;
+            frmManage.ChangeMode(frmManage.DefaultMode);
             Label lblId = (Label)grvManage.Rows[e.RowIndex].FindControl("lblId");
 
-            DB.UpdateDepartment(new Guid(lblId.Text), null, null, true);
+            DB.RemoveDepartment((new Guid(lblId.Text)));
 
             pnlGreen.Visible = true;
             lblSuccess.Text = "A department has been removed successfully, this data could be restored from Trash.";
@@ -127,20 +131,76 @@ public partial class HRManager_ManageDepartment : System.Web.UI.Page
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        //System.Threading.Thread.Sleep(10000);
-
-        //grvManage.DataBind();
-        //if (grvManage.Rows.Count == 0)
-        //{
-        //    pnlRed.Visible = true;
-        //    lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
-        //}
-        //String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-        //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+        List<Department> listSearch = DB.SearchDepartment(txtSearch.Text.Trim(), false);
+        grvManage.DataSource = listSearch;
+        grvManage.DataBind();
+        if (grvManage.Rows.Count == 0)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
+        }
     }
     protected void frmManage_ModeChanging(object sender, FormViewModeEventArgs e)
     {
         e.Cancel = true;
         frmManage.ChangeMode(frmManage.DefaultMode);
+    }
+    protected void grvManage_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        List<Department> list = (List<Department>)grvManage.DataSource;
+        DataTable dataTable = BusinessHelper.GenericListToDataTable(list);
+
+        if (dataTable != null)
+        {
+            DataView dataView = new DataView(dataTable);
+            dataView.Sort = e.SortExpression + " " + ConvertSortDirectionToSql(e.SortDirection);
+
+            grvManage.DataSource = dataView;
+            grvManage.DataBind();
+        }
+    }
+
+    private string ConvertSortDirectionToSql(SortDirection sortDirection)
+    {
+        string newSortDirection = String.Empty;
+
+        switch (sortDirection)
+        {
+            case SortDirection.Ascending:
+                newSortDirection = "DESC";
+                break;
+
+            case SortDirection.Descending:
+                newSortDirection = "ASC";
+                break;
+        }
+
+        return newSortDirection;
+    }
+    protected void imgbtnFirst_Click(object sender, ImageClickEventArgs e)
+    {
+        grvManage.PageIndex = 0;
+        grvManage.DataBind();
+    }
+    protected void imgbtnLast_Click(object sender, ImageClickEventArgs e)
+    {
+        grvManage.PageIndex = grvManage.PageCount - 1;
+        grvManage.DataBind();
+    }
+    protected void imgbtnBack_Click(object sender, ImageClickEventArgs e)
+    {
+        if (grvManage.PageIndex > 0)
+        {
+            grvManage.PageIndex = grvManage.PageIndex - 1;
+            grvManage.DataBind();
+        }
+    }
+    protected void imgbtnNext_Click(object sender, ImageClickEventArgs e)
+    {
+        if (grvManage.PageIndex < grvManage.PageCount - 1)
+        {
+            grvManage.PageIndex = grvManage.PageIndex + 1;
+            grvManage.DataBind();
+        }
     }
 }
