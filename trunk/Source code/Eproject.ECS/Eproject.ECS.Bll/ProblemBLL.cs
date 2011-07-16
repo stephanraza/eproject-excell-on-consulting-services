@@ -26,9 +26,9 @@ namespace Eproject.ECS.Bll
         /// get all rows
         /// </summary>
         /// <returns></returns>
-        public DataTable Problem_ShowAllDisplay()
+        public DataTable Problem_ShowAllDisplay(string SearchKey)
         {
-            return problem.Problem_ShowAllDisplay();
+            return problem.Problem_ShowAllDisplay(SearchKey);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Eproject.ECS.Bll
         /// <param name="Problem_Id"></param>
         /// <param name="Problem_IsDelete"></param>
         /// <returns></returns>
-        public int Problem_UpdateStatus(string Problem_Id, bool Problem_IsDelete)
+        public int Problem_UpdateStatus(string Problem_Id)
         {
-            return problem.Problem_UpdateStatus(Problem_Id, Problem_IsDelete);
+            return problem.Problem_UpdateStatus(Problem_Id);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Eproject.ECS.Bll
         /// </summary>
         /// <param name="Problem_Id"></param>
         /// <returns></returns>
-        public DataRow Problem_ShowOnewDisplay(string Problem_Id)
+        public DataTable Problem_ShowOnewDisplay(string Problem_Id)
         {
             return problem.Problem_ShowOnewDisplay(Problem_Id);
         }
@@ -70,6 +70,21 @@ namespace Eproject.ECS.Bll
         public int Problem_Check(string Problem_Id)
         {
             return problem.Problem_Check(Problem_Id);
+        }
+
+        public bool Problem_Delete(string Problem_Id)
+        {
+            return problem.Problem_Delete(Problem_Id) > 0;
+        }
+
+        public bool Problem_DeleteRemove(string Problem_Id)
+        {
+            return problem.Problem_DeleteRemove(Problem_Id) > 0;
+        }
+
+        public DataTable Problem_ShowAllDisplayRemove(string KeyWord)
+        {
+            return problem.Problem_ShowAllDisplayRemove(KeyWord);
         }
     }
 }
