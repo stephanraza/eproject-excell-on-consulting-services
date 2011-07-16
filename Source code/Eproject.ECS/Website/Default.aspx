@@ -6,20 +6,14 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Excell-on Consulting Services</title>
-    <link rel="stylesheet" href="App_Themes/css/screen.css" type="text/css" media="screen" title="default" />
-    <!--  jquery core -->
-    <script src="App_Themes/js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
-
-    <!-- Custom jquery scripts -->
-    <script src="App_Themes/js/jquery/custom_jquery.js" type="text/javascript"></script>
-
-    <!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-    <script src="App_Themes/js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-    $(document).pngFix( );
-    });
-    </script>
+    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<%=ResolveUrl("~")%>App_Themes/css/screen.css" type="text/css" media="screen" title="default" />
+    <!--[if IE]>
+    <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
+    <![endif]-->
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery.min.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery/custom_jquery.js" type="text/javascript"></script>
 </head>
 <body id="login-bg">
     <form id="form1" runat="server">
@@ -40,7 +34,8 @@
 	    <!--  start login-inner -->
 	    <div id="login-inner">
             <asp:Login ID="frmLogin" runat="server" 
-                FailureText="Login was not successful. Please try again.">
+                FailureText="Login was not successful. Please try again." 
+                onloggedin="frmLogin_LoggedIn">
                 <LayoutTemplate>
                     <table border="0" cellpadding="0">
                         <tr>

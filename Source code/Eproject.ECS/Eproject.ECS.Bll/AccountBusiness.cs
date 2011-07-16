@@ -88,6 +88,38 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
+        /// Get an account's information.
+        /// </summary>
+        /// <param name="employeeId">Id of the employee.</param>
+        /// <returns>Return an account if it exists, null otherwise.</returns>
+        public Account GetAccountOfEmployee(Guid employeeId)
+        {
+            try
+            {
+                Account account = AD.GetAccountOfEmployee(employeeId);
+                return account;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get accounts of employees.
+        /// </summary>
+        /// <returns>List of accounts.</returns>
+        public List<Account> GetAccountsOfEmployees(List<Employee> listEmployee)
+        {
+            try
+            {
+                return AD.GetAccountsOfEmployees(listEmployee);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
         /// Create an new account.
         /// </summary>
         /// <param name="emId">Id of employee who use this account.</param>
@@ -148,7 +180,7 @@ namespace Eproject.ECS.Bll
         public void DeleteAccount(Guid accountId)
         {
             Account deleteAcc = GetAccount(accountId);
-            int result = AD.DeleteAccount(deleteAcc.Account_Id);
+            int result = AD.DeleteAccount(deleteAcc);
             if (result == -1)
             {
                 throw new Exception("An error occurred while executing this operation.");
@@ -161,7 +193,12 @@ namespace Eproject.ECS.Bll
         public void RemoveAccount(Guid accountId)
         {
             Account removeAcc = GetAccount(accountId);
-            UpdateAccount(removeAcc.Account_Id, removeAcc.Account_Password, removeAcc.Role_Name, removeAcc.Account_IsLocked, true);
+            removeAcc.Account_IsDelete = true;
+            int result = AD.UpdateAccount(removeAcc);
+            if (result == -1)
+            {
+                throw new Exception("An error occurred while executing this operation.");
+            }
         }
         /// <summary>
         /// Restore an account from trash.
@@ -170,7 +207,12 @@ namespace Eproject.ECS.Bll
         public void RestoreAccount(Guid accountId)
         {
             Account restoreAcc = GetAccount(accountId);
-            UpdateAccount(restoreAcc.Account_Id, restoreAcc.Account_Password, restoreAcc.Role_Name, restoreAcc.Account_IsLocked, false);
+            restoreAcc.Account_IsDelete = false;
+            int result = AD.UpdateAccount(restoreAcc);
+            if (result == -1)
+            {
+                throw new Exception("An error occurred while executing this operation.");
+            }
         }
         /// <summary>
         /// Lock an account.
@@ -179,7 +221,12 @@ namespace Eproject.ECS.Bll
         public void LockAccount(Guid accountId)
         {
             Account lockAcc = GetAccount(accountId);
-            UpdateAccount(lockAcc.Account_Id, lockAcc.Account_Password, lockAcc.Role_Name, true, lockAcc.Account_IsDelete);
+            lockAcc.Account_IsLocked = true;
+            int result = AD.UpdateAccount(lockAcc);
+            if (result == -1)
+            {
+                throw new Exception("An error occurred while executing this operation.");
+            }
         }
         /// <summary>
         /// Unlock an account.
@@ -188,7 +235,12 @@ namespace Eproject.ECS.Bll
         public void UnlockAccount(Guid accountId)
         {
             Account unlockAcc = GetAccount(accountId);
-            UpdateAccount(unlockAcc.Account_Id, unlockAcc.Account_Password, unlockAcc.Role_Name, false, unlockAcc.Account_IsDelete);
+            unlockAcc.Account_IsLocked = false;
+            int result = AD.UpdateAccount(unlockAcc);
+            if (result == -1)
+            {
+                throw new Exception("An error occurred while executing this operation.");
+            }
         }
 
         public void ChangePassword(String userName,String oldPass, String newPass)

@@ -17,14 +17,14 @@
     <%
       } %>  
 	    <ul class="sub">
-		    <%if(urlString.Contains("New"))
+		    <%if(urlString.Contains("/New/"))
         {%>   
         <li class="sub_show">
         <%}else{%>
         <li>
         <%
           } %><a href="<%=ResolveUrl("~")%>Manage/New/Create">News</a></li>
-		    <%if(urlString.Contains("Contact"))
+		    <%if(urlString.Contains("/Contact/"))
         {%>   
         <li class="sub_show">
         <%}else{%>

@@ -79,7 +79,6 @@
 			            <div class="step-light-round">&nbsp;</div>
 			            <div class="clear"></div>
 		            </div>
-		            </div>
 		            <!--  end step-holder -->
             	
     	        <!--  start message-yellow -->

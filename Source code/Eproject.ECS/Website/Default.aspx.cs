@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.IO;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -17,5 +18,13 @@ public partial class _Default : System.Web.UI.Page
     {
         if (Request.IsAuthenticated)
             Response.Redirect("Account");
+    }
+    protected void frmLogin_LoggedIn(object sender, EventArgs e)
+    {
+        DirectoryInfo di = new DirectoryInfo(WebHelper.Instance.GetWebsitePath() + @"Temp\");
+        foreach (FileInfo item in di.GetFiles())
+        {
+            item.Delete();
+        }
     }
 }

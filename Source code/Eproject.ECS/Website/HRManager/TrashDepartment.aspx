@@ -1,13 +1,14 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ManageDepartment.aspx.cs" Inherits="HRManager_ManageDepartment" Title="Excell-on Consulting Services" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TrashDepartment.aspx.cs" Inherits="HRManager_TrashDepartment" Title="Untitled Page" %>
 <%@ Register src="~/Controls/PersonalInfoControl.ascx" tagname="PersonalInfoControl" tagprefix="ucPersonalInfoControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <title>Excell-on Consulting Services</title>
     <!--[if IE]>
     <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
     <![endif]-->
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
-    <div id="page-heading"><h1>MANAGE DEPARTMENT INFORMATION</h1></div>
+<div id="page-heading"><h1>TRASH</h1></div>
 
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -41,18 +42,18 @@
 			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Create">
                             Create details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
-			            <div class="step-no">2</div>
-			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">
+			            <div class="step-no-off">2</div>
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">
                             Manage departments</a></div>
-			            <div class="step-dark-right">&nbsp;</div>
+			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">3</div>
 			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Modify">
                             Modify details</a></div>
 			            <div class="step-light-right">&nbsp;</div>
-			            <div class="step-no-off">4</div>
-			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Trash">
+			            <div class="step-no">4</div>
+			            <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Department/Trash">
                             Trash</a></div>
-			            <div class="step-light-round">&nbsp;</div>
+			            <div class="step-dark-round">&nbsp;</div>
 			            <div class="clear"></div>
 		            </div>
 		            <!--  end step-holder -->
@@ -183,9 +184,9 @@
                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                     </asp:TemplateField>
                                     <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" 
-                                        DeleteImageUrl="~/App_Themes/images/table/table_icon_remove.gif" 
+                                        DeleteImageUrl="~/App_Themes/images/table/table_icon_delete.gif" 
                                         HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
-                                        SelectImageUrl="~/App_Themes/images/table/table_icon_edit.gif" 
+                                        SelectImageUrl="~/App_Themes/images/table/table_icon_restore.gif" 
                                         ButtonType="Image" >
                                        <HeaderStyle CssClass="table-header-repeat line-left" />
                                     </asp:CommandField>
@@ -231,127 +232,6 @@
 			                                </tr>
 			                            </table>
 			                        <!--  end paging................ -->
-                        </td>
-                    </tr>                                    
-                    <tr>
-                        <td colspan="2" style="padding:10px">
-                            &nbsp;
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">                        
-                            <asp:FormView ID="frmManage" runat="server"
-                                DefaultMode="Insert" Width="90%" onmodechanging="frmManage_ModeChanging">
-                                <EditItemTemplate>
-                                <!-- START EDIT TEMPLATE -->   
-		                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form" width="100%">
-	                    <tr>
-	                        <td>
-		                    <div >
-                              <div style="margin:0px 100px 0px 100px">
-                                    
-                                  <div style="padding:5px; border:solid 1px #CCC;">
-	                              <div style="background:#ECECEC">
-	                                <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
-	                                  <tr>
-	                                    <td colspan="2" class="title" align="left" style="padding:10px 0px 10px 10px">
-                                            Department information<br />
-	                                      </td>
-                                      </tr>
-	                                  <tr>
-	                                    <td colspan="2" >
-	                                      <hr />
-	                                      <br />
-               	                          <p class="content" style="font-size:12px">- Change information of the department 
-                                              that is selected.</p></td>
-                                      </tr>
-	                                  <tr>
-	                                    <td align="center" class="content" colspan="2"><hr /></td>
-                                      </tr>
-	                                  <tr>
-	                                      <th align="right" class="content" style="text-align:right" valign="top" 
-                                              width="50%">
-                                              Department Name :</th>
-                                          <td align="left">
-                                              <asp:Label ID="Department_NameLabel" runat="server" CssClass="th-label" 
-                                                  Text='<%# Eval("Department_Name") %>'></asp:Label>
-                                          </td>
-                                          <tr>
-                                              <th align="right" class="content" style="text-align:right" valign="top" 
-                                                  width="50%">
-                                                  Description :</th>
-                                              <td align="left" valign="top">
-                                                  <asp:TextBox ID="Department_DescriptionTextBox" runat="server" 
-                                                      CssClass="form-textarea1" Text='<%# Eval("Department_Description") %>' 
-                                                      TextMode="MultiLine"></asp:TextBox>
-                                              </td>
-                                              <tr>
-                                                  <th>
-                                                      &nbsp;</th>
-                                                  <td align="center" class="content">
-                                                      <asp:Button ID="UpdateButton" runat="server" CssClass="form-change-left" 
-                                                          onclick="UpdateButton_Click" Text="" />
-                                                      <asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" 
-                                                          CommandName="Cancel" CssClass="form-cancel" Text="" />
-                                                  </td>
-                                              </tr>
-                                          </tr>
-	                                  </tr>
-                                    </table>
-                                  </div>
-                                  </div>
-                                </div>
-	                                        </div>
-                                            </td>
-                                        </tr>
-	                                </table>
-	                <!-- END EDIT TEMPLATE  -->
-                                </EditItemTemplate>
-                                <InsertItemTemplate>
-                                <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-		                            <tr>
-			                            <th valign="top">Department Name :</th>
-			                            <td>
-                                            <asp:TextBox ID="Department_NameTextBox" Text='<%# Eval("Department_Name") %>' runat="server" CssClass="inp-form"></asp:TextBox>
-                                            <br />
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                            ControlToValidate="Department_NameTextBox" Display="Dynamic" CssClass="content" Font-Size="12px"
-                                            ErrorMessage="Name of department is required."></asp:RequiredFieldValidator>
-                                        </td>
-			                            <td>&nbsp;</td>
-		                            </tr>
-		                            <tr>
-			                            <th valign="top">Description :</th>
-			                            <td><asp:TextBox ID="Department_DescriptionTextBox" runat="server" CssClass="form-textarea" Text='<%# Eval("Department_Description") %>'
-                                                TextMode="MultiLine"></asp:TextBox></td>
-			                            <td>
-                                        </td>
-		                            </tr>
-	                                <tr>
-		                                <th>&nbsp;</th>
-		                                <td valign="top">
-                                            <asp:Button ID="InsertButton" runat="server" Text="" CssClass="form-submit" 
-                                                onclick="InsertButton_Click" />
-                                            <asp:Button ID="InsertCancelButton" runat="server" Text="" CssClass="form-reset" CausesValidation="False" CommandName="Cancel"/>
-		                                </td>
-		                                <td></td>
-	                                </tr>
-	                            </table>
-                                </InsertItemTemplate>
-                                <ItemTemplate>
-                                    <%--Department_Name:
-                                    <asp:Label ID="Department_NameLabel" runat="server" 
-                                        Text='<%# Bind("Department_Name") %>' />
-                                    <br />
-                                    Department_Description:
-                                    <asp:Label ID="Department_DescriptionLabel" runat="server" 
-                                        Text='<%# Bind("Department_Description") %>' />
-                                    <br />--%>
-                                </ItemTemplate>
-                            </asp:FormView>
-                        
-                            
-                        
                         </td>
                     </tr>
                     </table>

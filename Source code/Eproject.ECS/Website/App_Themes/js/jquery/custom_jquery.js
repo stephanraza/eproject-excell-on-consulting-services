@@ -101,3 +101,11 @@ $(document).ready(function () {
     return confirm("Are you sure to remove this department ?");
 	});
 });
+
+$(document).ready(function () {
+    $( '.datePicker' ).datepicker({
+       changeMonth: true,
+       changeYear: true,
+      yearRange: '1960:2011'
+    });
+});

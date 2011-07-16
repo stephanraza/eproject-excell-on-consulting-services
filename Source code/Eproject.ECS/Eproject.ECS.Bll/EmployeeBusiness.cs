@@ -21,8 +21,6 @@ namespace Eproject.ECS.Bll
     public class EmployeeBusiness
     {
         EmployeeDAL ED = new EmployeeDAL();
-        DepartmentBusiness DB = new DepartmentBusiness();
-        AccountBusiness AB = new AccountBusiness();
         /// <summary>
         /// 
         /// </summary>
@@ -39,6 +37,7 @@ namespace Eproject.ECS.Bll
         {
             try
             {
+                DepartmentBusiness DB = new DepartmentBusiness();
                 Employee newEmployee = new Employee();
                 newEmployee.Employee_Id = employeeId;
                 newEmployee.Department_Id = DB.GetDepartment(departmentName, false).Department_Id;
@@ -88,7 +87,11 @@ namespace Eproject.ECS.Bll
                 return new List<String>();
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
         public Employee GetEmployee(Guid employeeId)
         {
             Employee employee = ED.GetEmployee(employeeId);
@@ -97,7 +100,11 @@ namespace Eproject.ECS.Bll
             else
                 throw new Exception(String.Format("This emloyee is not exists."));
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public Employee GetEmployee(String email)
         {
             Employee employee = ED.GetEmployee(email);
@@ -106,7 +113,11 @@ namespace Eproject.ECS.Bll
             else
                 throw new Exception(String.Format("Emloyee with email is '{0}' not found!"));
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public bool IsExist(String email)
         {
             try
@@ -121,11 +132,21 @@ namespace Eproject.ECS.Bll
                 return false;
             }
         }
-
-        public void UpdateEmployee(String userName, String fName, String lName, String email, String address, String phone, String gender, String dob, String data)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="address"></param>
+        /// <param name="phone"></param>
+        /// <param name="gender"></param>
+        /// <param name="dob"></param>
+        /// <param name="data"></param>
+        public void UpdateEmployee(Guid employeeId, String fName, String lName, String email, String address, String phone, String gender, String dob, String data)
         {
-            Account acc = AB.GetAccount(userName);
-            Employee employee = ED.GetEmployee(acc.Employee_Id);
+            Employee employee = ED.GetEmployee(employeeId);
 
             if (fName != null)
                 employee.Employee_FirtName = fName;
@@ -157,6 +178,117 @@ namespace Eproject.ECS.Bll
             if (result == -1)
             {
                 throw new Exception("An error occurred while executing this operation.");
+            }
+        }
+        /// <summary>
+        /// Get all employees in department.
+        /// </summary>
+        /// <returns>List of employees.</returns>
+        public List<Employee> GetEmployees(Guid departmentId, bool isDelete)
+        {
+            try
+            {
+                return ED.GetEmployees(departmentId.ToString(), isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<Employee>();
+            }
+        }
+        /// <summary>
+        /// Delete permanently an employee.
+        /// </summary>
+        /// <param name="emId">Id of the employee that you want to delete.</param>
+        public void DeleteEmployee(Guid emId)
+        {
+            try
+            {
+                Employee employee = ED.GetEmployee(emId);
+
+                // Delete account of this employee first.
+                AccountBusiness AB = new AccountBusiness();
+                Account account = AB.GetAccountOfEmployee(emId);
+                if (account != null)
+                    AB.DeleteAccount(account.Account_Id);
+
+                int result = ED.DeleteEmployee(employee);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Remove an employee to trash.
+        /// </summary>
+        /// <param name="employeeId">Id of the employee that you want to remove.</param>
+        public void RemoveEmployee(Guid employeeId)
+        {
+            try
+            {
+                Employee employee = GetEmployee(employeeId);
+                //Remove account first.
+                AccountBusiness AB = new AccountBusiness();
+                Account account = AB.GetAccountOfEmployee(employeeId);
+                if (account != null)
+                    AB.RemoveAccount(account.Account_Id);
+
+                employee.Employee_IsDelete = true;
+                int result = ED.UpdateEmployee(employee);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Restore an employee from trash.
+        /// </summary>
+        /// <param name="employeeId">Id of the employee that you want to restore.</param>
+        public void RestoreEmployee(Guid employeeId)
+        {
+            try
+            {
+                Employee employee = GetEmployee(employeeId);
+                employee.Employee_IsDelete = false;
+                int result = ED.UpdateEmployee(employee);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+                //Then restore account.
+                AccountBusiness AB = new AccountBusiness();
+                Account account = AB.GetAccountOfEmployee(employeeId);
+                if (account != null)
+                    AB.RestoreAccount(account.Account_Id);
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Search employees by anything.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <returns>List of employee.</returns>
+        public List<EmployeeOfDepartment> SearchEmployee(String content, bool isDelete)
+        {
+            try
+            {
+                return ED.Search(content, isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -235,7 +235,9 @@
 			    <div class="account">
                     <asp:ImageButton ID="imgbtnAccount" PostBackUrl="Account" CausesValidation="false" ImageUrl="~/App_Themes/images/shared/nav/nav_myaccount.gif" runat="server" /></div>
 			    <div class="nav-divider">&nbsp;</div>
-			    <asp:LoginStatus ID="LoginStatus" runat="server" LogoutText="" LogoutImageUrl="~/App_Themes/images/shared/nav/nav_logout.gif" CssClass="logout"/>
+			    <asp:LoginStatus ID="LoginStatus" runat="server" LogoutText="" 
+                    LogoutImageUrl="~/App_Themes/images/shared/nav/nav_logout.gif" 
+                    CssClass="logout" onloggedout="LoginStatus_LoggedOut"/>
                 <div class="clear">&nbsp;</div>
     		
 			    <!--  start account-content -->	
