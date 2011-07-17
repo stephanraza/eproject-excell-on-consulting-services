@@ -31,7 +31,7 @@ namespace Eproject.ECS.Bll
         {
             return companyDal.Company_Update(entity);
         }
-
+       
         /// <summary>
         /// Get a DataTable
         /// </summary>

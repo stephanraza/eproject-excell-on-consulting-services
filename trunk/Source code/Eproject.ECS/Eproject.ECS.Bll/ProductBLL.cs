@@ -16,9 +16,9 @@ namespace Eproject.ECS.Bll
         /// Show all 
         /// </summary>
         /// <returns></returns>
-        public DataTable Product_ShowAllDisplay()
+        public DataTable Product_ShowAllDisplay(string key)
         {
-            return entity.Product_ShowAllDisplay();
+            return entity.Product_ShowAllDisplay(key);
         }
         /// <summary>
         /// Add new a row
@@ -53,9 +53,9 @@ namespace Eproject.ECS.Bll
         /// <param name="Product_Id"></param>
         /// <param name="Product_IsDelete"></param>
         /// <returns></returns>
-        public int Product_UpdateStatus(string Product_Id, bool Product_IsDelete)
+        public int Product_UpdateStatus(string Product_Id)
         {
-            return entity.Product_UpdateStatus(Product_Id, Product_IsDelete);
+            return entity.Product_UpdateStatus(Product_Id);
         }
         /// <summary>
         /// Check Exsits of ID
@@ -75,6 +75,16 @@ namespace Eproject.ECS.Bll
         public DataRow Product_ShowOnewDisplay(string Product_Id)
         {
             return entity.Product_ShowOnewDisplay(Product_Id);
+        }
+
+        public bool Product_UpdateStatusRemove(string Product_Id)
+        {
+            return entity.Product_UpdateStatusRemove(Product_Id) > 0;
+        }
+
+        public DataTable Product_ShowAllDisplayRemove(string key)
+        {
+            return entity.Product_ShowAllDisplayRemove(key);
         }
     }
 }
