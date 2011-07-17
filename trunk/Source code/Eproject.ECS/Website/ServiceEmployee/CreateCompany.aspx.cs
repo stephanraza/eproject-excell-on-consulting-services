@@ -19,7 +19,13 @@ public partial class ServiceEmployee_CreateCompany : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
 
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     protected Company GetDataForm()
@@ -61,15 +67,14 @@ public partial class ServiceEmployee_CreateCompany : System.Web.UI.Page
         txtAddress.Text = "";
         txtDescription.Text = "";
     }
-
-    private void PreviewForm(Company company)
-    {
-        ltrName.Text = company.Company_Name;
-        ltrPhone.Text = company.Company_Phone;
-        ltrAddress.Text = company.Company_Address;
-        ltrEmail.Text = company.Company_Email;
-        ltrDescription.Text = company.Company_Description;
-    }
+    //private void PreviewForm(Company company)
+    //  {
+    //      ltrName.Text = company.Company_Name;
+    //      ltrPhone.Text = company.Company_Phone;
+    //      ltrAddress.Text = company.Company_Address;
+    //      ltrEmail.Text = company.Company_Email;
+    //      ltrDescription.Text = company.Company_Description;
+    //  }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -103,8 +108,8 @@ public partial class ServiceEmployee_CreateCompany : System.Web.UI.Page
         pnlRed.Visible = false;
         pnlGreen.Visible = true;
         lblSuccess.Text = "Create new a dealer successfully!";
-        pnlPreviewCustomer.Visible = true;
-        PreviewForm(entity);
+        //pnlPreviewCustomer.Visible = true;
+        //PreviewForm(entity);
         ResetForm();
     }
 }

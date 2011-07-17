@@ -1,31 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="CreateDealer.aspx.cs" Inherits="Administrator_CreateDealer" Title="Untitled Page" %>
+    CodeFile="CreateDealer.aspx.cs" Inherits="Administrator_CreateDealer" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Excell-on Consulting Services</title>
-    <%--<script type="text/javascript" language="javascript">
-        function reset()
-        {
-            document.getElementById(<%=ddlEmployeeEmail.ClientID %>).options(0).selected = true;
-            document.<%=Form.ClientID %>.<%=txtUserName.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtConfirmPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=ckbDefaultPassword.ClientID %>.checked = false;
-            document.getElementById(<%=ddlRole.ClientID %>).options(0).selected = true;
-        }
-    </script>--%>
-    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
-        rel="stylesheet" type="text/css" />
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            CREATE PROFILE</h1>
+            CREATE DEALER</h1>
     </div>
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
         <tr>
@@ -59,25 +40,25 @@
                                     <div class="step-no">
                                         1</div>
                                     <div class="step-dark-left">
-                                        <a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
+                                        <a href="<%=ResolveUrl("~")%>/ManageService/Dealer/Create">Create details</a></div>
                                     <div class="step-dark-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         2</div>
                                     <div class="step-light-left">
-                                        <a href="">Manage employees</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Dealer/Manage">Manage dealers</a></div>
                                     <div class="step-light-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         3</div>
                                     <div class="step-light-left">
-                                        <a href="">Modify details</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Dealer/Modify">Modify details</a></div>
                                     <div class="step-light-right">
                                         &nbsp;</div>
                                     <div class="step-no-off">
                                         4</div>
                                     <div class="step-light-left">
-                                        <a href="">Trash</a></div>
+                                        <a href="<%=ResolveUrl("~")%>ManageService/Dealer/Trash">Trash</a></div>
                                     <div class="step-light-round">
                                         &nbsp;</div>
                                     <div class="clear">
@@ -229,133 +210,7 @@
                             </td>
                             <td>
                                 <!--  start related-activities -->
-                                <asp:Panel ID="pnlPreviewCustomer" runat="server" Visible="false">
-                                    <div id="related-activities">
-                                        <!--  start related-act-top -->
-                                        <div id="related-act-top">
-                                            <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/header_preview_act.gif" width="271"
-                                                height="43" alt="" />
-                                        </div>
-                                        <!-- end related-act-top -->
-                                        <!--  start related-act-bottom -->
-                                        <div id="related-act-bottom">
-                                            <!--  start related-act-inner -->
-                                            <div id="related-act-inner">
-                                                <div style="text-align: center">
-                                                    <asp:ImageButton ID="imgAvatar" runat="server" /></div>
-                                                <br />
-                                                <div class="clear">
-                                                </div>
-                                                <div class="lines-dotted-short">
-                                                </div>
-                                                <div class="left">
-                                                    <a href="">
-                                                        <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21"
-                                                            alt="" /></a></div>
-                                                <div class="right">
-                                                    <h5>
-                                                        Profile</h5>
-                                                    <table style="width: 100%;">
-                                                        <tr>
-                                                            <td style="width: 40%;" valign="top">
-                                                                Dealer name
-                                                            </td>
-                                                            <td style="width: 5%;" valign="top">
-                                                                :
-                                                            </td>
-                                                            <td>
-                                                                <asp:Literal ID="ltrName" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top">
-                                                                Phone number
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrPhoneNumber" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top">
-                                                                Address
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrAddress" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top">
-                                                                Email
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrEmail" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <br />
-                                                    <ul class="greyarrow">
-                                                        <li><a href="">Click here modify profile</a> </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="clear">
-                                                </div>
-                                                <div class="lines-dotted-short">
-                                                </div>
-                                                <div class="left">
-                                                    <a href="">
-                                                        <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21"
-                                                            alt="" /></a></div>
-                                                <div class="right">
-                                                    <h5>
-                                                        Dealer</h5>
-                                                    <table style="width: 100%;">
-                                                        <tr>
-                                                            <td style="width: 40%;" valign="top">
-                                                                Name
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrCompanyName" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top">
-                                                                Description
-                                                            </td>
-                                                            <td valign="top">
-                                                                :
-                                                            </td>
-                                                            <td valign="top">
-                                                                <asp:Literal ID="ltrDescription" runat="server"></asp:Literal>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <br />
-                                                    <ul class="greyarrow">
-                                                        <li><a href="">Click here modify department</a> </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="clear">
-                                                </div>
-                                            </div>
-                                            <!-- end related-act-inner -->
-                                            <div class="clear">
-                                            </div>
-                                        </div>
-                                        <!-- end related-act-bottom -->
-                                    </div>
-                                </asp:Panel>
+                              
                                 <!-- end related-activities -->
                             </td>
                         </tr>

@@ -21,6 +21,13 @@ public partial class ServiceEmployee_TrashCompany : System.Web.UI.Page
         {
             BindDataToGrid(txtSearch.Text);
         }
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     protected string FormatLogo(object obj)

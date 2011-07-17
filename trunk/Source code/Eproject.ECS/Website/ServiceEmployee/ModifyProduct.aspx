@@ -1,12 +1,35 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="CreateProblem.aspx.cs" Inherits="ServiceEmployee_CreateProblem" Title="Excell-on Consulting Services" %>
+    CodeFile="ModifyProduct.aspx.cs" Inherits="ServiceEmployee_ModifyProduct" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
+        rel="stylesheet" type="text/css" />
+
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+
+    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+	$(function() {
+		$( "#<%=txtManufactureDate.ClientID%>" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '1900:2011'
+		});
+		
+		$( "#<%=txtExpiryDate.ClientID%>" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '1900:2011'
+		});
+	});
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            CREATE PROBLEM</h1>
+            MODIFY PRODUCT</h1>
     </div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -41,24 +64,33 @@
                                     <td>
                                         <!--  start step-holder -->
                                         <div id="step-holder">
-			                                <div class="step-no">1</div>
-			                                <div class="step-dark-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Create">
-                                                Create details</a></div>
-			                                <div class="step-dark-right">&nbsp;</div>
-			                                <div class="step-no-off">2</div>
-			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Manage">
-                                                Manage problems</a></div>
-			                                <div class="step-light-right">&nbsp;</div>
-			                                <div class="step-no-off">3</div>
-			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Modify">
-                                                Modify details</a></div>
-			                                <div class="step-light-right">&nbsp;</div>
-			                                <div class="step-no-off">4</div>
-			                                <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageService/Problem/Trash">
-                                                Trash</a></div>
-			                                <div class="step-light-round">&nbsp;</div>
-			                                <div class="clear"></div>
-		                                </div>
+                                            <div class="step-no-off">
+                                                1</div>
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Create">Create details</a></div>
+                                            <div class="step-light-right">
+                                                &nbsp;</div>
+                                            <div class="step-no-off">
+                                                2</div>
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Manage">Manage product</a></div>
+                                            <div class="step-light-right">
+                                                &nbsp;</div>
+                                            <div class="step-no">
+                                                3</div>
+                                            <div class="step-dark-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Modify">Modify details</a></div>
+                                            <div class="step-dark-right">
+                                                &nbsp;</div>
+                                            <div class="step-no-off">
+                                                4</div>
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Trash">Trash</a></div>
+                                            <div class="step-light-round">
+                                                &nbsp;</div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
                                         <!--  end step-holder -->
                                         <!--  start message-yellow -->
                                         <asp:Panel ID="pnlYellow" runat="server" Visible="false">
@@ -82,8 +114,8 @@
                                                 <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td class="red-left">
-                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close
-                                                                and try again.</a>
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
+                                                            and try again.</a>
                                                         </td>
                                                         <td class="red-right">
                                                             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -130,14 +162,11 @@
                                         <table border="0" cellpadding="0" cellspacing="0" id="id-form">
                                             <tr>
                                                 <th valign="top">
-                                                    Customer name :
+                                                    Category name :
                                                 </th>
                                                 <td>
-                                                <div class="inp-form">
-                                                    <asp:DropDownList ID="ddlCustomer" runat="server" CssClass="styledselect_form"
-                                                        AutoPostBack="True">
+                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="inp-form" AutoPostBack="True">
                                                     </asp:DropDownList>
-                                                </div>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -148,11 +177,8 @@
                                                     Company name :
                                                 </th>
                                                 <td>
-                                                <div class="inp-form">
-                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="styledselect_form" 
-                                                        AutoPostBack="True">
+                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="inp-form" AutoPostBack="True">
                                                     </asp:DropDownList>
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -160,38 +186,93 @@
                                             </tr>
                                             <tr>
                                                 <th valign="top">
-                                                    Date :
+                                                    Product Name:
                                                 </th>
                                                 <td>
-                                                    <asp:TextBox ID="txtDate" runat="server" CssClass="inp-form datePicker"></asp:TextBox>
+                                                    <asp:TextBox ID="txtProductName" runat="server" ValidationGroup="9" CssClass="inp-form"></asp:TextBox>
                                                 </td>
                                                 <td>
-                                                    &nbsp;
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtDate"
-                                                        Display="Dynamic" ErrorMessage="Date of birth is required."></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtProductName"
+                                                        Display="Dynamic" ValidationGroup="9" ErrorMessage="Product name is required."></asp:RequiredFieldValidator>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th valign="top">
-                                                    Title :
+                                                    Product Type :
                                                 </th>
-                                                <td valign="top">
-                                                    <asp:TextBox ID="txtTitle" runat="server" TextMode="MultiLine" CssClass="form-textarea"></asp:TextBox>
+                                                <td>
+                                                    <asp:DropDownList ID="ddlProductType" runat="server" CssClass="inp-form">
+                                                        <asp:ListItem Text="Service" Value="Service"></asp:ListItem>
+                                                        <asp:ListItem Text="Product" Value="Product"></asp:ListItem>
+                                                    </asp:DropDownList>
                                                 </td>
                                                 <td>
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtTitle"
-                                                        Display="Dynamic" ErrorMessage="Title is required." ValidationGroup="9"></asp:RequiredFieldValidator>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th valign="top">
-                                                    Content :
+                                                    Product Price:
                                                 </th>
                                                 <td>
-                                                    <asp:TextBox ID="txtContent" runat="server" TextMode="MultiLine" CssClass="form-textarea"></asp:TextBox>
+                                                    <asp:TextBox ID="txtProductPrice" runat="server" ValidationGroup="9" CssClass="inp-form"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtProductPrice"
+                                                        Display="Dynamic" ValidationGroup="9" ErrorMessage="Product name is required."></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtProductPrice"
+                                                        ErrorMessage="Do not format" ValidationExpression="^[0-9]{0,16}" ValidationGroup="9"></asp:RegularExpressionValidator>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th valign="top">
+                                                    Manufacture Date :
+                                                </th>
+                                                <td>
+                                                    <asp:TextBox ID="txtManufactureDate" ValidationGroup="9" runat="server" CssClass="inp-form"></asp:TextBox>
                                                 </td>
                                                 <td>
                                                     &nbsp;
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtManufactureDate"
+                                                        ErrorMessage="Incorrect format" ValidationExpression="^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$"
+                                                        ValidationGroup="9"></asp:RegularExpressionValidator>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th valign="top">
+                                                    Expiry Date :
+                                                </th>
+                                                <td>
+                                                    <asp:TextBox ID="txtExpiryDate" ValidationGroup="9" runat="server" CssClass="inp-form"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    &nbsp;
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ErrorMessage="Incorrect format"
+                                                        ControlToValidate="txtExpiryDate" ValidationExpression="^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$"
+                                                        ValidationGroup="9"></asp:RegularExpressionValidator>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th valign="top">
+                                                    Description :
+                                                </th>
+                                                <td>
+                                                    <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" CssClass="form-textarea"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th valign="top">
+                                                    Image :
+                                                </th>
+                                                <td>
+                                                    <asp:FileUpload ID="fuImage" runat="server" />
+                                                </td>
+                                                <td>
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="fuImage"
+                                                        Display="Dynamic" ErrorMessage="Your file is not invalid. It only supports image type."
+                                                        ValidationExpression="^.+\.(([jJ][pP][eE]?[gG])|([gG][iI][fF])|([pP][nN][gG])|([bB][mM][pP])|([iI][cC][oO]))$"></asp:RegularExpressionValidator>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -199,9 +280,11 @@
                                                     &nbsp;
                                                 </th>
                                                 <td valign="top">
-                                                    <asp:Button ID="btnSubmit" runat="server" Text="" CssClass="form-submit" ValidationGroup="9"
-                                                        OnClick="btnSubmit_Click" />
-                                                    <input id="btnReset" type="button" value="Reset" onclick='reset();' class="form-reset" />
+                                                    <asp:Button ID="btnSubmit" runat="server" Text="" CssClass="form-submit" 
+                                                        ValidationGroup="9" onclick="btnSubmit_Click" />
+                                                    <%--<input id="btnReset" type="button" value="Reset" onclick='reset();' class="form-reset" />--%>
+                                                    <asp:Button ID="btnCancel" runat="server" Text="" CausesValidation="False" 
+                                                        CssClass="form-cancel" onclick="btnCancel_Click" />
                                                 </td>
                                                 <td>
                                                 </td>
@@ -210,7 +293,6 @@
                                         <!-- end id-form  -->
                                     </td>
                                     <td>
-                                      
                                     </td>
                                 </tr>
                                 <tr>
@@ -228,9 +310,8 @@
                         <!--  end content-table-inner  -->
                     </ContentTemplate>
                     <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="ddlCustomer" EventName="SelectedIndexChanged" />
-                        <asp:AsyncPostBackTrigger ControlID="ddlCompany" 
-                            EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="ddlCategory" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="ddlCompany" EventName="SelectedIndexChanged" />
                     </Triggers>
                 </asp:UpdatePanel>
             </td>

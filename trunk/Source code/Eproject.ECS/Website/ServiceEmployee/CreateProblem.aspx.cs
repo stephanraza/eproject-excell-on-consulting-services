@@ -20,8 +20,15 @@ public partial class ServiceEmployee_CreateProblem : System.Web.UI.Page
         if (!IsPostBack)
         {
             BindDataDropDownList();
-            LoadPreview();
+            
         }
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     #region  Private  Member
@@ -71,25 +78,8 @@ public partial class ServiceEmployee_CreateProblem : System.Web.UI.Page
             ddlCompany.Items.Add(items);
         }
     }
-    protected void LoadPreview()
-    {
-        string id = ddlCustomer.SelectedValue;
-        DataRow row = customer.Customer_ShowOnewDisplay(id);
-        ltrName.Text = row["Customer_FulName"].ToString();
-        ltrPhone.Text = row["Customer_Phone"].ToString();
-        ltrAddress.Text = row["Customer_Address"].ToString();
-        string idcom = ddlCompany.SelectedValue;
-        DataRow rows = company.Company_ShowOnewDisplay(idcom);
-        ltrNameCom.Text = rows["Company_Name"].ToString();
-        ltrPhoneCom.Text = rows["Company_Phone"].ToString();
-        ltrAddressCom.Text = rows["Company_Address"].ToString();
-        pnlPreviewCustomer.Visible = true;
-    }
-    private void PreviewForm(Problem problem)
-    {
-
-
-    }
+   
+  
     protected void ResetForm()
     {
         txtTitle.Text = "";
@@ -154,28 +144,9 @@ public partial class ServiceEmployee_CreateProblem : System.Web.UI.Page
         customerOfCompanyBll.CustomerOfCompany_Insert(customerOfCompany);      
         pnlRed.Visible = false;
         pnlGreen.Visible = true;
-        lblSuccess.Text = "Create successfully!";
-        PreviewForm(entity);
+        lblSuccess.Text = "Create successfully!";       
         ResetForm();
         BindDataDropDownList();
-    }
-    protected void ddlCustomer_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        string id = ddlCustomer.SelectedValue;
-        DataRow row = customer.Customer_ShowOnewDisplay(id);
-        ltrName.Text = row["Customer_FulName"].ToString();
-        ltrPhone.Text = row["Customer_Phone"].ToString();
-        ltrAddress.Text = row["Customer_Address"].ToString();
-        pnlPreviewCustomer.Visible = true;
-    }
-    protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        string id = ddlCompany.SelectedValue;
-        DataRow row = company.Company_ShowOnewDisplay(id);
-        ltrNameCom.Text = row["Company_Name"].ToString();
-        ltrPhoneCom.Text = row["Company_Phone"].ToString();
-        ltrAddressCom.Text = row["Company_Address"].ToString();
-        pnlPreviewCustomer.Visible = true;
-    }
+    }  
     #endregion
 }

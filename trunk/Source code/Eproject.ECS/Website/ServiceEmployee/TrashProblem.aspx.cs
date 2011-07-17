@@ -18,10 +18,18 @@ public partial class ServiceEmployee_TrashProblem : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
         if (!IsPostBack)
         {
             BinDataToGird(txtSearch.Text);
         }
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+
     }
 
     public void BinDataToGird(string key)

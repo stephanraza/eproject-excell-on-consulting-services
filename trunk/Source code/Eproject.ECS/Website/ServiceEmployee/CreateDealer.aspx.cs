@@ -23,6 +23,13 @@ public partial class Administrator_CreateDealer : System.Web.UI.Page
         {
             BindDataDropDownList();
         }
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     #region Function
@@ -60,17 +67,17 @@ public partial class Administrator_CreateDealer : System.Web.UI.Page
 
     }
 
-    private void PreviewForm(Dealer dealer)
-    {
-        ltrName.Text = dealer.Dealer_Name;
-        ltrPhoneNumber.Text = dealer.Dealer_Phone;
-        ltrAddress.Text = dealer.Dealer_Address;
-        ltrEmail.Text = dealer.Dealer_Email;
-        string companyId = dealer.Company_Id.ToString();
-        DataRow dataRow = company.Company_ShowOnewDisplay(companyId);
-        ltrCompanyName.Text = dataRow["Company_Name"].ToString();
-        ltrDescription.Text = dataRow["Company_Description"].ToString();
-    }
+    //private void PreviewForm(Dealer dealer)
+    //{
+    //    ltrName.Text = dealer.Dealer_Name;
+    //    ltrPhoneNumber.Text = dealer.Dealer_Phone;
+    //    ltrAddress.Text = dealer.Dealer_Address;
+    //    ltrEmail.Text = dealer.Dealer_Email;
+    //    string companyId = dealer.Company_Id.ToString();
+    //    DataRow dataRow = company.Company_ShowOnewDisplay(companyId);
+    //    ltrCompanyName.Text = dataRow["Company_Name"].ToString();
+    //    ltrDescription.Text = dataRow["Company_Description"].ToString();
+    //}
 
     #endregion
 
@@ -109,8 +116,8 @@ public partial class Administrator_CreateDealer : System.Web.UI.Page
         pnlRed.Visible = false;
         pnlGreen.Visible = true;
         lblSuccess.Text = "Create new a dealer successfully!";
-        pnlPreviewCustomer.Visible = true;
-        PreviewForm(entity);
+        //pnlPreviewCustomer.Visible = true;
+        //PreviewForm(entity);
         ResetForm();
     }
 

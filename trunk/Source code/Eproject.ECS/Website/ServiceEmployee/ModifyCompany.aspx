@@ -90,8 +90,8 @@
                                         <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td class="red-left">
-                                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
-                                                    and try again.</a>
+                                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close
+                                                        and try again.</a>
                                                 </td>
                                                 <td class="red-right">
                                                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -228,7 +228,7 @@
                                                                                 <asp:Button ID="UpdateButton" runat="server" CssClass="form-change-left" Text=""
                                                                                     OnClick="UpdateButton_Click" />
                                                                                 <asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CssClass="form-cancel"
-                                                                                    Text="" onclick="UpdateCancelButton_Click" />
+                                                                                    Text="" OnClick="UpdateCancelButton_Click" />
                                                                             </td>
                                                                         </tr>
                                                                     </tr>
