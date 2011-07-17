@@ -20,6 +20,11 @@ public partial class ServiceEmployee_ModifyCompany : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
         if (RouteCollectionExtensions.RouteData != null)
         {
             if (RouteCollectionExtensions.RouteData.Values["id"] != null)
@@ -51,6 +56,10 @@ public partial class ServiceEmployee_ModifyCompany : System.Web.UI.Page
                 Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Company/Manage/null");
             }
         }
+
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     private void FillData(DataRow row)
@@ -71,26 +80,36 @@ public partial class ServiceEmployee_ModifyCompany : System.Web.UI.Page
 
     protected void UpdateButton_Click(object sender, EventArgs e)
     {
-        Company entity = new Company();
-        if (companyBll.Company_CheckName(txtCompanyNameEdit.Text))
-        {
-            pnlRed.Visible = true;
-            lblError.Text = "Name is Exitst !!!";
-            return;
-        }
-        if (companyBll.Company_CheckEmail((txtCompanyEmail.Text)))
-        {
-            pnlRed.Visible = true;
-            lblError.Text = "Email is Exitst !!!";
-            return;
-        }
         string CompanyId = dataRow["Company_Id"].ToString();
-        entity.Company_Id = new Guid(CompanyId);
-        entity.Company_Name = txtCompanyNameEdit.Text;
-        entity.Company_Email = txtCompanyEmail.Text;
-        entity.Company_Address = txtCompanyAddress.Text;
-        entity.Company_Description = txtCompanyDescription.Text;
-        entity.Company_Phone = txtCompanyPhoneEdit.Text;
+        DataRow rows = companyBll.Company_ShowOnewDisplay(CompanyId);
+        Company company = new Company();
+        company.Company_Id = new Guid(CompanyId);
+        company.Company_Name = rows["Company_Name"].ToString();
+        company.Company_Email = rows["Company_Email"].ToString();
+        company.Company_Address = rows["Company_Address"].ToString();
+        company.Company_Description = rows["Company_Description"].ToString();
+        company.Company_Logo = rows["Company_Logo"].ToString();
+        company.Company_Phone = rows["Company_Phone"].ToString();
+        company.Company_IsDelete = bool.Parse(rows["Company_IsDelete"].ToString());
+
+        if (companyBll.Company_CheckName(txtCompanyNameEdit.Text) && !company.Company_Name.Equals(txtCompanyNameEdit.Text))
+        {
+            pnlRed.Visible = true;
+            lblError.Text = "This name have already.";
+            return;
+        }
+
+        if (companyBll.Company_CheckEmail(txtCompanyEmail.Text) && !company.Company_Email.Equals(txtCompanyEmail.Text))
+        {
+            pnlRed.Visible = true;
+            lblError.Text = "This email have already used.";
+            return;
+        }
+        company.Company_Name = txtCompanyNameEdit.Text;
+        company.Company_Email = txtCompanyEmail.Text;
+        company.Company_Address = txtCompanyAddress.Text;
+        company.Company_Description = txtCompanyDescription.Text;
+        company.Company_Phone = txtCompanyPhoneEdit.Text;
         string filePath = "";
         System.Drawing.Image image;
         if (fuLogoEdit.HasFile)
@@ -103,8 +122,8 @@ public partial class ServiceEmployee_ModifyCompany : System.Web.UI.Page
             image = System.Drawing.Image.FromFile(filePath);
         }
         String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
-        entity.Company_Logo = data;
-        if (companyBll.Company_Update(entity) < 1)
+        company.Company_Logo = data;
+        if (companyBll.Company_Update(company) < 1)
         {
             pnlRed.Visible = true;
             lblError.Text = "Do not success !!!";

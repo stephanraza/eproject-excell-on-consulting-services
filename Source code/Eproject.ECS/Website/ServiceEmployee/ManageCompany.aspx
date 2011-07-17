@@ -2,23 +2,7 @@
     CodeFile="ManageCompany.aspx.cs" Inherits="ServiceEmployee_ManageCompany" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Excell-on Consulting Services</title>
-
-    <script type="text/javascript" language="javascript">
-        function confirmRemove() {
-            return confirm("Are you sure to remove this problem ?");
-        }
-    </script>
-
-    <!--[if IE]>
-    <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
-    <![endif]-->
-    <style type="text/css">
-        .style1
-        {
-            height: 19px;
-        }
-    </style>
+  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
@@ -241,7 +225,12 @@
                                                                 <%--<ItemStyle Width="20%"></ItemStyle>--%>
                                                             </asp:TemplateField>
                                                             <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" 
-                                                                DeleteText="Remove" />
+                                                                DeleteText="Remove" ButtonType="Image" 
+                                                                DeleteImageUrl="~/App_Themes/images/table/table_icon_remove.gif" 
+                                                                HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
+                                                                SelectImageUrl="~/App_Themes/images/table/table_icon_edit.gif" >
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:CommandField>
                                                         </Columns>
                                                         <AlternatingRowStyle CssClass="alternate-row" />
                                                     </asp:GridView>

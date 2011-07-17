@@ -11,11 +11,10 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using Eproject.ECS.Bll;
-using Eproject.ECS.Entities;
 
-public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
+public partial class ServiceEmployee_ManageProduct : System.Web.UI.Page
 {
-    CompanyBLL companyBll = new CompanyBLL();
+    ProductBLL productBll = new ProductBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         pnlRed.Visible = false;
@@ -35,7 +34,7 @@ public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
                 if (value.Equals("null"))
                 {
                     pnlYellow.Visible = true;
-                    lblMessage.Text = "You must choose a company to modify.";
+                    lblMessage.Text = "You must choose a product to modify.";
                 }
                 else if (value.Equals("success"))
                 {
@@ -49,14 +48,6 @@ public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
-    protected void BindDataToGrid(string keySearch)
-    {
-        // imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
-        grvManage.DataSource = companyBll.Company_ShowAllDisplay(keySearch);
-        grvManage.DataKeyNames = new string[] { "Company_Id" };
-        grvManage.DataBind();
-    }
-
     protected string FormatLogo(object obj)
     {
         if (obj == null)
@@ -65,6 +56,21 @@ public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
         }
         return WebHelper.Instance.GetImageURL(obj.ToString(), 128, 128, false);
     }
+
+    protected void BindDataToGrid(string key)
+    {
+        grvManage.DataSource = productBll.Product_ShowAllDisplay(key);
+        grvManage.DataKeyNames = new string[] { "Product_Id" };
+        grvManage.DataBind();
+    }
+    protected void grvManage_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+    {
+        if (grvManage.DataKeys[e.NewSelectedIndex] != null)
+        {
+            string ProductId = grvManage.DataKeys[e.NewSelectedIndex].Value.ToString();
+            Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Product/Modify/" + ProductId);
+        }
+    }
     protected void grvManage_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         if (grvManage != null)
@@ -72,8 +78,8 @@ public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
             if (grvManage.DataKeys[e.RowIndex] != null)
             {
 
-                string CompanyId = grvManage.DataKeys[e.RowIndex].Value.ToString();
-                if (!companyBll.Company_UpdateStatusRemove(CompanyId))
+                string ProductId = grvManage.DataKeys[e.RowIndex].Value.ToString();
+                if (!productBll.Product_UpdateStatusRemove(ProductId))
                 {
 
                     pnlRed.Visible = true;
@@ -82,25 +88,17 @@ public partial class ServiceEmployee_ManageCompany : System.Web.UI.Page
                 }
             }
             pnlGreen.Visible = true;
-            lblSuccess.Text = "A comapny has been removed successfully, this data could be restored from Trash.";
+            lblSuccess.Text = "A product has been removed successfully, this data could be restored from Trash.";
             BindDataToGrid("");
         }
-    }
-    protected void grvManage_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-    {
-        if (grvManage.DataKeys[e.NewSelectedIndex] != null)
-        {
-            string companyId = grvManage.DataKeys[e.NewSelectedIndex].Value.ToString();
-            Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Company/Modify/" + companyId);
-        }
-    }
-    protected void txtSearch_TextChanged(object sender, EventArgs e)
-    {
-        BindDataToGrid(txtSearch.Text);
     }
     protected void grvManage_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         grvManage.PageIndex = e.NewPageIndex;
+        BindDataToGrid(txtSearch.Text);
+    }
+    protected void txtSearch_TextChanged(object sender, EventArgs e)
+    {
         BindDataToGrid(txtSearch.Text);
     }
 }

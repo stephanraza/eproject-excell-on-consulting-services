@@ -6,7 +6,7 @@
     <![endif]-->
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
-    <div id="page-heading"><h1>MANAGE DEPARTMENT INFORMATION</h1></div>
+    <div id="page-heading"><h1>MANAGE ORDER INFORMATION</h1></div>
 
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>

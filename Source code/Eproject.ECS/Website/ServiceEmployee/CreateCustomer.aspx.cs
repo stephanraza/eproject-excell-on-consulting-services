@@ -17,7 +17,13 @@ public partial class ServiceEmployee_CreateCustomer : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
 
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     Customer customer = new Customer();
@@ -48,12 +54,12 @@ public partial class ServiceEmployee_CreateCustomer : System.Web.UI.Page
         txtAddress.Text = "";
     }
 
-    private void PreviewForm(Customer customer)
-    {
-        ltrName.Text = customer.Customer_FulName;
-        ltrPhone.Text = customer.Customer_Phone;
-        ltrAddress.Text = customer.Customer_Address;
-    }
+    //private void PreviewForm(Customer customer)
+    //{
+    //    ltrName.Text = customer.Customer_FulName;
+    //    ltrPhone.Text = customer.Customer_Phone;
+    //    ltrAddress.Text = customer.Customer_Address;
+    //}
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -73,8 +79,8 @@ public partial class ServiceEmployee_CreateCustomer : System.Web.UI.Page
         pnlRed.Visible = false;
         pnlGreen.Visible = true;
         lblSuccess.Text = "Create new a customer successfully!";
-        pnlPreviewCustomer.Visible = true;
-        PreviewForm(entity);
+        //pnlPreviewCustomer.Visible = true;
+        //PreviewForm(entity);
         ResetForm();
     }
 }

@@ -2,7 +2,6 @@
     CodeFile="CreateProduct.aspx.cs" Inherits="ServiceEmployee_CreateProduct" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Excell-on Consulting Services</title>
     <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
         rel="stylesheet" type="text/css" />
 
@@ -24,13 +23,28 @@
 			yearRange: '1900:2011'
 		});
 	});
+function btnReset_onclick() {
+
+}
+
+function btnReset_onclick() {
+
+}
+
     </script>
+
+    <style type="text/css">
+        #btnReset
+        {
+            height: 26px;
+        }
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            CREATE PROFILE</h1>
+            CREATE PRODUCT</h1>
     </div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -68,25 +82,25 @@
                                             <div class="step-no">
                                                 1</div>
                                             <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>/ManageSystem/Account/Create">Create details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Create">Create details</a></div>
                                             <div class="step-dark-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 2</div>
                                             <div class="step-light-left">
-                                                <a href="">Manage employees</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Manage">Manage product</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 3</div>
                                             <div class="step-light-left">
-                                                <a href="">Modify details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Modify">Modify details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 4</div>
                                             <div class="step-light-left">
-                                                <a href="">Trash</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Trash">Trash</a></div>
                                             <div class="step-light-round">
                                                 &nbsp;</div>
                                             <div class="clear">
@@ -166,10 +180,10 @@
                                                     Category name :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="styledselect_form" AutoPostBack="True"
+                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="inp-form" AutoPostBack="True"
                                                         OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged">
                                                     </asp:DropDownList>
-                                                    <asp:TextBox ID="txtCategory" runat="server" Visible="true" CssClass="inp-form"></asp:TextBox>
+                                                    <asp:TextBox ID="txtCategory" runat="server" Visible="false" CssClass="inp-form"></asp:TextBox>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -180,8 +194,7 @@
                                                     Company name :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="styledselect_form" 
-                                                        AutoPostBack="True" onselectedindexchanged="ddlCompany_SelectedIndexChanged">
+                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="inp-form" AutoPostBack="True">
                                                     </asp:DropDownList>
                                                 </td>
                                                 <td>
@@ -205,7 +218,7 @@
                                                     Product Type :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlProductType" runat="server" CssClass="styledselect_form">
+                                                    <asp:DropDownList ID="ddlProductType" runat="server" CssClass="inp-form">
                                                         <asp:ListItem Text="Service" Value="Service"></asp:ListItem>
                                                         <asp:ListItem Text="Product" Value="Product"></asp:ListItem>
                                                     </asp:DropDownList>
@@ -223,6 +236,8 @@
                                                 <td>
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtProductPrice"
                                                         Display="Dynamic" ValidationGroup="9" ErrorMessage="Product name is required."></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtProductPrice"
+                                                        ErrorMessage="Do not format" ValidationExpression="^[0-9]{0,16}" ValidationGroup="9"></asp:RegularExpressionValidator>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -293,134 +308,6 @@
                                         <!-- end id-form  -->
                                     </td>
                                     <td>
-                                        <asp:Panel ID="pnlPreviewCustomer" runat="server" Visible="false">
-                                            <!--  start related-activities -->
-                                            <div id="related-activities">
-                                                <!--  start related-act-top -->
-                                                <div id="related-act-top">
-                                                    <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/header_preview_act.gif" width="271"
-                                                        height="43" alt="" />
-                                                </div>
-                                                <!-- end related-act-top -->
-                                                <!--  start related-act-bottom -->
-                                                <div id="related-act-bottom">
-                                                    <!--  start related-act-inner -->
-                                                    <div id="related-act-inner">
-                                                        <div class="left">
-                                                            <a href="">
-                                                                <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21"
-                                                                    alt="" /></a></div>
-                                                        <div class="right">
-                                                            <h5>
-                                                                Category's Information</h5>
-                                                            <table style="width: 100%;">
-                                                                <tr>
-                                                                    <td style="width: 40%;" valign="top">
-                                                                        Category Name
-                                                                    </td>
-                                                                    <td style="width: 5%;" valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td>
-                                                                        <asp:Literal ID="ltrName" runat="server" Text=""></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td valign="top">
-                                                                        Phone Number
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td>
-                                                                        <asp:Literal ID="ltrPhone" runat="server"></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td valign="top">
-                                                                        Address
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        <asp:Literal ID="ltrAddress" runat="server"></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <br />
-                                                            <ul class="greyarrow">
-                                                                <li><a href="">Click here modify company</a> </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="clear">
-                                                        </div>
-                                                        <div class="lines-dotted-short">
-                                                        </div>
-                                                        <div class="clear">
-                                                        </div>
-                                                        <div class="left">
-                                                            <a href="">
-                                                                <img src="<%=ResolveUrl("~")%>App_Themes/images/forms/icon_plus.gif" width="21" height="21"
-                                                                    alt="" /></a></div>
-                                                        <div class="right">
-                                                            <h5>
-                                                                Company&#39;s Information</h5>
-                                                            <table style="width: 100%;">
-                                                                <tr>
-                                                                    <td style="width: 40%;" valign="top">
-                                                                        Full Name
-                                                                    </td>
-                                                                    <td style="width: 5%;" valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td>
-                                                                        <asp:Literal ID="ltrNameCom" runat="server" Text=""></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td valign="top">
-                                                                        Phone Number
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td>
-                                                                        <asp:Literal ID="ltrPhoneCom" runat="server"></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td valign="top">
-                                                                        Address
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        :
-                                                                    </td>
-                                                                    <td valign="top">
-                                                                        <asp:Literal ID="ltrAddressCom" runat="server"></asp:Literal>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <br />
-                                                            <ul class="greyarrow">
-                                                                <li><a href="">Click here modify company</a> </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="clear">
-                                                        </div>
-                                                        <div class="lines-dotted-short">
-                                                        </div>
-                                                        <div class="clear">
-                                                        </div>
-                                                    </div>
-                                                    <!-- end related-act-inner -->
-                                                    <div class="clear">
-                                                    </div>
-                                                </div>
-                                                <!-- end related-act-bottom -->
-                                            </div>
-                                            <!-- end related-activities -->
-                                        </asp:Panel>
                                     </td>
                                 </tr>
                                 <tr>
@@ -439,8 +326,7 @@
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="ddlCategory" EventName="SelectedIndexChanged" />
-                        <asp:AsyncPostBackTrigger ControlID="ddlCompany" 
-                            EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="ddlCompany" EventName="SelectedIndexChanged" />
                     </Triggers>
                 </asp:UpdatePanel>
             </td>

@@ -17,11 +17,19 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
         if (!IsPostBack)
         {
             BindDataToDropdownList();
-            LoadPreview();
         }
+
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     CategoryBLL categoryBll = new CategoryBLL();
@@ -32,10 +40,8 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
     {
         DataTable table = categoryBll.Category_ShowAllDisplay();
         ddlCategory.Items.Clear();
-        ListItem items = new ListItem();
-        items.Text = "New category";
-        items.Value = "0";
-        ddlCategory.Items.Add(items);
+        ddlCategory.Items.Add(new ListItem("Choose Name", "0"));
+        ddlCategory.Items.Add(new ListItem("-- Other --", "1"));
         for (int i = 0; i < table.Rows.Count; i++)
         {
             ListItem item = new ListItem();
@@ -46,7 +52,7 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
 
         DataTable dataTable = companyBll.Company_ShowAllDisplay("");
         ddlCompany.Items.Clear();
-        // ddlCategory.Items.Add("New category");
+        ddlCompany.Items.Add(new ListItem("Choose Name", "0"));
         for (int i = 0; i < dataTable.Rows.Count; i++)
         {
             ListItem item = new ListItem();
@@ -54,8 +60,6 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
             item.Value = dataTable.Rows[i]["Company_Id"].ToString();
             ddlCompany.Items.Add(item);
         }
-        ddlCategory.SelectedIndex = 1;
-        txtCategory.Visible = false;
     }
 
     protected void ResetForm()
@@ -71,7 +75,7 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
     private Product CreateProduct()
     {
         Product product = new Product();
-        if (string.IsNullOrEmpty(ddlCompany.SelectedValue))
+        if (string.IsNullOrEmpty(ddlCompany.SelectedValue) || ddlCompany.SelectedValue == "0")
         {
             pnlRed.Visible = true;
             lblError.Text = "Company name is null.";
@@ -135,7 +139,7 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
 
     protected void GetDataForm()
     {
-        if (ddlCategory.SelectedValue == "0")
+        if (ddlCategory.SelectedValue == "1")
         {
             txtCategory.Visible = true;
             Category category = new Category();
@@ -162,7 +166,12 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
                 return;
             }
             Product product = CreateProduct();
-
+            if (product == null)
+            {
+                pnlRed.Visible = true;
+                lblError.Text = "Company name is null.";
+                return;
+            }
             product.Category_Id = category.Category_Id;
             if (!productBll.Product_Insert(product))
             {
@@ -178,11 +187,17 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
         }
         else
         {
-            Product product = CreateProduct();
-            if (string.IsNullOrEmpty(ddlCategory.SelectedValue))
+            if (ddlCategory.SelectedValue == "0")
             {
                 pnlRed.Visible = true;
                 lblError.Text = "category name is null.";
+                return;
+            }
+            Product product = CreateProduct();
+            if (product == null)
+            {
+                pnlRed.Visible = true;
+                lblError.Text = "Company name is null.";
                 return;
             }
             product.Category_Id = new Guid(ddlCategory.SelectedValue);
@@ -200,54 +215,21 @@ public partial class ServiceEmployee_CreateProduct : System.Web.UI.Page
         }
     }
 
-    protected void LoadPreview()
-    {
-        string id = ddlCategory.SelectedValue;
-        DataRow row = categoryBll.Category_ShowOnewDisplay(id);
-        ltrName.Text = row["Category_Name"].ToString();
-        ltrPhone.Text = "No";
-        ltrAddress.Text = "No";
-        string idcom = ddlCompany.SelectedValue;
-        DataRow rows = companyBll.Company_ShowOnewDisplay(idcom);
-        ltrNameCom.Text = rows["Company_Name"].ToString();
-        ltrPhoneCom.Text = rows["Company_Phone"].ToString();
-        ltrAddressCom.Text = rows["Company_Address"].ToString();
-        pnlPreviewCustomer.Visible = true;
-    }
-
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         GetDataForm();
         ResetForm();
     }
+
     protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlCategory.SelectedValue == "0")
+        if (ddlCategory.SelectedValue == "1")
         {
             txtCategory.Visible = true;
-            ltrName.Text = "No";
-            ltrPhone.Text = "No";
-            ltrAddress.Text = "No";
         }
         else
         {
             txtCategory.Visible = false;
-            string id = ddlCategory.SelectedValue;
-            DataRow row = categoryBll.Category_ShowOnewDisplay(id);
-            ltrName.Text = row["Category_Name"].ToString();
-            ltrPhone.Text = "No";
-            ltrAddress.Text = "No";
-            pnlPreviewCustomer.Visible = true;
         }
-
-    }
-    protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        string idcom = ddlCompany.SelectedValue;
-        DataRow rows = companyBll.Company_ShowOnewDisplay(idcom);
-        ltrNameCom.Text = rows["Company_Name"].ToString();
-        ltrPhoneCom.Text = rows["Company_Phone"].ToString();
-        ltrAddressCom.Text = rows["Company_Address"].ToString();
-        pnlPreviewCustomer.Visible = true;
     }
 }

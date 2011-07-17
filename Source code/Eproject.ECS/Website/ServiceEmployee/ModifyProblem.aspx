@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            CREATE COMPANY</h1>
+            MODIFY PROBLEM</h1>
     </div>
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
         <tr>
@@ -143,7 +143,7 @@
                                                             <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
                                                                 <tr>
                                                                     <td colspan="2" class="title" align="left" style="padding: 10px 0px 10px 10px">
-                                                                        Department information<br />
+                                                                        Problem information<br />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>

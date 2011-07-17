@@ -55,7 +55,7 @@
                                     <td>
                                         <!--  start step-holder -->
                                          <div id="step-holder">
-                                            <%--<div class="step-no-off">
+                                            <div class="step-no-off">
                                                 1</div>
                                             <div class="step-light-left">
                                                 <a href="<%=ResolveUrl("~")%>ManageService/Company/Create">Create details</a></div>
@@ -76,10 +76,10 @@
                                             <div class="step-no">
                                                 4</div>
                                             <div class="step-dark-left">
-                                                <%--<a href="<%=ResolveUrl("~")%>ManageService/Company/Trash">Trash</a></div>--%>
+                                               <a href="<%=ResolveUrl("~")%>ManageService/Company/Trash">Trash</a></div>
                                             <div class="step-dark-round">
                                                 &nbsp;</div>
-                                            <div class="clear">--%>
+                                            <div class="clear">
                                             </div>
                                         </div>
                                         <!--  end step-holder -->
@@ -106,8 +106,8 @@
                                                 <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td class="red-left">
-                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close
-                                                                and try again.</a>
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
+                                                            and try again.</a>
                                                         </td>
                                                         <td class="red-right">
                                                             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -237,7 +237,13 @@
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                                 <%--<ItemStyle Width="20%"></ItemStyle>--%>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" SelectText="Restore" />
+                                                            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" 
+                                                                SelectText="Restore" ButtonType="Image" 
+                                                                DeleteImageUrl="~/App_Themes/images/table/table_icon_delete.gif" 
+                                                                HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
+                                                                SelectImageUrl="~/App_Themes/images/table/table_icon_restore.gif" >
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:CommandField>
                                                         </Columns>
                                                         <AlternatingRowStyle CssClass="alternate-row" />
                                                     </asp:GridView>

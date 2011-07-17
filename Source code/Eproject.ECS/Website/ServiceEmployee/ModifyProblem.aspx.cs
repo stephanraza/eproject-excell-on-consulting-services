@@ -51,6 +51,13 @@ public partial class ServiceEmployee_ModifyProblem : System.Web.UI.Page
                 Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Problem/Manage/null");
             }
         }
+        pnlRed.Visible = false;
+        pnlGreen.Visible = false;
+        pnlYellow.Visible = false;
+        pnlBlue.Visible = false;
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     private void FillData(DataRow row)

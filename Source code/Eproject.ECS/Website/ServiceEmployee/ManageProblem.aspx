@@ -109,8 +109,8 @@
                                                 <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td class="red-left">
-                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close
-                                                                and try again.</a>
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
+                                                            and try again.</a>
                                                         </td>
                                                         <td class="red-right">
                                                             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -248,7 +248,15 @@
                                                                     <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Delete"
                                                                         Text="Delete"></asp:LinkButton>
                                                                 </ItemTemplate>
-                                                            </asp:TemplateField>--%><asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" />
+                                                            </asp:TemplateField>--%>
+                                                            <asp:CommandField ShowDeleteButton="True" 
+                                                                ShowSelectButton="True" ButtonType="Image" 
+                                                                DeleteImageUrl="~/App_Themes/images/table/table_icon_remove.gif" 
+                                                                HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
+                                                                SelectImageUrl="~/App_Themes/images/table/table_icon_edit.gif" 
+                                                                DeleteText="Remove" >
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:CommandField>
                                                         </Columns>
                                                         <AlternatingRowStyle CssClass="alternate-row" />
                                                     </asp:GridView>

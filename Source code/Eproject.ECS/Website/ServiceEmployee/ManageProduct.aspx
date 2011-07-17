@@ -1,26 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="TrashProblem.aspx.cs" Inherits="ServiceEmployee_TrashProblem" Title="Untitled Page" %>
+    CodeFile="ManageProduct.aspx.cs" Inherits="ServiceEmployee_ManageProduct" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Excell-on Consulting Services</title>
-
-    <script type="text/javascript" language="javascript">
-        function confirmRemove() {
-            return confirm("Are you sure to remove this problem ?");
-        }
-    </script>
-
-    <style type="text/css">
-        .style1
-        {
-            height: 19px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            TRASH</h1>
+            MANAGE PRODUCT INFORMATION</h1>
     </div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -58,26 +44,26 @@
                                             <div class="step-no-off">
                                                 1</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageService/Problem/Create">Create details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Create">Create details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no-off">
+                                            <div class="step-no">
                                                 2</div>
-                                            <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageService/Problem/Manage">Manage company</a></div>
-                                            <div class="step-light-right">
+                                            <div class="step-dark-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Manage">Manage product</a></div>
+                                            <div class="step-dark-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 3</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageService/Problem/Modify">Modify details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Modify">Modify details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no">
+                                            <div class="step-no-off">
                                                 4</div>
-                                            <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageService/Problem/Trash">Trash</a></div>
-                                            <div class="step-dark-round">
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Product/Trash">Trash</a></div>
+                                            <div class="step-light-round">
                                                 &nbsp;</div>
                                             <div class="clear">
                                             </div>
@@ -106,8 +92,8 @@
                                                 <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td class="red-left">
-                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
-                                                            and try again.</a>
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close
+                                                                and try again.</a>
                                                         </td>
                                                         <td class="red-right">
                                                             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -174,83 +160,101 @@
                                             <tr>
                                                 <td colspan="2" align="center">
                                                     <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" CssClass="product-table"
-                                                        Width="95%" OnSelectedIndexChanging="grvManage_SelectedIndexChanging" OnRowDeleting="grvManage_RowDeleting"
-                                                        AllowPaging="True" OnPageIndexChanging="grvManage_PageIndexChanging">
+                                                        Width="95%" AllowPaging="True" OnPageIndexChanging="grvManage_PageIndexChanging"
+                                                        OnRowDeleting="grvManage_RowDeleting" OnSelectedIndexChanging="grvManage_SelectedIndexChanging">
                                                         <Columns>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Problem Id&lt;/a&gt;" HeaderStyle-CssClass="table-header-check"
-                                                                SortExpression="Department_Id" ItemStyle-Width="30%">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Product Name&lt;/a&gt;" HeaderStyle-CssClass="table-header-check"
+                                                                SortExpression="Product_Name" ItemStyle-Width="30%">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblId" runat="server" Text='<%# Eval("Problem_Id") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Name" runat="server" Text='<%# Eval("Product_Name") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblId" runat="server" Text='<%# Eval("Problem_Id") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Name" runat="server" Text='<%# Eval("Product_Name") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="20%"></ItemStyle>
+                                                                <ItemStyle Width="15%"></ItemStyle>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Title&lt;/a&gt;" SortExpression="Problem_Title">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Image&lt;/a&gt;">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblTitle" runat="server" Text='<%# Eval("Problem_Title") %>'></asp:Label>
+                                                                    <asp:Image ID="imageLogo" runat="server" Height="48px" ImageUrl='<%#FormatLogo(Eval("Product_Image")) %>'
+                                                                        Width="48px" />
                                                                 </ItemTemplate>
-                                                                <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblTitle2" runat="server" Text='<%# Eval("Problem_Title") %>'></asp:Label>
-                                                                </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="16%" />
+                                                                <%--<ItemStyle Width="20%" />--%>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Content&lt;/a&gt;" SortExpression="Problem_Content">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Type&lt;/a&gt;" SortExpression="Product_Type">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblContent" runat="server" Text='<%# Eval("Problem_Content") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Type" runat="server" Text='<%# Eval("Product_Type") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblContent2" runat="server" Text='<%# Eval("Problem_Content") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Type" runat="server" Text='<%# Eval("Product_Type") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="16%" />
+                                                                <%--<ItemStyle Width="20%" />--%>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Date&lt;/a&gt;" SortExpression="ProblemOfCustomer_Date">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Price&lt;/a&gt;" SortExpression="Product_Price">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblDate" runat="server" Text='<%# Eval("ProblemOfCustomer_Date") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Price" runat="server" Text='<%# Eval("Product_Price") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblDate2" runat="server" Text='<%# Eval("ProblemOfCustomer_Date") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Price" runat="server" Text='<%# Eval("Product_Price") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="16%" />
+                                                                <%--<ItemStyle Width="18%" />--%>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Customer Name&lt;/a&gt;" SortExpression="Customer_FulName">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" SortExpression="Product_Description">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblCustomer" runat="server" Text='<%# Eval("Customer_FulName") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Description" runat="server" Text='<%# Eval("Product_Description") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblCustomer2" runat="server" Text='<%# Eval("Customer_FulName") %>'></asp:Label>
+                                                                    <asp:Label ID="lblProduct_Description" runat="server" Text='<%# Eval("Product_Description") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="16%" />
+                                                                <%--<ItemStyle Width="18%" />--%>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Manufacture Date&lt;/a&gt;" SortExpression="Product_ManufactureDate">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblProduct_ManufactureDate" runat="server" Text='<%# Eval("Product_ManufactureDate") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblProduct_ManufactureDate" runat="server" Text='<%# Eval("Product_ManufactureDate") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                                <%--<ItemStyle Width="18%"></ItemStyle>--%>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Expiry Date&lt;/a&gt;" SortExpression="Product_ExpiryDate">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblProduct_ExpiryDate" runat="server" Text='<%# Eval("Product_ExpiryDate") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblProduct_ExpiryDate" runat="server" Text='<%# Eval("Product_ExpiryDate") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                                <%--<ItemStyle Width="20%"></ItemStyle>--%>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="&lt;a href&gt;Company Name&lt;/a&gt;" SortExpression="Company_Name">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblCompany" runat="server" Text='<%# Eval("Company_Name") %>'></asp:Label>
+                                                                    <asp:Label ID="lblCompany_Name" runat="server" Text='<%# Eval("Company_Name") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblCompany2" runat="server" Text='<%# Eval("Company_Name") %>'></asp:Label>
+                                                                    <asp:Label ID="lblCompany_Name" runat="server" Text='<%# Eval("Company_Name") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
-                                                                <ItemStyle Width="16%" />
+                                                                <%--<ItemStyle Width="20%"></ItemStyle>--%>
                                                             </asp:TemplateField>
-                                                            <%--<asp:TemplateField ShowHeader="False">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Category Name&lt;/a&gt;" SortExpression="Category_Name">
                                                                 <ItemTemplate>
-                                                                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Select"
-                                                                        Text="Select"></asp:LinkButton>
-                                                                    <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Delete"
-                                                                        Text="Delete"></asp:LinkButton>
+                                                                    <asp:Label ID="lblCategory_Name" runat="server" Text='<%# Eval("Category_Name") %>'></asp:Label>
                                                                 </ItemTemplate>
-                                                            </asp:TemplateField>--%><asp:CommandField ShowDeleteButton="True" 
-                                                                ShowSelectButton="True" ButtonType="Image" 
-                                                                DeleteImageUrl="~/App_Themes/images/table/table_icon_delete.gif" 
-                                                                HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
-                                                                SelectImageUrl="~/App_Themes/images/table/table_icon_restore.gif" 
-                                                                SelectText="Restore" >
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblCategory_Name" runat="server" Text='<%# Eval("Category_Name") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                                <%--<ItemStyle Width="20%"></ItemStyle>--%>
+                                                            </asp:TemplateField>
+                                                            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" DeleteText="Remove"
+                                                                ButtonType="Image" DeleteImageUrl="~/App_Themes/images/table/table_icon_remove.gif"
+                                                                HeaderText="&lt;a href&gt;Option&lt;/a&gt;" SelectImageUrl="~/App_Themes/images/table/table_icon_edit.gif">
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:CommandField>
                                                         </Columns>
