@@ -14,7 +14,7 @@ namespace Eproject.ECS.Dal
         /// Get rows all
         /// </summary>
         /// <returns></returns>
-        public DataTable Product_ShowAllDisplay()
+        public DataTable Product_ShowAllDisplay(string key)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -22,7 +22,8 @@ namespace Eproject.ECS.Dal
                 {
                     SqlCommand conCommand = new SqlCommand("Product_ShowAllDisplay", connection);
                     conCommand.CommandType = CommandType.StoredProcedure;
-
+                    conCommand.Parameters.Add("@SearchKey", SqlDbType.NVarChar);
+                    conCommand.Parameters["@SearchKey"].Value = key;
                     connection.Open();
                     DataTable table = new DataTable();
                     IDataReader reader = conCommand.ExecuteReader();
@@ -177,7 +178,7 @@ namespace Eproject.ECS.Dal
         /// <param name="Product_Id"></param>
         /// <param name="Product_IsDelete"></param>
         /// <returns></returns>
-        public int Product_UpdateStatus(string Product_Id, bool Product_IsDelete)
+        public int Product_UpdateStatus(string Product_Id)
         {
             using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
             {
@@ -188,10 +189,7 @@ namespace Eproject.ECS.Dal
 
                     command.Parameters.Add("@Product_Id", SqlDbType.UniqueIdentifier);
                     command.Parameters["@Product_Id"].Value = new Guid(Product_Id);
-
-                    command.Parameters.Add("@Product_IsDelete", SqlDbType.Bit);
-                    command.Parameters["@Product_IsDelete"].Value = Product_IsDelete;
-
+                  
                     connection.Open();
 
                     return command.ExecuteNonQuery();
@@ -264,6 +262,63 @@ namespace Eproject.ECS.Dal
                         return null;
                     DataRow row = table.Rows[0];
                     return row;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+
+        public int Product_UpdateStatusRemove(string Product_Id)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand("Product_UpdateStatusRemove", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Product_Id", SqlDbType.UniqueIdentifier);
+                    command.Parameters["@Product_Id"].Value = new Guid(Product_Id);                  
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Dispose();
+                }
+            }
+        }
+
+        public DataTable Product_ShowAllDisplayRemove(string key)
+        {
+            using (SqlConnection connection = new SqlConnection(AppConfiguration.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand conCommand = new SqlCommand("Product_ShowAllDisplayRemove", connection);
+                    conCommand.CommandType = CommandType.StoredProcedure;
+                    conCommand.Parameters.Add("@SearchKey", SqlDbType.NVarChar);
+                    conCommand.Parameters["@SearchKey"].Value = key;
+                    connection.Open();
+                    DataTable table = new DataTable();
+                    IDataReader reader = conCommand.ExecuteReader();
+                    table.Load(reader);
+
+                    return table;
                 }
                 catch (Exception)
                 {
