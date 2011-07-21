@@ -177,6 +177,7 @@ h3	{
 	font-family: Tahoma;
 	font-weight: normal;
 	text-decoration: underline;
+	cursor: pointer;
 	}
 .yellow-right a	{
 	cursor: pointer;
@@ -199,6 +200,7 @@ h3	{
 	font-family: Tahoma;
 	font-weight: normal;
 	text-decoration: underline;
+	cursor: pointer;
 	}
 .blue-right a	{
 	cursor: pointer;
@@ -221,6 +223,7 @@ h3	{
 	font-family: Tahoma;
 	font-weight: normal;
 	text-decoration: underline;
+	cursor: pointer;
 	}
 .red-right a	{
 	cursor: pointer;
@@ -244,6 +247,7 @@ h3	{
 	font-family: Tahoma;
 	font-weight: normal;
 	text-decoration: underline;
+	cursor: pointer;
 	}
 .green-right a	{
 	cursor: pointer;
@@ -336,7 +340,7 @@ a:hover.icon-5	{
 	margin-bottom: 20px;
 	}
 .product-table	td a	{
-	color: #393939;
+	color: #6da827;
 	}
 .product-table	td a:hover	{
 	text-decoration: underline;

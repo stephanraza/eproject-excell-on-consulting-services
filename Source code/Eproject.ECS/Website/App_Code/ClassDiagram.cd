@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CustomizeMembershipProvider">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAQAEgAiMEYAEAAAQAQIAAAICHAEAAAkAAAY=</HashCode>
+      <FileName>App_Code\CustomizeMembershipProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CustomizeRoleProvider">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAEEAAwAAAEAAAAAAAABAAAAAAAAAIAAAAEAAEQAAI=</HashCode>
+      <FileName>App_Code\CustomizeRoleProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImageHelper">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\ImageHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RouteCollectionExtensions">
+    <Position X="5.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>App_Code\RouteCollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RouteHandler" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>App_Code\RouteCollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WebHelper">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAAAAAAAAAAAAAAAAAABACAAIQABAAAAABAA=</HashCode>
+      <FileName>App_Code\WebHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -17,20 +17,20 @@
     <%
       } %>  
 	    <ul class="sub">
-		    <%if(urlString.Contains("/New/"))
+		    <%if(urlString.Contains("/News/"))
         {%>   
         <li class="sub_show">
         <%}else{%>
         <li>
         <%
-          } %><a href="<%=ResolveUrl("~")%>Manage/New/Create">News</a></li>
+          } %><a href="<%=ResolveUrl("~")%>ManageWeb/News/Create">News</a></li>
 		    <%if(urlString.Contains("/Contact/"))
         {%>   
         <li class="sub_show">
         <%}else{%>
         <li>
         <%
-          } %><a href="<%=ResolveUrl("~")%>Manage/Contact/Create">Contacts</a></li>
+          } %><a href="<%=ResolveUrl("~")%>ManageWeb/Contact/Create">Contacts</a></li>
 	    </ul>
     </div>
     <!--[if lte IE 6]></td></tr></table></a><![endif]-->

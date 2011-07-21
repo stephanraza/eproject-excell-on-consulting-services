@@ -18,6 +18,7 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
 {
     private EmployeeBusiness EB;
     private DepartmentBusiness DB;
+    private AccountBusiness AB;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,19 +27,114 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
         pnlYellow.Visible = false;
         pnlBlue.Visible = false;
 
+        EB = new EmployeeBusiness();
+        DB = new DepartmentBusiness();
+        AB = new AccountBusiness();
+
+        GetRouteData();
         loadData();
-        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+        if (IsPostBack)
+        {
+            String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+        }
+        else
+        {
+            ddlSearchBy.Items.Clear();
+            ddlSearchBy.Items.Add("All");
+            if (IsAdmin())
+                ddlSearchBy.Items.Add("Account");
+            ddlSearchBy.Items.Add("Employee");
+            ddlSearchBy.Items.Add("Department");
+        }
+    }
+
+    private void GetRouteData()
+    {
+        String id = "";
+
+        if (RouteCollectionExtensions.RouteData != null)
+        {
+            if (RouteCollectionExtensions.RouteData.Values["id"] != null)
+            {
+                id = RouteCollectionExtensions.RouteData.Values["id"] as String;
+            }
+        }
+
+        String value = "";
+        if (Session["return"] != null)
+            value = Session["return"].ToString();
+
+        if (!String.IsNullOrEmpty(value))
+        {
+            if (value.Equals("null"))
+            {
+                pnlYellow.Visible = true;
+                lblMessage.Text = "You must choose an employee to modify or view details.";
+                hplnkYellow.NavigateUrl = "";
+                hplnkYellow.Text = "Close and continue.";
+            }
+            else if (value.Equals("Emodify"))
+            {
+                pnlGreen.Visible = true;
+                lblSuccess.Text = "Employee's information has been modified successfully.";
+                hplnkGreen.Text = "View detail.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Display/" + id;
+            }
+            else if (value.Equals("Amodify"))
+            {
+                pnlGreen.Visible = true;
+                lblSuccess.Text = "Account's information has been modified successfully.";
+                hplnkGreen.Text = "View detail.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Display/" + id;
+            }
+            else if (value.Equals("Aremove"))
+            {
+                pnlGreen.Visible = true;
+                lblSuccess.Text = "An account has been removed successfully, this data could be restored from Trash.";
+                hplnkGreen.Text = "Go to trash.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Trash";
+            }
+            Session.Remove("return");
+        }
+    }
+    protected bool IsAdmin()
+    {
+        return AB.IsAdmin(Page.User.Identity.Name);
+    }
+    protected String GetURL(Object data)
+    {
+        return WebHelper.Instance.GetImageURL(data.ToString(), 48, 48, true);
+    }
+    protected String GetAccountURL(Object data)
+    {
+        String url = WebHelper.Instance.GetURL() + "ManageSystem/Account/Display/" + data.ToString();
+        return url;
+    }
+    protected String GetEmployeeURL(Object data)
+    {
+        String url = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Display/" + data.ToString();
+        return url;
+    }
+    protected String GetDepartmentURL(Object data)
+    {
+        String url = WebHelper.Instance.GetURL() + "ManageSystem/Department/Display/" + data.ToString();
+        return url;
+    }
+    protected String GetEmployeeModifyURL(Object data)
+    {
+        String url = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + data.ToString();
+        return url;
     }
     private void loadData()
     {
-        List<EmployeeOfDepartment> listEmployee = EB.SearchEmployee(txtSearch.Text.Trim(), false);
+        List<EmployeeDetail> listEmployee = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, false);
         grvManage.DataSource = listEmployee;
         grvManage.DataBind();
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        List<EmployeeOfDepartment> listSearch = EB.SearchEmployee(txtSearch.Text.Trim(), false);
+        List<EmployeeDetail> listSearch = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, false);
         grvManage.DataSource = listSearch;
         grvManage.DataBind();
         if (grvManage.Rows.Count == 0)
@@ -46,69 +142,6 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
             pnlRed.Visible = true;
             lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
         }
-    }
-    protected void grvManage_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        try
-        {
-            e.Cancel = true;
-            frmManage.ChangeMode(frmManage.DefaultMode);
-            Label lblId = (Label)grvManage.Rows[e.RowIndex].FindControl("lblId");
-
-            EB.RemoveEmployee(new Guid(lblId.Text));
-
-            pnlGreen.Visible = true;
-            lblSuccess.Text = "An employee has been removed successfully, this data could be restored from Trash.";
-            loadData();
-        }
-        catch (Exception ex)
-        {
-            pnlRed.Visible = true;
-            lblError.Text = ex.Message;
-        }
-    }
-    protected void grvManage_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        frmManage.ChangeMode(FormViewMode.Edit);
-        Label lblId = (Label)grvManage.Rows[grvManage.SelectedIndex].FindControl("lblId");
-        Employee employee = EB.GetEmployee(new Guid(lblId.Text.Trim()));
-        Department department = DB.GetDepartment(employee.Department_Id);
-
-        EmployeeOfDepartment eod = new EmployeeOfDepartment();
-        eod.Employee_Id = employee.Employee_Id;
-        eod.Employee_FirtName = employee.Employee_FirtName;
-        eod.Employee_LastName = employee.Employee_LastName;
-        eod.Employee_Gender = employee.Employee_Gender;
-        eod.Employee_DateOfBirth = employee.Employee_DateOfBirth;
-        eod.Employee_Address = employee.Employee_Address;
-        eod.Employee_PhoneNumber = employee.Employee_PhoneNumber;
-        eod.Employee_Email = employee.Employee_Email;
-        eod.Employee_Avatar = employee.Employee_Avatar;
-        eod.Employee_IsDelete = employee.Employee_IsDelete;
-
-        eod.Department_Id = department.Department_Id;
-        eod.Department_Name = department.Department_Name;
-        eod.Department_Description = department.Department_Description;
-        eod.Department_IsDelete = department.Department_IsDelete;
-
-        List<EmployeeOfDepartment> list = new List<EmployeeOfDepartment>();
-        list.Add(eod);
-        frmManage.DataSource = list;
-        frmManage.DataBind();
-        frmManage.PageIndex = 1;
-        RadioButtonList radModifyGender = (RadioButtonList)frmManage.FindControl("radModifyGender");
-        DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlModifyDepartment");
-        TextBox txtDate = (TextBox)frmManage.FindControl("txtModifyDOB");
-        ImageButton imgbtn = (ImageButton)frmManage.FindControl("imgAvatar");
-
-        if (eod.Employee_Gender)
-            radModifyGender.SelectedIndex = 0;
-        else
-            radModifyGender.SelectedIndex = 1;
-        imgbtn.ImageUrl = WebHelper.Instance.GetImageURL(eod.Employee_Avatar, 128, 128, false);
-        ddlDepartment.Text = eod.Department_Name;
-        txtDate.Text = eod.Employee_DateOfBirth.ToShortDateString();
-        
     }
     protected void grvManage_Sorting(object sender, GridViewSortEventArgs e)
     {
@@ -130,173 +163,133 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
     {
 
     }
-    protected void UpdateButton_Click(object sender, EventArgs e)
+    protected void imgbtnRemove_Click(object sender, ImageClickEventArgs e)
     {
-        if (IsValid)
+        try
         {
-            try
-            {
-                EmployeeBusiness EB = new EmployeeBusiness();
-                TextBox txtEmail = (TextBox)frmManage.FindControl("txtModifyEmail");
-                FileUpload fuAvatar = (FileUpload)frmManage.FindControl("fuModifyAvatar");
-                RadioButtonList radListGender = (RadioButtonList)frmManage.FindControl("radModifyGender");
-                DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlModifyDepartment");
-                TextBox txtFirstName = (TextBox)frmManage.FindControl("txtFName");
-                TextBox txtLastName = (TextBox)frmManage.FindControl("txtLName");
-                TextBox txtDOB = (TextBox)frmManage.FindControl("txtModifyDOB");
-                TextBox txtAddress = (TextBox)frmManage.FindControl("txtModifyAddress");
-                TextBox txtPhoneNumber = (TextBox)frmManage.FindControl("txtModifyPhoneNumber");
+            ImageButton ibRemove = (ImageButton)sender;
+            HiddenField hf = (HiddenField)ibRemove.FindControl("hfEmployeeId");
 
-                Label lblId = (Label)grvManage.Rows[grvManage.SelectedIndex].FindControl("lblId");
-                Employee employee = EB.GetEmployee(new Guid(lblId.Text.Trim()));
-                if (EB.IsExist(txtEmail.Text.Trim()) && !employee.Employee_Email.Equals(txtEmail.Text.Trim()))
-                {
-                    pnlRed.Visible = true;
-                    lblError.Text = "This email have already used.";
-                    return;
-                }
+            EB.RemoveEmployee(new Guid(hf.Value));
 
-                String data = "";
-                if (fuAvatar.HasFile)
-                {
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(fuAvatar.PostedFile.InputStream);
-                    data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
-                }
-                else
-                {
-                    data = employee.Employee_Avatar;
-                }
-                EB.UpdateEmployee(employee.Employee_Id, txtFirstName.Text.Trim(), txtLastName.Text.Trim(),txtEmail.Text.Trim(),txtAddress.Text.Trim(),txtPhoneNumber.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), data);
+            pnlGreen.Visible = true;
+            lblSuccess.Text = "An employee has been removed successfully, this data could be restored from Trash.";
+            hplnkGreen.Text = "Go to trash.";
+            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Trash";
+            loadData();
+        }
+        catch (Exception ex)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = ex.Message;
+        }
+    }
+    protected void imgbtnEditAccount_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton ibRemove = (ImageButton)sender;
+        HiddenField hf = (HiddenField)ibRemove.FindControl("hfEmployeeId");
 
-                pnlGreen.Visible = true;
-                lblSuccess.Text = "Create new an employee successfully.";
-                frmManage.ChangeMode(frmManage.DefaultMode);
-                loadData();
-            }
-            catch (Exception ex)
+        Account account = AB.GetAccountOfEmployee(new Guid(hf.Value));
+        Account accountLoggedIn = AB.GetAccount(Page.User.Identity.Name);
+        if (account != null)
+        {
+            if (account.Account_Id == accountLoggedIn.Account_Id)
             {
                 pnlRed.Visible = true;
-                lblError.Text = ex.Message;
+                lblError.Text = "You don't have permission to execute this task.";
+                hplnkYellow.NavigateUrl = "";
+                hplnkYellow.Text = "Close and continue.";
+                return;
             }
-
+            if (account.Account_IsDelete)
+            {
+                pnlYellow.Visible = true;
+                lblMessage.Text = "This account has been removed. You could restore it from Trash.";
+                hplnkYellow.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Trash";
+                hplnkYellow.Text = "Go to Trash.";
+                return;
+            }
+            Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Account/Modify/" + account.Account_Id);
         }
-    }
-    protected void btnSubmit_Click(object sender, EventArgs e)
-    {
-        if (IsValid)
+        else
         {
-            try
-            {
-                EmployeeBusiness EB = new EmployeeBusiness();
-                TextBox txtEmail = (TextBox)frmManage.FindControl("txtEmail");
-                FileUpload fuAvatar = (FileUpload)frmManage.FindControl("fuAvatar");
-                RadioButtonList radListGender = (RadioButtonList)frmManage.FindControl("radListGender");
-                DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlDepartment");
-                TextBox txtFirstName = (TextBox)frmManage.FindControl("txtFirstName");
-                TextBox txtLastName = (TextBox)frmManage.FindControl("txtLastName");
-                TextBox txtDOB = (TextBox)frmManage.FindControl("txtDOB");
-                TextBox txtAddress = (TextBox)frmManage.FindControl("txtAddress");
-                TextBox txtPhoneNumber = (TextBox)frmManage.FindControl("txtPhoneNumber");
-
-                if (EB.IsExist(txtEmail.Text.Trim()))
-                {
-                    pnlRed.Visible = true;
-                    lblError.Text = "This email have already used.";
-                    return;
-                }
-
-                String filePath = "";
-                System.Drawing.Image image;
-                if (fuAvatar.HasFile)
-                {
-                    image = System.Drawing.Image.FromStream(fuAvatar.PostedFile.InputStream);
-                }
-                else
-                {
-                    if (radListGender.Text.Equals("Male"))
-                        filePath = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/male.png";
-                    else if (radListGender.Text.Equals("Female"))
-                        filePath = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/female.png";
-
-                    image = System.Drawing.Image.FromFile(filePath);
-                }
-
-                String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
-                EB.CreateEmployee(Guid.NewGuid(), ddlDepartment.Text.Trim(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), txtEmail.Text.Trim(), data);
-
-                pnlGreen.Visible = true;
-                lblSuccess.Text = "Create new an employee successfully.";
-                loadData();
-                Reset();
-            }
-            catch (Exception ex)
-            {
-                pnlRed.Visible = true;
-                lblError.Text = ex.Message;
-            }
-
+            pnlYellow.Visible = true;
+            lblMessage.Text = "This employee has not registered an account.";
+            hplnkYellow.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Create/" + hf.Value;
+            hplnkYellow.Text = "Create account.";
+            return;
         }
     }
-    private void Reset()
+    protected void ddlSearchBy_SelectedIndexChanged(object sender, EventArgs e)
     {
-        TextBox txtEmail = (TextBox)frmManage.FindControl("txtEmail");
-        RadioButtonList radListGender = (RadioButtonList)frmManage.FindControl("radListGender");
-        DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlDepartment");
-        TextBox txtFirstName = (TextBox)frmManage.FindControl("txtFirstName");
-        TextBox txtLastName = (TextBox)frmManage.FindControl("txtLastName");
-        TextBox txtDOB = (TextBox)frmManage.FindControl("txtDOB");
-        TextBox txtAddress = (TextBox)frmManage.FindControl("txtAddress");
-        TextBox txtPhoneNumber = (TextBox)frmManage.FindControl("txtPhoneNumber");
-
-        txtEmail.Text = "";
-        radListGender.SelectedIndex = 0;
-        ddlDepartment.SelectedIndex = 0;
-        txtFirstName.Text = "";
-        txtLastName.Text = "";
-        txtDOB.Text = "";
-        txtAddress.Text = "";
-        txtPhoneNumber.Text = "";
-    }
-    protected override void OnInit(EventArgs e)
-    {
-        EB = new EmployeeBusiness();
-        DB = new DepartmentBusiness();
-
-        frmManage.ItemCreated += new EventHandler(frmManage_ItemCreated);
-        base.OnInit(e);
-    }
-    void frmManage_ItemCreated(object sender, EventArgs e)
-    {
-        if (frmManage.CurrentMode == FormViewMode.Insert)
+        DropDownList ddl = (DropDownList)sender;
+        if (ddl.Text.Equals("Account"))
         {
-            lblTextBoxId.Text = ((TextBox)frmManage.FindControl("txtDOB")).ClientID;
-            CompareValidator cv = (CompareValidator)frmManage.FindControl("CompareValidator1");
-            DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlDepartment");
-
-            cv.ValueToCompare = DateTime.Now.Date.ToShortDateString();
-            ddlDepartment.Items.Add("Select department");
-            foreach (String item in DB.GetDepartmentNames())
-            {
-                ddlDepartment.Items.Add(item);
-            }
+            pnlSearchByAccount.Visible = true;
+            HiddenPanelEmployee();
         }
-        else if (frmManage.CurrentMode == FormViewMode.Edit)
+        else if (ddl.Text.Equals("Employee"))
         {
-            lblTextBoxId.Text = ((TextBox)frmManage.FindControl("txtModifyDOB")).ClientID;
-            CompareValidator cv = (CompareValidator)frmManage.FindControl("CompareValidator");
-            DropDownList ddlDepartment = (DropDownList)frmManage.FindControl("ddlModifyDepartment");
+            HiddenPanelAccount();
+            pnlSearchByEmployee.Visible = true;
+        }
+        else
+        {
+            HiddenPanelAccount();
+            HiddenPanelEmployee();
+        }
 
-            cv.ValueToCompare = DateTime.Now.Date.ToShortDateString();
-            ddlDepartment.Items.Add("Select department");
-            foreach (String item in DB.GetDepartmentNames())
-            {
-                ddlDepartment.Items.Add(item);
-            }
+    }
+    private void HiddenPanelAccount()
+    {
+        ddlAdvanvedStatus.SelectedIndex = 0;
+        pnlSearchByAccount.Visible = false;
+    }
+    private void HiddenPanelEmployee()
+    {
+        ddlAdvancedGender.SelectedIndex = 0;
+        txtAdvancedFromDate.Text = "";
+        txtAdvancedToDate.Text = "";
+        pnlSearchByEmployee.Visible = false;
+    }
+    protected void ddlAdvanvedStatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            List<EmployeeDetail> list = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, ddlAdvanvedStatus.Text, false);
+            grvManage.DataSource = list;
+            grvManage.DataBind();
+        }
+        catch (Exception ex)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = ex.Message;
         }
     }
-    protected void frmManage_ModeChanging(object sender, FormViewModeEventArgs e)
+    protected void ddlAdvancedGender_SelectedIndexChanged(object sender, EventArgs e)
     {
-        e.Cancel = true;
-        frmManage.ChangeMode(frmManage.DefaultMode);
+        SearchByEmployee();
+    }
+    private void SearchByEmployee()
+    {
+        try
+        {
+            List<EmployeeDetail> list = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, ddlAdvancedGender.Text, txtAdvancedFromDate.Text, txtAdvancedToDate.Text, false);
+            grvManage.DataSource = list;
+            grvManage.DataBind();
+        }
+        catch (Exception ex)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = ex.Message;
+        }
+    }
+    protected void txtAdvancedFromDate_TextChanged(object sender, EventArgs e)
+    {
+        SearchByEmployee();
+    }
+    protected void txtAdvancedToDate_TextChanged(object sender, EventArgs e)
+    {
+        SearchByEmployee();
     }
 }

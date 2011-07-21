@@ -34,6 +34,8 @@ namespace Eproject.ECS.Bll
             Account acc = AD.GetAccount(userName);
             if (acc!=null && SecurityHelper.Instance.VerifyMd5Hash(password, acc.Account_Password))
             {
+                if (acc.Account_IsDelete || acc.Account_IsLocked)
+                    return false;
                 return true;
             }
             else
@@ -162,8 +164,10 @@ namespace Eproject.ECS.Bll
         public void UpdateAccount(Guid accId, String password, String roleName, bool isLocked, bool IsDelete)
         {
             Account updateAcc = GetAccount(accId);
-            updateAcc.Role_Name = roleName;
-            updateAcc.Account_Password = password;
+            if (roleName != null)
+                updateAcc.Role_Name = roleName;
+            if (password != null)
+                updateAcc.Account_Password = SecurityHelper.Instance.GetMd5Hash(password);
             updateAcc.Account_IsLocked = isLocked;
             updateAcc.Account_IsDelete = IsDelete;
 
@@ -242,7 +246,12 @@ namespace Eproject.ECS.Bll
                 throw new Exception("An error occurred while executing this operation.");
             }
         }
-
+        /// <summary>
+        /// Change password for account.
+        /// </summary>
+        /// <param name="userName">User name of the account.</param>
+        /// <param name="oldPass">Old password.</param>
+        /// <param name="newPass">New password.</param>
         public void ChangePassword(String userName,String oldPass, String newPass)
         {
             try
@@ -264,6 +273,50 @@ namespace Eproject.ECS.Bll
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Check role of the account is administrator or not.
+        /// </summary>
+        /// <param name="userName">User name of the account.</param>
+        /// <returns>True if role is administrator, false otherwise.</returns>
+        public bool IsAdmin(String userName)
+        {
+            Account account = AD.GetAccount(userName);
+            if (account != null && account.Role_Name.Equals("Administrator"))
+                    return true;
+            return false;
+        }
+        /// <summary>
+        /// Advance search for searching accounts.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <param name="status">Status of these accounts for searching.</param>
+        /// <param name="isDelete">True if these accounts are deleted, false otherwise.</param>
+        /// <returns>List of accounts.</returns>
+        public List<Account> SearchAccount(String content, String status, bool isDelete)
+        {
+            try
+            {
+                String conditionStatus = " AND Account_IsLocked = '{0}'";
+                if (status.Equals("Locked"))
+                    conditionStatus = String.Format(conditionStatus, true);
+                else if (status.Equals("Unlocked"))
+                    conditionStatus = String.Format(conditionStatus, false);
+                else
+                    conditionStatus = "";
+
+                String searchByAccount = "(Role_Name LIKE N'%{0}%'"
+                                   + " OR Account_UserName LIKE N'%{0}%')";
+
+                content = content.Replace("'", " ");
+                searchByAccount = String.Format(searchByAccount, content);
+                String where = searchByAccount + conditionStatus + " AND ";
+                return AD.Search(where, isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<Account>();
             }
         }
     }
