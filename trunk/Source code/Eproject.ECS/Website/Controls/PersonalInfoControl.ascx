@@ -41,10 +41,6 @@
                                     </tr>
                                 </table>
                                 <br />
-		                        <ul class="greyarrow"> 
-			                        <li>
-                                        <asp:HyperLink ID="hplnkModifyAccount" runat="server">Click here modify account</asp:HyperLink></li>
-		                        </ul>
 	                        </div>
 	                        <div class="clear"></div>
 				            

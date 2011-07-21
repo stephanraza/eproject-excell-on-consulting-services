@@ -1,7 +1,6 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="CreateAccount.aspx.cs" Inherits="Administrator_CreateAccount" Title="Untitled Page" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="CreateAccount.aspx.cs" Inherits="Administrator_CreateAccount" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <title>Excell-on Consulting Services</title>
     <script type="text/javascript" language="javascript">
         function ckbDefaultPassword(){
             if(document.<%=Form.ClientID %>.<%=ckbDefaultPassword.ClientID %>.checked)
@@ -18,16 +17,6 @@
                 document.<%=Form.ClientID %>.<%=txtPassword.ClientID %>.value = "";
                 document.<%=Form.ClientID %>.<%=txtConfirmPassword.ClientID %>.value = "";
             }
-        }
-        
-        function reset()
-        {
-            document.getElementById(<%=ddlEmployeeEmail.ClientID %>).options(0).selected = true;
-            document.<%=Form.ClientID %>.<%=txtUserName.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=txtConfirmPassword.ClientID %>.value = "";
-            document.<%=Form.ClientID %>.<%=ckbDefaultPassword.ClientID %>.checked = false;
-            document.getElementById(<%=ddlRole.ClientID %>).options(0).selected = true;
         }
     </script>
     </asp:Content>
@@ -66,7 +55,7 @@
                             Create details</a></div>
 			            <div class="step-dark-right">&nbsp;</div>
 			            <div class="step-no-off">2</div>
-			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Account/Manage">
+			            <div class="step-light-left"><a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Manage">
                             Manage accounts</a></div>
 			            <div class="step-light-right">&nbsp;</div>
 			            <div class="step-no-off">3</div>
@@ -81,7 +70,7 @@
 		            </div>
 		            <!--  end step-holder -->
             	
-    	        <!--  start message-yellow -->
+    	                <!--  start message-yellow -->
     	                <asp:Panel ID="pnlYellow" runat="server" Visible="false">
 				            <div id="message-yellow">
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -100,9 +89,8 @@
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 					            <td class="red-left">
-                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
-                                    and try again.</a></td>
-					            <td class="red-right"><asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
+                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink ID="hplnkRed" runat="server" CssClass="close-red">Please try again.</asp:HyperLink></td>
+					            <td class="red-right"><asp:HyperLink ID="hplnkRedClose" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
 				            </table>
@@ -123,21 +111,22 @@
 				            </div>
 				        </asp:Panel>
 				        <!--  end message-blue -->
+				        
 				        <!--  start message-green -->
 				        <asp:Panel ID="pnlGreen" runat="server" Visible="false">
 				            <div id="message-green">
 				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
 				            <tr>
 				            <td class="green-left">
-                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add 
-                                    new one.</a></td>
-					            <td class="green-right"><asp:HyperLink ID="HyperLink5" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
+                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink ID="hplnkGreen" runat="server" CssClass="close-green">Add new one.</asp:HyperLink></td>
+					            <td class="green-right"><asp:HyperLink ID="hplnkGreenClose" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
 				                </td>
 				            </tr>
 				            </table>
 				            </div>
 				        </asp:Panel>
 				        <!--  end message-green -->
+				        
 		            <!-- start id-form -->   
 		                    <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 		                    <tr>
@@ -225,7 +214,8 @@
 		                    <td valign="top">
                                 <asp:Button ID="btnSubmit" runat="server" Text="" CssClass="form-submit" 
                                     onclick="btnSubmit_Click"/>
-                                <input id="btnReset" type="button" value="Reset" onclick='reset();' class="form-reset" />
+                                <asp:Button ID="btnReset" runat="server" Text="" CssClass="form-reset" onclick="btnReset_Click" 
+                                    />
 		                    </td>
 		                    <td></td>
 	                    </tr>
@@ -318,7 +308,7 @@
                                 </table>                
         					    <br />
 					            <ul class="greyarrow"> 
-						            <li><a href="">Click here modify profile</a> </li>
+						            <li><asp:HyperLink ID="hplnkModifyProfile" runat="server">Click here modify profile</asp:HyperLink></li>
 					            </ul>
 				            </div>
             				
@@ -348,7 +338,7 @@
                                 </table>
                                 <br />
 					            <ul class="greyarrow"> 
-						            <li><a href="">Click here modify department</a> </li>
+						            <li><asp:HyperLink ID="hpnlnkModifyDepartment" runat="server">Click here modify department</asp:HyperLink></li>
 					            </ul>
 				            </div>
 				            <div class="clear"></div>

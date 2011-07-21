@@ -142,5 +142,24 @@ namespace Eproject.ECS.Dal
         {
             return DBHelper.Instance.Delete("Account", String.Format("Account_Id = '{0}'", account.Account_Id.ToString()));
         }
+        /// <summary>
+        /// Search accounts by anything.
+        /// </summary>
+        /// <param name="where">Condition for searching.</param>
+        /// <returns>List of employee.</returns>
+        public List<Account> Search(String where, bool isDelete)
+        {
+            List<Account> list = new List<Account>();
+            List<Object> listObj = DBHelper.Instance.Select("Account", String.Format("{0} Account_IsDelete = '{1}'", where, isDelete), null, -1, -1);
+            if (listObj.Count != 0)
+            {
+                foreach (Object item in listObj)
+                {
+                    Account acc = (Account)item;
+                    list.Add(acc);
+                }
+            }
+            return list;
+        }
     }
 }

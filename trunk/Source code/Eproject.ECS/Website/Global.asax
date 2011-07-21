@@ -9,32 +9,48 @@
         routes.MapPageRoute("Default", "Login", "~/Default.aspx");
         routes.MapPageRoute("MyAccount", "Account", "~/MyAccount.aspx");
 
-        routes.MapPageRoute("CreateAccount", "ManageSystem/Account/Create", "~/Administrator/CreateAccount.aspx");
+        routes.MapPageRoute("CreateAccount", "ManageSystem/Account/Create/{id}", "~/Administrator/CreateAccount.aspx",
+            new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("ManageAccount", "ManageSystem/Account/Manage", "~/Administrator/ManageAccount.aspx");
         routes.MapPageRoute("ModifyAccount", "ManageSystem/Account/Modify/{id}", "~/Administrator/ModifyAccount.aspx",
             new RouteValueDictionary { { "id", "" } });
-
+        routes.MapPageRoute("DisplayAccount", "ManageSystem/Account/Display/{id}", "~/Administrator/DisplayAccount.aspx",
+            new RouteValueDictionary { { "id", "" } });
+        routes.MapPageRoute("TrashAccount", "ManageSystem/Account/Trash", "~/Administrator/TrashAccount.aspx");
+        
         routes.MapPageRoute("CreateDepartment", "ManageSystem/Department/Create", "~/HRManager/CreateDepartment.aspx");
+        routes.MapPageRoute("ModifyDepartment", "ManageSystem/Department/Modify", "~/HRManager/ModifyDepartment.aspx");
         routes.MapPageRoute("ManageDepartment", "ManageSystem/Department/Manage", "~/HRManager/ManageDepartment.aspx");
         routes.MapPageRoute("TrashDepartment", "ManageSystem/Department/Trash", "~/HRManager/TrashDepartment.aspx");
 
         routes.MapPageRoute("CreateEmployee", "ManageSystem/Employee/Create", "~/HRManager/CreateEmployee.aspx");
-        routes.MapPageRoute("ManageEmployee", "ManageSystem/Employee/Manage", "~/HRManager/ManageEmployee.aspx");
+        routes.MapPageRoute("ManageEmployee", "ManageSystem/Employee/Manage/{id}", "~/HRManager/ManageEmployee.aspx",
+            new RouteValueDictionary { { "id", "" }});
+        routes.MapPageRoute("ModifyEmployee", "ManageSystem/Employee/Modify/{id}", "~/HRManager/ModifyEmployee.aspx",
+            new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("TrashEmployee", "ManageSystem/Employee/Trash", "~/HRManager/TrashEmployee.aspx");
 
         routes.MapPageRoute("CreateService", "ManageService/Service/Create", "~/ServiceManager/CreateService.aspx");
         routes.MapPageRoute("ManageService", "ManageService/Service/Manage", "~/ServiceManager/ManageService.aspx");
+        routes.MapPageRoute("ModifyService", "ManageSystem/Service/Modify", "~/ServiceManager/ModifyService.aspx");
         routes.MapPageRoute("TrashService", "ManageService/Service/Trash", "~/ServiceManager/TrashService.aspx");
 
         routes.MapPageRoute("CreateOrder", "ManageService/Order/Create", "~/ServiceEmployee/CreateOrder.aspx");
         routes.MapPageRoute("ManageOrder", "ManageService/Order/Manage", "~/ServiceEmployee/ManageOrder.aspx");
+        routes.MapPageRoute("ModifyOrder", "ManageService/Order/Modify", "~/ServiceEmployee/ModifyOrder.aspx");
         routes.MapPageRoute("TrashOrder", "ManageService/Order/Trash", "~/ServiceEmployee/TrashOrder.aspx");        
 
         routes.MapPageRoute("CreateCustomer", "ManageService/Customer/Create", "~/ServiceEmployee/CreateCustomer.aspx");
         routes.MapPageRoute("ManageCustomer", "ManageService/Customer/Manage", "~/ServiceEmployee/ManageCustomer.aspx");
+        routes.MapPageRoute("ModifyCustomer", "ManageSystem/Customer/Modify", "~/ServiceEmployee/ModifyCustomer.aspx");
+        routes.MapPageRoute("TrashCustomer", "ManageService/Customer/Trash", "~/ServiceEmployee/TrashCustomer.aspx");
 
-        routes.MapPageRoute("CreateDealer", "ManageService/Dealer/Create", "~/ServiceEmployee/CreateDealer.aspx");
-        routes.MapPageRoute("ManageDealer", "ManageService/Dealer/Manage", "~/ServiceEmployee/ManageDealer.aspx");          
+        routes.MapPageRoute("CreateProduct", "ManageService/Product/Create", "~/ServiceEmployee/CreateProduct.aspx");
+        routes.MapPageRoute("ManageProduct", "ManageService/Product/Manage/{return}", "~/ServiceEmployee/ManageProduct.aspx",
+            new RouteValueDictionary { { "return", "" } });
+        routes.MapPageRoute("ModifyProduct", "ManageService/Product/Modify/{id}", "~/ServiceEmployee/ModifyProduct.aspx",
+            new RouteValueDictionary { { "id", "" } });
+        routes.MapPageRoute("TrashProduct", "ManageService/Product/Trash", "~/ServiceEmployee/TrashProduct.aspx");
 
         routes.MapPageRoute("CreateCompany", "ManageService/Company/Create", "~/ServiceEmployee/CreateCompany.aspx");
         routes.MapPageRoute("ManageCompany", "ManageService/Company/Manage/{return}", "~/ServiceEmployee/ManageCompany.aspx",
@@ -50,12 +66,15 @@
             new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("TrashProblem", "ManageService/Problem/Trash", "~/ServiceEmployee/TrashProblem.aspx");
 
-        routes.MapPageRoute("CreateProduct", "ManageService/Product/Create", "~/ServiceEmployee/CreateProduct.aspx");
-        routes.MapPageRoute("ManageProduct", "ManageService/Product/Manage/{return}", "~/ServiceEmployee/ManageProduct.aspx",
-            new RouteValueDictionary { { "return", "" } });
-        routes.MapPageRoute("ModifyProduct", "ManageService/Product/Modify/{id}", "~/ServiceEmployee/ModifyProduct.aspx",
-            new RouteValueDictionary { { "id", "" } });
-        routes.MapPageRoute("TrashProduct", "ManageService/Product/Trash", "~/ServiceEmployee/TrashProduct.aspx");
+        routes.MapPageRoute("CreateNews", "ManageWeb/News/Create", "~/Employee/CreateNews.aspx");
+        routes.MapPageRoute("ManageNews", "ManageWeb/News/Manage", "~/Employee/ManageNews.aspx");
+        routes.MapPageRoute("ModifyNews", "ManageWeb/News/Modify", "~/Employee/ModifyNews.aspx");
+        routes.MapPageRoute("TrashNews", "ManageWeb/News/Trash", "~/Employee/TrashNews.aspx");
+
+        routes.MapPageRoute("CreateContact", "ManageWeb/Contact/Create", "~/Employee/CreateContact.aspx");
+        routes.MapPageRoute("ManageContact", "ManageWeb/Contact/Manage", "~/Employee/ManageContact.aspx");
+        routes.MapPageRoute("ModifyContact", "ManageWeb/Contact/Modify", "~/Employee/ModifyContact.aspx");
+        routes.MapPageRoute("TrashContact", "ManageWeb/Contact/Trash", "~/Employee/TrashContact.aspx");
     }
 
     void Application_Start(object sender, EventArgs e)

@@ -69,22 +69,23 @@ namespace Eproject.ECS.Bll
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<String> GetEmailNotRegister()
+        public List<Employee> GetEmployeesNotRegistered()
         {
             try
             {
-                List<String> listEmail = new List<String>();
+                List<Employee> list = new List<Employee>();
+                List<Object> listObj = ED.GetEmployeesNotRegistered();
 
-                foreach (Object item in ED.GetEmployeesNotRegister())
+                foreach (Object item in listObj)
                 {
                     Employee employee = (Employee)item;
-                    listEmail.Add(employee.Employee_Email);
+                    list.Add(employee);
                 }
-                return listEmail;
+                return list;
             }
             catch (Exception ex)
             {
-                return new List<String>();
+                return new List<Employee>();
             }
         }
         /// <summary>
@@ -144,10 +145,11 @@ namespace Eproject.ECS.Bll
         /// <param name="gender"></param>
         /// <param name="dob"></param>
         /// <param name="data"></param>
-        public void UpdateEmployee(Guid employeeId, String fName, String lName, String email, String address, String phone, String gender, String dob, String data)
+        public void UpdateEmployee(Guid employeeId, Guid departmentId, String fName, String lName, String email, String address, String phone, String gender, String dob, String data)
         {
             Employee employee = ED.GetEmployee(employeeId);
 
+            employee.Department_Id = departmentId;
             if (fName != null)
                 employee.Employee_FirtName = fName;
             if (lName != null)
@@ -276,19 +278,143 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
+        /// Filter while searching
+        /// </summary>
+        /// <param name="searchBy">Searching by filter.</param>
+        /// <returns>String for searching.</returns>
+        private String SearchBy(String searchBy)
+        {
+            String result = "";
+            String searchByEmployee = "e.Employee_FirtName LIKE N'%{0}%' OR e.Employee_LastName LIKE N'%{0}%'"
+                                    + " OR e.Employee_Address LIKE N'%{0}%' OR e.Employee_PhoneNumber LIKE N'%{0}%'"
+                                    + " OR e.Employee_Email LIKE N'%{0}%'";
+            String searchByAccount = "a.Role_Name LIKE N'%{0}%'"
+                                   + " OR a.Account_UserName LIKE N'%{0}%'";
+            String searchByDepartment = "d.Department_Name LIKE N'%{0}%'"
+                                      + " OR d.Department_Description LIKE N'%{0}%'";
+            if (searchBy.Equals("Employee"))
+                result = searchByEmployee;
+            else if (searchBy.Equals("Account"))
+                result = searchByAccount;
+            else if (searchBy.Equals("Department"))
+                result = searchByDepartment;
+            else if (String.IsNullOrEmpty(searchBy) || searchBy.Equals("All"))
+            {
+                result = searchByEmployee + " OR " + searchByAccount + " OR " + searchByDepartment;
+            }
+            return result;
+        }
+        /// <summary>
         /// Search employees by anything.
         /// </summary>
         /// <param name="content">Content for searching.</param>
         /// <returns>List of employee.</returns>
-        public List<EmployeeOfDepartment> SearchEmployee(String content, bool isDelete)
+        public List<EmployeeDetail> SearchEmployee(String content, String searchBy, bool isDelete)
         {
             try
             {
-                return ED.Search(content, isDelete);
+                String conditionSearchBy = "({0})";
+                String result = SearchBy(searchBy);
+                if (!String.IsNullOrEmpty(result))
+                    conditionSearchBy = String.Format(conditionSearchBy, result);
+                else
+                    conditionSearchBy = "";
+
+                String where = conditionSearchBy + " AND ";
+                content = content.Replace("'", " ");
+                where = String.Format(where, content);
+
+                return ED.Search(where, isDelete);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return new List<EmployeeDetail>();
+            }
+        }
+        /// <summary>
+        /// Advance search for searching employee.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <param name="gender">Gender of employee.</param>
+        /// <param name="fromDate">Searching birthday in range.</param>
+        /// <param name="toDate">Searching birthday in range.</param>
+        /// <param name="isDelete">True if these employees are deleted, false otherwise.</param>
+        /// <returns>List of employee.</returns>
+        public List<EmployeeDetail> SearchEmployee(String content, String searchBy, String gender, String fromDate, String toDate, bool isDelete)
+        {
+            try
+            {
+                String conditionSearchBy = "({0})";
+                String result = SearchBy(searchBy);
+                if (!String.IsNullOrEmpty(result))
+                    conditionSearchBy = String.Format(conditionSearchBy, result);
+                else
+                    conditionSearchBy = "";
+
+                String conditionGender = " AND e.Employee_Gender = '{0}'";
+                if (gender.Equals("Male"))
+                    conditionGender = String.Format(conditionGender, true);
+                else if (gender.Equals("Female"))
+                    conditionGender = String.Format(conditionGender, false);
+                else
+                    conditionGender = "";
+
+                String conditionDate = " AND e.Employee_DateOfBirth BETWEEN '{0}' AND '{1}'";
+                if (String.IsNullOrEmpty(fromDate))
+                    fromDate = "1/1/1900";
+                if (string.IsNullOrEmpty(toDate))
+                    toDate = DateTime.Now.ToShortDateString();
+                conditionDate = String.Format(conditionDate, fromDate, toDate);
+
+                String where = conditionSearchBy +  " AND ";
+
+                content = content.Replace("'", " ");
+                where = String.Format(where, content);
+                where = where + conditionGender + conditionDate;
+
+                return ED.Search(where, isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<EmployeeDetail>();
+            }
+        }
+        /// <summary>
+        /// Advance search for searching employee.
+        /// </summary>
+        /// <param name="content">Content for searching.</param>
+        /// <param name="status">Status of these accounts for searching.</param>
+        /// <param name="isDelete">True if these employees are deleted, false otherwise.</param>
+        /// <returns>List of employee.</returns>
+        public List<EmployeeDetail> SearchEmployee(String content, String searchBy, String status, bool isDelete)
+        {
+            try
+            {
+                String conditionSearchBy = "({0})";
+                String result = SearchBy(searchBy);
+                if (!String.IsNullOrEmpty(result))
+                    conditionSearchBy = String.Format(conditionSearchBy, result);
+                else
+                    conditionSearchBy = "";
+
+                String conditionStatus = " AND a.Account_IsLocked = '{0}'";
+                if (status.Equals("Locked"))
+                    conditionStatus = String.Format(conditionStatus, true);
+                else if (status.Equals("Unlocked"))
+                    conditionStatus = String.Format(conditionStatus, false);
+                else
+                    conditionStatus = "";
+
+                String where = conditionSearchBy + " AND ";
+
+                content = content.Replace("'", " ");
+                where = String.Format(where, content);
+                where = where + conditionStatus;
+                return ED.Search(where, isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<EmployeeDetail>();
             }
         }
     }

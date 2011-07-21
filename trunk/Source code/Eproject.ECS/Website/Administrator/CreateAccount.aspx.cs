@@ -37,18 +37,44 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
         {
             loadData();
         }
+        GetRouteData();
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
+    private void GetRouteData()
+    {
+        String id = "";
 
+        if (RouteCollectionExtensions.RouteData != null)
+        {
+            if (RouteCollectionExtensions.RouteData.Values["id"] != null)
+            {
+                id = RouteCollectionExtensions.RouteData.Values["id"] as String;
+            }
+        }
+
+        if (!String.IsNullOrEmpty(id))
+        {
+            Employee employee = EB.GetEmployee(new Guid(id));
+            ddlEmployeeEmail.SelectedValue = employee.Employee_Id.ToString();
+            DisplayPanelPreview(employee.Employee_Email);
+        }
+    }
     private void loadData()
     {
-        List<String> listEmail = EB.GetEmailNotRegister();
+        List<Employee> list = EB.GetEmployeesNotRegistered();
+        ddlEmployeeEmail.Items.Clear();
         ddlEmployeeEmail.Items.Add("Select email");
-        foreach (String item in listEmail)
+        foreach (Employee emp in list)
         {
+            ListItem item = new ListItem();
+            item.Text = emp.Employee_Email;
+            item.Value = emp.Employee_Id.ToString();
             ddlEmployeeEmail.Items.Add(item);
         }
 
         List<String> listRole = RB.GetRoleNames();
+        ddlRole.Items.Clear();
         ddlRole.Items.Add("Select role");
         foreach (String item in listRole)
         {
@@ -60,15 +86,13 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
     {
         if (((DropDownList)sender).SelectedIndex != 0)
         {
-            String emailSelected = ((DropDownList)sender).Text;
+            String emailSelected = ((DropDownList)sender).SelectedItem.Text;
             DisplayPanelPreview(emailSelected);
         }
         else
         {
             ResetPanelPreview();
         }
-        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
 
     private void DisplayPanelPreview(String emailSelected)
@@ -93,10 +117,12 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
             lblAddress.Text = employee.Employee_Address;
             lblPhoneNumber.Text = employee.Employee_PhoneNumber;
             lblEmail.Text = employee.Employee_Email;
+            hplnkModifyProfile.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id;
 
             Department department = DB.GetDepartment(employee.Department_Id);
             lblDepartmentName.Text = department.Department_Name;
             lblDescription.Text = department.Department_Description;
+            hpnlnkModifyDepartment.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Modify/" + department.Department_Id;
         }
         catch (NullReferenceException nre)
         {
@@ -131,7 +157,7 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
                 AB.CreateAccount(Guid.NewGuid(), EB.GetEmployee(ddlEmployeeEmail.Text).Employee_Id, txtUserName.Text.Trim(), txtPassword.Text.Trim(), ddlRole.Text.Trim());
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new an account successfully.";
-                ResetPanelPreview();
+                Reset();
             }
             catch (Exception ex)
             {
@@ -141,5 +167,20 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
                 DisplayPanelPreview(ddlEmployeeEmail.Text);
             }
         }
+    }
+    protected void btnReset_Click(object sender, EventArgs e)
+    {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        ddlEmployeeEmail.SelectedIndex = 0;
+        ResetPanelPreview();
+        ckbDefaultPassword.Checked = false;
+        txtUserName.Text = "";
+        txtPassword.Text = "";
+        txtConfirmPassword.Text = "";
+        ddlRole.SelectedIndex = 0;
     }
 }

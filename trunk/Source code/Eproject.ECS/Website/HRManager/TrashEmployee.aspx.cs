@@ -35,13 +35,13 @@ public partial class HRManager_TrashEmployee : System.Web.UI.Page
     }
     private void loadData()
     {
-        List<EmployeeOfDepartment> listEmployee = EB.SearchEmployee(txtSearch.Text.Trim(), true);
+        List<EmployeeDetail> listEmployee = EB.SearchEmployee(txtSearch.Text.Trim(),"", true);
         grvManage.DataSource = listEmployee;
         grvManage.DataBind();
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        List<EmployeeOfDepartment> listSearch = EB.SearchEmployee(txtSearch.Text.Trim(), true);
+        List<EmployeeDetail> listSearch = EB.SearchEmployee(txtSearch.Text.Trim(),"", true);
         grvManage.DataSource = listSearch;
         grvManage.DataBind();
         if (grvManage.Rows.Count == 0)

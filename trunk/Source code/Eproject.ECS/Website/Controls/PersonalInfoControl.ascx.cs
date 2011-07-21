@@ -41,7 +41,6 @@ public partial class Controls_PersonalInfoControl : System.Web.UI.UserControl
         imgAvatar.PostBackUrl = WebHelper.Instance.GetURL() + "Account";
         lblUserName.Text = account.Account_UserName;
         lblRole.Text = account.Role_Name;
-        hplnkModifyAccount.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Modify/" + account.Account_Id.ToString();
         lblFirstName.Text = employee.Employee_FirtName;
         lblLastName.Text = employee.Employee_LastName;
         lblEmail.Text = employee.Employee_Email;

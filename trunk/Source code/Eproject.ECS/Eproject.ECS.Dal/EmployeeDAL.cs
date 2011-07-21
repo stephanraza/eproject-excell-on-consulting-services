@@ -118,58 +118,68 @@ namespace Eproject.ECS.Dal
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Object> GetEmployeesNotRegister()
+        public List<Object> GetEmployeesNotRegistered()
         {
-            return DBHelper.Instance.Select("Employee", "Employee_Id NOT IN(SELECT Employee_Id FROM Account)", null, -1, -1);
+            return DBHelper.Instance.Select("Employee", "Employee_Id NOT IN(SELECT Employee_Id FROM Account) AND Employee_IsDelete = 'False'", null, -1, -1);
         }
         /// <summary>
         /// Search employees by anything.
         /// </summary>
-        /// <param name="content">Content for searching.</param>
+        /// <param name="where">Condition for searching.</param>
         /// <returns>List of employee.</returns>
-        public List<EmployeeOfDepartment> Search(String content, bool isDelete)
+        public List<EmployeeDetail> Search(String where, bool isDelete)
         {
-            String query = "SELECT Employee.Employee_Id,Employee.Department_Id, Employee.Employee_FirtName,"
-                           + "Employee.Employee_LastName, Employee.Employee_Gender,"
-                           + "Employee.Employee_DateOfBirth, Employee.Employee_Address,"
-                           + "Employee.Employee_PhoneNumber, Employee.Employee_Email,"
-                           + "Employee.Employee_Avatar, Employee.Employee_IsDelete,"
-                           + "Department.Department_Name, Department.Department_Description,"
-                           + "Department.Department_IsDelete FROM Employee, Department "
-                           + " WHERE Employee.Department_Id = Department.Department_Id"
-                           + " AND ( Employee_FirtName LIKE N'%{0}%' OR Employee_LastName LIKE N'%{0}%'"
-                           + " OR Employee_Address LIKE N'%{0}%' OR Employee_PhoneNumber LIKE N'%{0}%'"
-                           + " OR Employee_Email LIKE N'%{0}%' OR Department_Name LIKE N'%{0}%'"
-                           + " OR Department_Description LIKE N'%{0}%' ) "
-                           + " AND Employee_IsDelete = '{1}'";
-            if (!isDelete)
-                query += " AND Department_IsDelete = '{1}'";
-            query = String.Format(query, content, isDelete);
+            String query = "SELECT e.Employee_Id, e.Department_Id, a.Account_Id,"
+                           + " e.Employee_FirtName, e.Employee_LastName,"
+                           + " e.Employee_Gender, e.Employee_DateOfBirth,"
+                           + " e.Employee_Address, e.Employee_PhoneNumber,"
+                           + " e.Employee_Email, e.Employee_Avatar,"
+                           + " d.Department_Name, a.Account_UserName, a.Role_Name,"
+                           + " a.Account_IsLocked, a.Account_IsDelete"
+                           + " FROM department d RIGHT JOIN employee e ON d.Department_Id = e.Department_Id"
+                           + " LEFT JOIN Account a ON a.Employee_Id = e.Employee_Id"
+                           + " WHERE {0} e.Employee_IsDelete = '{1}'";
+
+            query = String.Format(query, where, isDelete);
             DBHelper.Instance.OpenConnection();
             SqlDataReader reader = DBHelper.Instance.ExecuteReaderSQL(query);
 
-            List<EmployeeOfDepartment> list = new List<EmployeeOfDepartment>();
+            List<EmployeeDetail> list = new List<EmployeeDetail>();
 
             while (reader.Read())
             {
-                EmployeeOfDepartment eod = new EmployeeOfDepartment();
-                eod.Employee_Id = reader.GetGuid(0);
-                eod.Employee_FirtName = reader.GetString(2);
-                eod.Employee_LastName = reader.GetString(3);
-                eod.Employee_Gender = reader.GetBoolean(4);
-                eod.Employee_DateOfBirth = DateTime.Parse(reader.GetDateTime(5).ToShortDateString());
-                eod.Employee_Address = reader.GetString(6);
-                eod.Employee_PhoneNumber = reader.GetString(7);
-                eod.Employee_Email = reader.GetString(8);
-                eod.Employee_Avatar = reader.GetString(9);
-                eod.Employee_IsDelete = reader.GetBoolean(10);
+                EmployeeDetail employeeDetail = new EmployeeDetail();
+                if (!reader.IsDBNull(0))
+                {
+                    employeeDetail.Employee_Id = reader.GetGuid(0);
+                    employeeDetail.Employee_FullName = reader.GetString(3) + " " + reader.GetString(4);
+                    if (reader.GetBoolean(5))
+                        employeeDetail.Employee_Gender = "Male";
+                    else
+                        employeeDetail.Employee_Gender = "Female";
+                    employeeDetail.Employee_DateOfBirth = reader.GetDateTime(6).ToShortDateString();
+                    employeeDetail.Employee_Address = reader.GetString(7);
+                    employeeDetail.Employee_PhoneNumber = reader.GetString(8);
+                    employeeDetail.Employee_Email = reader.GetString(9);
+                    employeeDetail.Employee_Avatar = reader.GetString(10);
+                }
+                if (!reader.IsDBNull(1))
+                {
+                    employeeDetail.Department_Id = reader.GetGuid(1);
+                    employeeDetail.Department_Name = reader.GetString(11);
+                }
+                if (!reader.IsDBNull(2))
+                {
+                    if (reader.GetBoolean(15) == isDelete)
+                    {
+                        employeeDetail.Account_Id = reader.GetGuid(2);
+                        employeeDetail.Account_UserName = reader.GetString(12);
+                        employeeDetail.Role_Name = reader.GetString(13);
+                        employeeDetail.Account_IsLocked = reader.GetBoolean(14);
+                    }
+                }
 
-                eod.Department_Id = reader.GetGuid(1);
-                eod.Department_Name = reader.GetString(11);
-                eod.Department_Description = reader.GetString(12);
-                eod.Department_IsDelete = reader.GetBoolean(13);
-
-                list.Add(eod);
+                list.Add(employeeDetail);
             }
             DBHelper.Instance.CloseConnection();
 

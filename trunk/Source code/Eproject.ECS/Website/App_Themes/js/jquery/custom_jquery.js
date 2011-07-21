@@ -98,7 +98,7 @@ $(document).ready(function () {
   
 $(document).ready(function () {
 	$(".confirm").click(function () {
-    return confirm("Are you sure to remove this department ?");
+    return confirm("Are you sure to remove this data ?");
 	});
 });
 
@@ -108,4 +108,16 @@ $(document).ready(function () {
        changeYear: true,
       yearRange: '1960:2011'
     });
+});
+
+$(document).ready(function () {
+	$(".confirmDelete").click(function () {
+    return confirm("Are you sure to delete permanently this data ?");
+	});
+});
+
+$(document).ready(function () {
+	$(".confirmRestore").click(function () {
+    return confirm("Are you sure to restore this data ?");
+	});
 });
