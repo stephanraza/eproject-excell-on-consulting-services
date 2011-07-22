@@ -106,6 +106,7 @@ namespace Eproject.ECS.Dal
         /// <returns>List of department.</returns>
         public List<Department> Search(String content, bool isDelete)
         {
+            content = content.Replace("'", " ");
             List<Department> listDepartment = new List<Department>();
             List<Object> listObject = DBHelper.Instance.Select("Department", String.Format("(Department_Name LIKE N'%{0}%' OR Department_Description LIKE N'%{0}%') AND Department_IsDelete = '{1}'",content, isDelete), null, -1, -1);
 

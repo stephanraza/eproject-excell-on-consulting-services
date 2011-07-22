@@ -33,14 +33,14 @@ namespace Eproject.ECS.Bll
         /// <param name="phone"></param>
         /// <param name="email"></param>
         /// <param name="avatar"></param>
-        public void CreateEmployee(Guid employeeId, String departmentName, String fName, String lName, String gender, String DOB, String address, String phone, String email, String data)
+        public void CreateEmployee(Guid employeeId, Guid departmentId, String fName, String lName, String gender, String DOB, String address, String phone, String email, String data)
         {
             try
             {
                 DepartmentBusiness DB = new DepartmentBusiness();
                 Employee newEmployee = new Employee();
                 newEmployee.Employee_Id = employeeId;
-                newEmployee.Department_Id = DB.GetDepartment(departmentName, false).Department_Id;
+                newEmployee.Department_Id = departmentId;
                 newEmployee.Employee_FirtName = fName;
                 newEmployee.Employee_LastName = lName;
                 if (gender.Equals("Male"))
@@ -207,16 +207,30 @@ namespace Eproject.ECS.Bll
             {
                 Employee employee = ED.GetEmployee(emId);
 
-                // Delete account of this employee first.
-                AccountBusiness AB = new AccountBusiness();
-                Account account = AB.GetAccountOfEmployee(emId);
-                if (account != null)
-                    AB.DeleteAccount(account.Account_Id);
-
-                int result = ED.DeleteEmployee(employee);
-                if (result == -1)
+                // Check related datas
+                OrderBusiness OB = new OrderBusiness();
+                List<OrderOfService> list = OB.GetOrdersByEmployeeId(emId, false);
+                if (list.Count == 0)
                 {
-                    throw new Exception("An error occurred while executing this operation.");
+                    // Delete account of this employee first.
+                    AccountBusiness AB = new AccountBusiness();
+                    Account account = AB.GetAccountOfEmployee(emId);
+                    if (account != null)
+                        AB.DeleteAccount(account.Account_Id);
+                    // Then delete orders of this employee
+                    foreach (OrderOfService item in list)
+                    {
+                        OB.DeleteOrder(item.OrderOfService_Id);
+                    }
+                    int result = ED.DeleteEmployee(employee);
+                    if (result == -1)
+                    {
+                        throw new Exception("An error occurred while executing this operation.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("This employee's data is also related to some other data. It could be not deleted.");
                 }
             }
             catch (Exception ex)
@@ -366,11 +380,11 @@ namespace Eproject.ECS.Bll
                     toDate = DateTime.Now.ToShortDateString();
                 conditionDate = String.Format(conditionDate, fromDate, toDate);
 
-                String where = conditionSearchBy +  " AND ";
+                String where = conditionSearchBy ;
 
                 content = content.Replace("'", " ");
                 where = String.Format(where, content);
-                where = where + conditionGender + conditionDate;
+                where = where + conditionGender + conditionDate + " AND ";
 
                 return ED.Search(where, isDelete);
             }
@@ -405,11 +419,11 @@ namespace Eproject.ECS.Bll
                 else
                     conditionStatus = "";
 
-                String where = conditionSearchBy + " AND ";
+                String where = conditionSearchBy;
 
                 content = content.Replace("'", " ");
                 where = String.Format(where, content);
-                where = where + conditionStatus;
+                where = where + conditionStatus + " AND ";
                 return ED.Search(where, isDelete);
             }
             catch (Exception ex)

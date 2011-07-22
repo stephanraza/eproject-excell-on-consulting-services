@@ -1,10 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TrashEmployee.aspx.cs" Inherits="HRManager_TrashEmployee" Title="Untitled Page" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TrashEmployee.aspx.cs" Inherits="HRManager_TrashEmployee" Title="Excell-on Consulting Services"
+    ValidateRequest="false" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <title>Excell-on Consulting Services</title>
-    <!--[if IE]>
-    <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
-    <![endif]-->
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
 <div id="page-heading"><h1>TRASH</h1></div>
@@ -57,202 +54,263 @@
 		            </div>
 		            <!--  end step-holder -->
             	
-    	                <!--  start message-yellow -->
-    	                <asp:Panel ID="pnlYellow" runat="server" Visible="false">
-				            <div id="message-yellow">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="yellow-left"><asp:Label ID="lblMessage" runat="server" Text=""></asp:Label><a href="#" class="close-yellow">
-                                    Close and continue.</a></td>
-					            <td class="yellow-right"><asp:HyperLink ID="HyperLink1" runat="server" CssClass="close-yellow" ImageUrl="~/App_Themes/images/table/icon_close_yellow.gif"></asp:HyperLink></td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-yellow -->
-        				
-				        <!--  start message-red -->
-				        <asp:Panel ID="pnlRed" runat="server" Visible="false">
-				            <div id="message-red">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="red-left">
-                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
-                                    and try again.</a></td>
-					            <td class="red-right"><asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
-				                </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-red -->
-        				
-				        <!--  start message-blue -->
-				        <asp:Panel ID="pnlBlue" runat="server" Visible="false">
-				            <div id="message-blue">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
-					            <td class="blue-right"><asp:HyperLink ID="HyperLink3" runat="server" CssClass="close-blue" ImageUrl="~/App_Themes/images/table/icon_close_blue.gif"></asp:HyperLink>
-					            </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-blue -->
-				        
-				        <!--  start message-green -->
-				        <asp:Panel ID="pnlGreen" runat="server" Visible="false">
-				            <div id="message-green">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-				            <td class="green-left">
-                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Continue.</a></td>
-					            <td class="green-right"><asp:HyperLink ID="HyperLink5" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
-				                </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-green -->
+    	               <!--  start message-yellow -->
+                                        <asp:Panel ID="pnlYellow" runat="server" Visible="false">
+                                            <div id="message-yellow">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="yellow-left">
+                                                            <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+                                                            &nbsp;<asp:HyperLink ID="hplnkYellow" runat="server" CssClass="close-yellow"></asp:HyperLink>
+                                                        </td>
+                                                        <td class="yellow-right">
+                                                            <asp:HyperLink ID="hplnkYellowClose" runat="server" CssClass="close-yellow" ImageUrl="~/App_Themes/images/table/icon_close_yellow.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-yellow -->
+                                        <!--  start message-red -->
+                                        <asp:Panel ID="pnlRed" runat="server" Visible="false">
+                                            <div id="message-red">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="red-left">
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink
+                                                                ID="hplnkRed" runat="server" CssClass="close-red">Please 
+                                    try again.</asp:HyperLink>
+                                                        </td>
+                                                        <td class="red-right">
+                                                            <asp:HyperLink ID="hplnkRedClose" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-red -->
+                                        <!--  start message-blue -->
+                                        <asp:Panel ID="pnlBlue" runat="server" Visible="false">
+                                            <div id="message-blue">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="blue-left">
+                                                            Welcome back. <a href="">View my account.</a>
+                                                        </td>
+                                                        <td class="blue-right">
+                                                            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="close-blue" ImageUrl="~/App_Themes/images/table/icon_close_blue.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-blue -->
+                                        <!--  start message-green -->
+                                        <asp:Panel ID="pnlGreen" runat="server" Visible="false">
+                                            <div id="message-green">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="green-left">
+                                                            <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink
+                                                                ID="hplnkGreen" runat="server" CssClass="close-green"></asp:HyperLink>
+                                                        </td>
+                                                        <td class="green-right">
+                                                            <asp:HyperLink ID="hplnkGreenClose" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-green -->
 				        
 				        
 				        
 		            <!-- start id-form -->
 		                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-		            <tr>
-                        <th valign="top" style="text-align:right; line-height:28px;padding:5px 15px 8px 0">
-                            Search :</th>
-                        <td id="searchTD"><asp:TextBox ID="txtSearch" CssClass="inp-form-search" runat="server" 
-                                AutoPostBack="True" ontextchanged="txtSearch_TextChanged"></asp:TextBox>
-                        <asp:UpdateProgress ID="UpdateProgress1" runat="server">
-                            <ProgressTemplate>
-                                <asp:Label ID="lblLoading" runat="server" CssClass="form-loading" 
-                                    AssociatedControlID="txtSearch"></asp:Label> 
-                       
-                            </ProgressTemplate>
-                        </asp:UpdateProgress>
-                        </td>     
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="padding:10px">
-                            &nbsp;
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                CssClass="product-table"
-                                onselectedindexchanged="grvManage_SelectedIndexChanged" Width="90%" 
-                                onrowdeleting="grvManage_RowDeleting" AllowSorting="True" 
-                                onsorting="grvManage_Sorting">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Employee Id&lt;/a&gt;" 
-                                        HeaderStyle-CssClass="table-header-check" SortExpression="Employee_Id">
-                                       <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Employee_Id") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Employee_Id") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;First Name&lt;/a&gt;" 
-                                        HeaderStyle-CssClass="table-header-repeat line-left" SortExpression="Employee_FirstName">
-                                       <ItemTemplate>
-                                            <asp:Label ID="lblFName" runat="server" Text='<%# Eval("Employee_FirtName") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblFName" runat="server" Text='<%# Eval("Employee_FirtName") %>'></asp:Label>
-                                       </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Last Name&lt;/a&gt;" 
-                                        SortExpression="Employee_LastName">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblLName" runat="server" Text='<%# Eval("Employee_LastName") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblLName" runat="server" Text='<%# Eval("Employee_LastName") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Gender&lt;/a&gt;" 
-                                        SortExpression="Employee_Gender">
-                                        <ItemTemplate>
-                                            <asp:CheckBox ID="CheckBox1" Enabled="false" Checked='<%# Eval("Employee_Gender") %>' runat="server" />
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:CheckBox ID="CheckBox1" Enabled="false" Checked='<%# Eval("Employee_Gender") %>' runat="server" />
-                                        </EditItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>                                        
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Date Of Birth&lt;/a&gt;" 
-                                        SortExpression="Employee_DateOfBirth">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDOB" runat="server" Text='<%# Eval("Employee_DateOfBirth") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblDOB" runat="server" Text='<%# Eval("Employee_DateOfBirth") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />    
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Address&lt;/a&gt;" 
-                                        SortExpression="Employee_Address">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("Employee_Address") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("Employee_Address") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Phone Number&lt;/a&gt;" 
-                                        SortExpression="Employee_PhoneNumber">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Employee_PhoneNumber") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Employee_PhoneNumber") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Email&lt;/a&gt;" 
-                                        SortExpression="Employee_Email">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Employee_Email") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Employee_Email") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" />    
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="&lt;a href&gt;Department Name&lt;/a&gt;" 
-                                        SortExpression="Department_Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <AlternatingItemTemplate>
-                                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
-                                        </AlternatingItemTemplate>
-                                        <HeaderStyle CssClass="table-header-repeat line-left" /> 
-                                    </asp:TemplateField>
-                                    <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" 
-                                        DeleteImageUrl="~/App_Themes/images/table/table_icon_delete.gif" 
-                                        HeaderText="&lt;a href&gt;Option&lt;/a&gt;" 
-                                        SelectImageUrl="~/App_Themes/images/table/table_icon_restore.gif" 
-                                        ButtonType="Image" >
-                                       <HeaderStyle CssClass="table-header-repeat line-left" />
-                                    </asp:CommandField>
-                                </Columns>
-                                <AlternatingRowStyle CssClass="alternate-row" />
-                            </asp:GridView>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="padding-right: 10px;">
-                            <!--  start paging..................................................... -->
-			                            <table border="0" cellpadding="0" cellspacing="0" id="paging-table">
+                                            <tr>
+                                                <th valign="top" style="text-align: right; line-height: 28px; padding: 5px 15px 8px 0">
+                                                    Search :
+                                                </th>
+                                                <td id="searchTD">
+                                                    <asp:TextBox ID="txtSearch" CssClass="inp-form-search" runat="server" AutoPostBack="True"
+                                                        OnTextChanged="txtSearch_TextChanged"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 10px">
+                                                    <asp:Panel ID="pnlSearchByEmployee" runat="server">
+                                                        <table border="0" cellpadding="0" cellspacing="0" id="id-form" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <div>
+                                                                        <div style="margin: 0px 100px 0px 100px">
+                                                                            <div style="padding: 5px; border: solid 1px #CCC;">
+                                                                                <div style="background: #ECECEC">
+                                                                                    <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
+                                                                                        <tr>
+                                                                                            <td colspan="3" class="title" align="left" style="padding: 10px 0px 10px 10px">
+                                                                                                <h3>
+                                                                                                    Advanced search</h3>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td align="center" class="content" colspan="3">
+                                                                                                <hr />
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th width="50%" align="right" style="text-align: right" class="content" valign="top">
+                                                                                                Gender :
+                                                                                            </th>
+                                                                                            <td align="left" valign="top" colspan="2">
+                                                                                                <div class="inp-form">
+                                                                                                    <asp:DropDownList ID="ddlAdvancedGender" CssClass="styledselect_form" runat="server"
+                                                                                                        AutoPostBack="True" OnSelectedIndexChanged="ddlAdvancedGender_SelectedIndexChanged">
+                                                                                                        <asp:ListItem Selected="True">All</asp:ListItem>
+                                                                                                        <asp:ListItem>Male</asp:ListItem>
+                                                                                                        <asp:ListItem>Female</asp:ListItem>
+                                                                                                    </asp:DropDownList>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th width="50%" align="right" style="text-align: right" class="content" valign="top"
+                                                                                                rowspan="2">
+                                                                                                Date Of Birth :
+                                                                                            </th>
+                                                                                            <td align="center" class="th-label" valign="top">
+                                                                                                From Date :
+                                                                                            </td>
+                                                                                            <td align="left" valign="top">
+                                                                                                <asp:TextBox ID="txtAdvancedFromDate" CssClass="inp-form datePicker" runat="server"
+                                                                                                    AutoPostBack="True" OnTextChanged="txtAdvancedFromDate_TextChanged"></asp:TextBox>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td align="center" class="th-label" valign="top">
+                                                                                                To Date :
+                                                                                            </td>
+                                                                                            <td align="left" valign="top">
+                                                                                                <asp:TextBox ID="txtAdvancedToDate" CssClass="inp-form datePicker" runat="server"
+                                                                                                    AutoPostBack="True" OnTextChanged="txtAdvancedToDate_TextChanged"></asp:TextBox>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </asp:Panel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 10px">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align="center">
+                                                    <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" CssClass="product-table"
+                                                        Width="90%" AllowSorting="True" OnSorting="grvManage_Sorting">
+                                                        <Columns>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Avatar&lt;/a&gt;" HeaderStyle-CssClass="table-header-check"
+                                                                SortExpression="">
+                                                                <ItemTemplate>
+                                                                    <asp:Image ID="imgAvatar" runat="server" ImageUrl='<%# GetURL(Eval("Employee_Avatar")) %>' />
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Image ID="imgAvatar" runat="server" ImageUrl='<%# GetURL(Eval("Employee_Avatar")) %>' />
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Full Name&lt;/a&gt;" HeaderStyle-CssClass="table-header-repeat line-left"
+                                                                SortExpression="Employee_LastName">
+                                                                <ItemTemplate>
+                                                                <asp:Label ID="lblFName" runat="server" Text='<%# Eval("Employee_FullName") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblFName" runat="server" Text='<%# Eval("Employee_FullName") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Gender&lt;/a&gt;" SortExpression="Employee_Gender">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblGender" runat="server" Text='<%# Eval("Employee_Gender") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblGender" runat="server" Text='<%# Eval("Employee_Gender") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;DOB&lt;/a&gt;" SortExpression="Employee_DateOfBirth">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblDOB" runat="server" Text='<%# Eval("Employee_DateOfBirth") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblDOB" runat="server" Text='<%# Eval("Employee_DateOfBirth") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Address&lt;/a&gt;" SortExpression="Employee_Address">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("Employee_Address") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("Employee_Address") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Phone Number&lt;/a&gt;" SortExpression="Employee_PhoneNumber">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Employee_PhoneNumber") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblPhone" runat="server" Text='<%# Eval("Employee_PhoneNumber") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Email&lt;/a&gt;" SortExpression="Employee_Email">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Employee_Email") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Employee_Email") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Option&lt;/a&gt;">
+                                                                <ItemTemplate>
+                                                                    <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
+                                                                        CausesValidation="False" ToolTip="Delete employee permanently"
+                                                                        onclick="imgbtnDelete_Click" />
+                                                                    <asp:HiddenField ID="hfEmployeeId" runat="server" Value='<%# Eval("Employee_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
+                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
+                                                                        ToolTip="Restore employee" onclick="imgbtnRestore_Click" />
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
+                                                                        CausesValidation="False" ToolTip="Delete employee permanently"
+                                                                        onclick="imgbtnDelete_Click" />
+                                                                    <asp:HiddenField ID="hfEmployeeId" runat="server" Value='<%# Eval("Employee_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
+                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
+                                                                        ToolTip="Restore employee" onclick="imgbtnRestore_Click" />
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                        </Columns>
+                                                        <AlternatingRowStyle CssClass="alternate-row" />
+                                                    </asp:GridView>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding-right: 10px;">
+                                                    <%--<!--  start paging..................................................... -->
+			                    <table border="0" cellpadding="0" cellspacing="0" id="paging-table">
 			                                <tr>
 			                                    <td style="border:none">
                                                     <asp:ImageButton ID="imgbtnFirst" runat="server" CssClass="page-far-left" 
@@ -285,10 +343,10 @@
 			                                    </td>
 			                                </tr>
 			                            </table>
-			                        <!--  end paging................ -->
-                        </td>
-                    </tr>
-                    </table>
+			                <!--  end paging................ -->--%>
+                                                </td>
+                                            </tr>
+                                        </table>
 	                <!-- end id-form  -->
 	                    
 	                    

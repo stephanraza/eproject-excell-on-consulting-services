@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="ModifyEmployee.aspx.cs" Inherits="HRManager_ModifyEmployee" Title="Excell-on Consulting Services" ValidateRequest="false" EnableEventValidation="false" %>
-
+<%@ Register Src="~/Controls/PersonalInfoControl.ascx" TagName="PersonalInfoControl"
+    TagPrefix="ucPersonalInfoControl" %>
+    
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
@@ -143,7 +145,7 @@
                                                                     <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
                                                                         <tr>
                                                                             <td colspan="2" class="title" align="left" style="padding: 10px 0px 10px 10px">
-                                                                                Employee information<br />
+                                                                                Employee's information<br />
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -274,6 +276,15 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
+                                                                            <th width="50%" align="right" style="text-align: right" class="content" valign="top">
+                                                                                &nbsp;
+                                                                            </th>
+                                                                            <td align="left" valign="top">
+                                                                                <asp:LinkButton ID="lblRemove" CssClass="confirm" runat="server" CausesValidation="False"
+                                                                                    OnClick="lblRemove_Click">Remove this employee</asp:LinkButton>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
                                                                             <th>
                                                                                 &nbsp;
                                                                             </th>
@@ -295,6 +306,9 @@
                                         <!-- end id-form  -->
                                     </td>
                                     <td>
+                                    <asp:Panel ID="pnlPersonalInfo" runat="server">
+                                    <ucPersonalInfoControl:PersonalInfoControl ID="PersonalInfoControl" runat="server" />
+                                </asp:Panel>
                                     </td>
                                 </tr>
                                 <tr>

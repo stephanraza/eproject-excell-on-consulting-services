@@ -151,18 +151,21 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
         {
             try
             {
-                String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+                Employee employee = EB.GetEmployee(new Guid(ddlEmployeeEmail.SelectedItem.Value));
 
-                AB.CreateAccount(Guid.NewGuid(), EB.GetEmployee(ddlEmployeeEmail.Text).Employee_Id, txtUserName.Text.Trim(), txtPassword.Text.Trim(), ddlRole.Text.Trim());
+                AB.CreateAccount(Guid.NewGuid(), employee.Employee_Id, txtUserName.Text.Trim(), txtPassword.Text.Trim(), ddlRole.Text.Trim());
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new an account successfully.";
+                hplnkGreen.Text = "Go to Manage panel.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage";
                 Reset();
             }
             catch (Exception ex)
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
                 ckbDefaultPassword.Checked = false;
                 DisplayPanelPreview(ddlEmployeeEmail.Text);
             }

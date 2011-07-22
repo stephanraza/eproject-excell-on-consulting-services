@@ -13,7 +13,7 @@ using System.Xml.Linq;
 using Eproject.ECS.Bll;
 using Eproject.ECS.Entities;
 
-public partial class HRManager_ModifyDepartment : System.Web.UI.Page
+public partial class HRManager_DisplayDepartment : System.Web.UI.Page
 {
     private DepartmentBusiness DB;
     private Guid departmentId;
@@ -57,8 +57,17 @@ public partial class HRManager_ModifyDepartment : System.Web.UI.Page
         try
         {
             Department department = DB.GetDepartment(departmentId);
+            int numberEmployee = DB.GetNumberOfEmployees(departmentId, false);
+
             lblName.Text = department.Department_Name;
-            txtModifyDescription.Text = department.Department_Description;
+            lblDisplayDescription.Text = department.Department_Description;
+            if (numberEmployee > 0)
+                lnkNumber.Visible = true;
+            else
+                lnkNumber.Visible = false;
+            lblNumberEmployee.Text = numberEmployee.ToString();
+
+            hplnkDisplayModifyDepartment.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Modify/" + departmentId.ToString();
         }
         catch (Exception ex)
         {
@@ -88,27 +97,13 @@ public partial class HRManager_ModifyDepartment : System.Web.UI.Page
             hplnkRed.NavigateUrl = "";
         }
     }
-    protected void btnChange_Click(object sender, EventArgs e)
+    protected void lnkNumber_Click(object sender, EventArgs e)
     {
-        try
-        {
-            DB.UpdateDepartment(departmentId, lblName.Text, txtModifyDescription.Text.Trim(), false);
-            if (Session["return"] == null)
-                Session.Add("return", "modify");
-            else
-                Session["return"] = "modify";
-            Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Department/Manage/" + departmentId.ToString());
-        }
-        catch (Exception ex)
-        {
-            pnlRed.Visible = true;
-            lblError.Text = ex.Message;
-            hplnkRed.Text = "Close and continue";
-            hplnkRed.NavigateUrl = "";
-        }
-    }
-    protected void btnCancel_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Department/Manage");
+        Department dep = DB.GetDepartment(departmentId);
+        if (Session["search"] == null)
+            Session.Add("search", dep.Department_Name);
+        else
+            Session["search"] = dep.Department_Name;
+        Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage");
     }
 }

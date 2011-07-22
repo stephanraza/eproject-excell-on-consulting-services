@@ -33,6 +33,7 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
 
         GetRouteData();
         loadData();
+        Search();
         if (IsPostBack)
         {
             String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
@@ -88,6 +89,13 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
                 hplnkGreen.Text = "View detail.";
                 hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Display/" + id;
             }
+            else if (value.Equals("Eremove"))
+            {
+                pnlGreen.Visible = true;
+                lblSuccess.Text = "An employee has been removed successfully, this data could be restored from Trash.";
+                hplnkGreen.Text = "Go to trash.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Trash";
+            }
             else if (value.Equals("Aremove"))
             {
                 pnlGreen.Visible = true;
@@ -97,6 +105,20 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
             }
             Session.Remove("return");
         }
+    }
+    private void Search()
+    {
+        String search = "";
+        if (Session["search"] != null)
+            search = Session["search"].ToString();
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            List<EmployeeDetail> listEmployee = EB.SearchEmployee(search, "Department", false);
+            grvManage.DataSource = listEmployee;
+            grvManage.DataBind();
+        }
+        Session.Remove("search");
     }
     protected bool IsAdmin()
     {
@@ -134,13 +156,24 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        List<EmployeeDetail> listSearch = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, false);
-        grvManage.DataSource = listSearch;
-        grvManage.DataBind();
+        if (ddlSearchBy.SelectedItem.Text.Equals("Account"))
+        {
+            SearchByStatus();
+        }
+        else if (ddlSearchBy.SelectedItem.Text.Equals("Employee"))
+        {
+            SearchByEmployee();
+        }
+        else
+        {
+            loadData();
+        }
         if (grvManage.Rows.Count == 0)
         {
             pnlRed.Visible = true;
             lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     protected void grvManage_Sorting(object sender, GridViewSortEventArgs e)
@@ -182,6 +215,8 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     protected void imgbtnEditAccount_Click(object sender, ImageClickEventArgs e)
@@ -254,6 +289,11 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
     }
     protected void ddlAdvanvedStatus_SelectedIndexChanged(object sender, EventArgs e)
     {
+        SearchByStatus();
+    }
+
+    private void SearchByStatus()
+    {
         try
         {
             List<EmployeeDetail> list = EB.SearchEmployee(txtSearch.Text.Trim(), ddlSearchBy.Text, ddlAdvanvedStatus.Text, false);
@@ -264,6 +304,8 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     protected void ddlAdvancedGender_SelectedIndexChanged(object sender, EventArgs e)
@@ -282,6 +324,8 @@ public partial class HRManager_ManageEmployee : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     protected void txtAdvancedFromDate_TextChanged(object sender, EventArgs e)

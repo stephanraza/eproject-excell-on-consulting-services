@@ -1,12 +1,13 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TrashDepartment.aspx.cs" Inherits="HRManager_TrashDepartment" Title="Excell-on Consulting Services"
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
+    CodeFile="ManageService.aspx.cs" Inherits="ServiceManager_ManageService" Title="Excell-on Consulting Services"
     ValidateRequest="false" EnableEventValidation="false" %>
-    
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            TRASH</h1>
+            MANAGE SERVICE INFORMATION</h1>
     </div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -44,26 +45,26 @@
                                             <div class="step-no-off">
                                                 1</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Create">Create details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Create">Create details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no-off">
+                                            <div class="step-no">
                                                 2</div>
-                                            <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">Manage departments</a></div>
-                                            <div class="step-light-right">
+                                            <div class="step-dark-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Manage">Manage services</a></div>
+                                            <div class="step-dark-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 3</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Modify">Modify details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Modify">Modify details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no">
+                                            <div class="step-no-off">
                                                 4</div>
-                                            <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Trash">Trash</a></div>
-                                            <div class="step-dark-round">
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Trash">Trash</a></div>
+                                            <div class="step-light-round">
                                                 &nbsp;</div>
                                             <div class="clear">
                                             </div>
@@ -93,8 +94,7 @@
                                                     <tr>
                                                         <td class="red-left">
                                                             <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink
-                                                                ID="hplnkRed" runat="server" CssClass="close-red">Please 
-                                    try again.</asp:HyperLink>
+                                                                ID="hplnkRed" runat="server" CssClass="close-red">Please try again.</asp:HyperLink>
                                                         </td>
                                                         <td class="red-right">
                                                             <asp:HyperLink ID="hplnkRedClose" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
@@ -149,52 +149,143 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td colspan="3" style="padding: 10px">
+                                                    <asp:Panel ID="pnlSearchByService" runat="server">
+                                                        <table border="0" cellpadding="0" cellspacing="0" id="id-form" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <div>
+                                                                        <div style="margin: 0px 100px 0px 100px">
+                                                                            <div style="padding: 5px; border: solid 1px #CCC;">
+                                                                                <div style="background: #ECECEC">
+                                                                                    <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
+                                                                                        <tr>
+                                                                                            <td colspan="3" class="title" align="left" style="padding: 10px 0px 10px 10px">
+                                                                                                <h3>
+                                                                                                    Advanced search</h3>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td align="center" class="content" colspan="3">
+                                                                                                <hr />
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th width="50%" align="right" style="text-align: right" class="content" valign="top"
+                                                                                                rowspan="2">
+                                                                                                Service Charge :
+                                                                                            </th>
+                                                                                            <td align="center" class="th-label" valign="top">
+                                                                                                From :
+                                                                                            </td>
+                                                                                            <td align="left" valign="top">
+                                                                                                <div class="charge-form">
+                                                                                                    <asp:DropDownList ID="ddlFrom" CssClass="styledselect_form_charge" runat="server" 
+                                                                                                        AutoPostBack="True" onselectedindexchanged="ddlFrom_SelectedIndexChanged"
+                                                                                                        >
+                                                                                                        <asp:ListItem Selected="True" Value="0">Not selected</asp:ListItem>
+                                                                                                        <asp:ListItem>3000</asp:ListItem>
+                                                                                                        <asp:ListItem>5000</asp:ListItem>
+                                                                                                        <asp:ListItem>7000</asp:ListItem>
+                                                                                                        <asp:ListItem>9000</asp:ListItem>
+                                                                                                    </asp:DropDownList>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td align="center" class="th-label" valign="top">
+                                                                                                To :
+                                                                                            </td>
+                                                                                            <td align="left" valign="top">
+                                                                                                <div class="charge-form">
+                                                                                                    <asp:DropDownList ID="ddlTo" CssClass="styledselect_form_charge" runat="server" 
+                                                                                                        AutoPostBack="True" onselectedindexchanged="ddlTo_SelectedIndexChanged"
+                                                                                                        >
+                                                                                                        <asp:ListItem Selected="True" Value="max">Not selected</asp:ListItem>
+                                                                                                        <asp:ListItem>3000</asp:ListItem>
+                                                                                                        <asp:ListItem>5000</asp:ListItem>
+                                                                                                        <asp:ListItem>7000</asp:ListItem>
+                                                                                                        <asp:ListItem>9000</asp:ListItem>
+                                                                                                    </asp:DropDownList>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </asp:Panel>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td colspan="2" style="padding: 10px">
                                                     &nbsp;
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" align="center">
-                                                    <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                                        CssClass="product-table" Width="90%"
-                                                        AllowSorting="True" OnSorting="grvManage_Sorting">
+                                                    <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" CssClass="product-table"
+                                                        Width="90%" AllowSorting="True" OnSorting="grvManage_Sorting">
                                                         <Columns>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" SortExpression="Department_Name">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Image&lt;/a&gt;" HeaderStyle-CssClass="table-header-check"
+                                                                SortExpression="">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                                                    <asp:Image ID="imgService" runat="server" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' />
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                                                    <asp:Image ID="imgService" runat="server" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' />
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" SortExpression="Department_Description">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" SortExpression="Service_Name">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentDescription" runat="server" Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                                                    <asp:HyperLink ID="hplnkServiceName" CssClass="close-green" runat="server" NavigateUrl='<%# GetServiceURL(Eval("Service_Id")) %>'
+                                                                        Text='<%# Eval("Service_Name") %>'></asp:HyperLink>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentDescription" runat="server" Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                                                    <asp:HyperLink ID="hplnkServiceName" CssClass="close-green" runat="server" NavigateUrl='<%# GetServiceURL(Eval("Service_Id")) %>'
+                                                                        Text='<%# Eval("Service_Name") %>'></asp:HyperLink>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Charge ($)&lt;/a&gt;" SortExpression="Service_Charge">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblCharge" runat="server" Text='<%# Eval("Service_Charge") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblCharge" runat="server" Text='<%# Eval("Service_Charge") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" SortExpression="Service_Description">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Service_Description") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Service_Description") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="&lt;a href&gt;Option&lt;/a&gt;">
                                                                 <ItemTemplate>
-                                                                    <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
-                                                                        CausesValidation="False" ToolTip="Delete department permanently"
-                                                                        onclick="imgbtnDelete_Click" />
-                                                                    <asp:HiddenField ID="hfDepartmentId" runat="server" Value='<%# Eval("Department_Id") %>' />
-                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
-                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
-                                                                        ToolTip="Restore department" onclick="imgbtnRestore_Click" />
+                                                                    <asp:ImageButton ID="imgbtnRemove" runat="server" CssClass="confirm" ImageUrl="~/App_Themes/images/table/table_icon_remove.gif"
+                                                                        CausesValidation="False" ToolTip="Remove service" OnClick="imgbtnRemove_Click" />
+                                                                    <asp:HiddenField ID="hfServiceId" runat="server" Value='<%# Eval("Service_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnEdit" runat="server" PostBackUrl='<%# GetServiceModifyURL(Eval("Service_Id")) %>'
+                                                                        ImageUrl="~/App_Themes/images/table/table_icon_edit.gif" CausesValidation="False"
+                                                                        ToolTip="Edit service" OnClick="imgbtnEdit_Click" />
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
-                                                                        CausesValidation="False" ToolTip="Delete department permanently"
-                                                                        onclick="imgbtnDelete_Click" />
-                                                                    <asp:HiddenField ID="hfDepartmentId" runat="server" Value='<%# Eval("Department_Id") %>' />
-                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
-                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
-                                                                        ToolTip="Restore department" onclick="imgbtnRestore_Click" />
+                                                                    <asp:ImageButton ID="imgbtnRemove" runat="server" CssClass="confirm" ImageUrl="~/App_Themes/images/table/table_icon_remove.gif"
+                                                                        CausesValidation="False" ToolTip="Remove service" OnClick="imgbtnRemove_Click" />
+                                                                    <asp:HiddenField ID="hfServiceId" runat="server" Value='<%# Eval("Service_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnEdit" runat="server" PostBackUrl='<%# GetServiceModifyURL(Eval("Service_Id")) %>'
+                                                                        ImageUrl="~/App_Themes/images/table/table_icon_edit.gif" CausesValidation="False"
+                                                                        ToolTip="Edit service" OnClick="imgbtnEdit_Click" />
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
@@ -248,7 +339,6 @@
                                         <!-- end id-form  -->
                                     </td>
                                     <td>
-                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -283,4 +373,3 @@
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
-

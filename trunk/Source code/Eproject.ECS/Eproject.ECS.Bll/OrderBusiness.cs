@@ -94,16 +94,215 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
+        /// Get all orders in database by order's id.
+        /// </summary>
+        /// <param name="isDelete">True if these oders is deleted, false otherwise.</param>
+        /// <param name="id">Id of order.</param>
+        /// <returns>A list object of order type.</returns>
+        public List<OrderOfService> GetOrdersByOrderId(Guid id, bool isDelete)
+        {
+            try
+            {
+                return OD.GetOrders(id, "OrderOfService", isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get all orders in database by employee's id.
+        /// </summary>
+        /// <param name="isDelete">True if these oders is deleted, false otherwise.</param>
+        /// <param name="id">Id of employee.</param>
+        /// <returns>A list object of order type.</returns>
+        public List<OrderOfService> GetOrdersByEmployeeId(Guid id, bool isDelete)
+        {
+            try
+            {
+                return OD.GetOrders(id, "Employee", isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get all orders in database by company's id.
+        /// </summary>
+        /// <param name="isDelete">True if these oders is deleted, false otherwise.</param>
+        /// <param name="id">Id of company.</param>
+        /// <returns>A list object of order type.</returns>
+        public List<OrderOfService> GetOrdersByCompanyId(Guid id, bool isDelete)
+        {
+            try
+            {
+                return OD.GetOrders(id, "Company", isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
         /// Get all details of 1 order.
+        /// </summary>
+        /// <param name="orderId">Id of the order.</param>
+        /// <returns>A list object of order's detail type.</returns>
+        public List<OrderOfServiceDetail> GetAllOrderDetailsByOrderId(Guid orderId)
+        {
+            try
+            {
+                String where = "OrderOfService_Id = '{0}'";
+                if (orderId != null)
+                    where = String.Format(where, orderId.ToString());
+                else
+                    where = "";
+
+                return OD.GetAllOrderDetails(where);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get all details of 1 order.
+        /// </summary>
+        /// <param name="serviceId">Id of the service.</param>
+        /// <returns>A list object of order's detail type.</returns>
+        public List<OrderOfServiceDetail> GetAllOrderDetailsByServiceId(Guid serviceId)
+        {
+            try
+            {
+                String where = "Service_Id = '{0}'";
+                if (serviceId != null)
+                    where = String.Format(where, serviceId.ToString());
+                else
+                    where = "";
+
+                return OD.GetAllOrderDetails(where);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get all details of 1 order by order's id.
         /// </summary>
         /// <param name="orderID">Id of the order.</param>
         /// <param name="isDelete">True if these details of oder is deleted, false otherwise.</param>
         /// <returns>A list object of order's detail type.</returns>
-        public List<OrderOfServiceDetail> GetOrderDetails(Guid orderID, bool isDelete)
+        public List<OrderOfServiceDetail> GetOrderDetailsByOrderId(Guid orderID, bool isDelete)
         {
             try
             {
-                return OD.GetOrderDetails(orderID, isDelete);
+                String where = "OrderOfService_Id = '{0}' AND ";
+                if (orderID != null)
+                    where = String.Format(where, orderID.ToString());
+                else
+                    where = "";
+
+                return OD.GetOrderDetails(where, isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Get all details of 1 order by service's id.
+        /// </summary>
+        /// <param name="serviceID">Id of the service.</param>
+        /// <param name="isDelete">True if these details of oder is deleted, false otherwise.</param>
+        /// <returns>A list object of order's detail type.</returns>
+        public List<OrderOfServiceDetail> GetOrderDetailsByServiceId(Guid serviceID, bool isDelete)
+        {
+            try
+            {
+                String where = "Service_Id = '{0}' AND ";
+                if (serviceID != null)
+                    where = String.Format(where, serviceID.ToString());
+                else
+                    where = "";
+
+                return OD.GetOrderDetails(where, isDelete);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Delete an order.
+        /// </summary>
+        /// <param name="orderId">Id of the order.</param>
+        public void DeleteOrder(Guid orderId)
+        {
+            try
+            {
+                String where = "OrderOfService_Id = '{0}'";
+                if (orderId != null)
+                    where = String.Format(where, orderId.ToString());
+                else
+                    where = "";
+
+                // Delete order details.
+                List<OrderOfServiceDetail> listDetail = OD.GetAllOrderDetails(where);
+                if (listDetail.Count > 0)
+                {
+                    foreach (OrderOfServiceDetail item in listDetail)
+                    {
+                        OD.DeleteOrderDetailByOrderId(orderId);
+                    }
+                }
+
+                int result = OD.DeleteOrder(orderId);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Delete order's details by order's id.
+        /// </summary>
+        /// <param name="orderId">Id of order.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public void DeleteOrderDetailByOrderId(Guid orderId)
+        {
+            try
+            {
+                int result = OD.DeleteOrderDetailByOrderId(orderId);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Delete order's details by service's id.
+        /// </summary>
+        /// <param name="serviceId">Id of service.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public void DeleteOrderDetailByServiceId(Guid serviceId)
+        {
+            try
+            {
+                int result = OD.DeleteOrderDetailByServiceId(serviceId);
+                if (result == -1)
+                {
+                    throw new Exception("An error occurred while executing this operation.");
+                }
             }
             catch (Exception ex)
             {

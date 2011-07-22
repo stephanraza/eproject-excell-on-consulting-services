@@ -14,9 +14,9 @@ using Eproject.ECS.Bll;
 using Eproject.ECS.Entities;
 using System.Collections.Generic;
 
-public partial class HRManager_TrashDepartment : System.Web.UI.Page
+public partial class ServiceManager_TrashService : System.Web.UI.Page
 {
-    private DepartmentBusiness DB;
+    private ServiceBusiness SB;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,8 +25,7 @@ public partial class HRManager_TrashDepartment : System.Web.UI.Page
         pnlYellow.Visible = false;
         pnlBlue.Visible = false;
 
-        DB = new DepartmentBusiness();
-
+        SB = new ServiceBusiness();
         loadData();
         if (IsPostBack)
         {
@@ -34,11 +33,21 @@ public partial class HRManager_TrashDepartment : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
         }
     }
-
+    protected String GetURL(Object data)
+    {
+        return WebHelper.Instance.GetImageURL(data.ToString(), 87, 87, false);
+    }
     private void loadData()
     {
-        List<Department> listDepartment = DB.SearchDepartment(txtSearch.Text.Trim(), true);
-        grvManage.DataSource = listDepartment;
+        List<Service> list = SB.SearchService(txtSearch.Text.Trim(), true);
+        if (list.Count > 0)
+        {
+            foreach (Service item in list)
+            {
+                item.Service_Charge = SecurityHelper.Instance.DecryptCryptography(item.Service_Charge, true);
+            }
+        }
+        grvManage.DataSource = list;
         grvManage.DataBind();
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
@@ -50,65 +59,17 @@ public partial class HRManager_TrashDepartment : System.Web.UI.Page
             lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
         }
     }
-    protected void grvManage_Sorting(object sender, GridViewSortEventArgs e)
-    {
-        List<Department> list = (List<Department>)grvManage.DataSource;
-        DataTable dataTable = BusinessHelper.GenericListToDataTable(list);
-
-        if (dataTable != null)
-        {
-            DataView dataView = new DataView(dataTable);
-            dataView.Sort = e.SortExpression + " " + ConvertSortDirectionToSql(e.SortDirection);
-
-            grvManage.DataSource = dataView;
-            grvManage.DataBind();
-        }
-    }
-
-    private string ConvertSortDirectionToSql(SortDirection sortDirection)
-    {
-        string newSortDirection = String.Empty;
-
-        switch (sortDirection)
-        {
-            case SortDirection.Ascending:
-                newSortDirection = "DESC";
-                break;
-
-            case SortDirection.Descending:
-                newSortDirection = "ASC";
-                break;
-        }
-
-        return newSortDirection;
-    }
-    protected void imgbtnFirst_Click(object sender, ImageClickEventArgs e)
-    {
-
-    }
-    protected void imgbtnBack_Click(object sender, ImageClickEventArgs e)
-    {
-
-    }
-    protected void imgbtnNext_Click(object sender, ImageClickEventArgs e)
-    {
-
-    }
-    protected void imgbtnLast_Click(object sender, ImageClickEventArgs e)
-    {
-
-    }
     protected void imgbtnDelete_Click(object sender, ImageClickEventArgs e)
     {
         try
         {
-            ImageButton ibDelete = (ImageButton)sender;
-            HiddenField hf = (HiddenField)ibDelete.FindControl("hfDepartmentId");
+            ImageButton ibRemove = (ImageButton)sender;
+            HiddenField hf = (HiddenField)ibRemove.FindControl("hfServiceId");
 
-            DB.DeleteDepartment(new Guid(hf.Value));
+            SB.DeleteService(new Guid(hf.Value));
             loadData();
             pnlGreen.Visible = true;
-            lblSuccess.Text = "A department has been deleted successfully.";
+            lblSuccess.Text = "A service has been deleted successfully.";
             hplnkGreen.Text = "Close and continue.";
             hplnkGreen.NavigateUrl = "";
         }
@@ -125,14 +86,14 @@ public partial class HRManager_TrashDepartment : System.Web.UI.Page
         try
         {
             ImageButton ibRestore = (ImageButton)sender;
-            HiddenField hf = (HiddenField)ibRestore.FindControl("hfDepartmentId");
+            HiddenField hf = (HiddenField)ibRestore.FindControl("hfServiceId");
 
-            DB.RestoreDepartment(new Guid(hf.Value));
+            SB.RestoreService(new Guid(hf.Value));
             loadData();
             pnlGreen.Visible = true;
-            lblSuccess.Text = "A department has been restored successfully.";
+            lblSuccess.Text = "A service has been restored successfully.";
             hplnkGreen.Text = "Go to Manage panel.";
-            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Manage";
+            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageService/Service/Manage";
         }
         catch (Exception ex)
         {
@@ -141,5 +102,9 @@ public partial class HRManager_TrashDepartment : System.Web.UI.Page
             hplnkRed.Text = "Close and continue.";
             hplnkRed.NavigateUrl = "";
         }
+    }
+    protected void grvManage_Sorting(object sender, GridViewSortEventArgs e)
+    {
+
     }
 }

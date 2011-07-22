@@ -24,6 +24,9 @@ public partial class ServiceManager_CreateService : System.Web.UI.Page
         pnlBlue.Visible = false;
 
         SB = new ServiceBusiness();
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -46,12 +49,16 @@ public partial class ServiceManager_CreateService : System.Web.UI.Page
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new a service successfully.";
+                hplnkGreen.Text = "Go to Manage panel.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageService/Service/Manage";
                 Reset();
             }
             catch (Exception ex)
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
             }
         }
     }
@@ -65,5 +72,9 @@ public partial class ServiceManager_CreateService : System.Web.UI.Page
     protected void btnReset_Click(object sender, EventArgs e)
     {
         Reset();
+    }
+    protected void Page_PreRender(object sender, System.EventArgs e)
+    {
+        this.ScriptManager1.RegisterPostBackControl(btnSubmit);
     }
 }
