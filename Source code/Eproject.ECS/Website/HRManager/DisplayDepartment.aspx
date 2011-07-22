@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="ModifyDepartment.aspx.cs" Inherits="HRManager_ModifyDepartment" Title="Excell-on Consulting Services"
+    CodeFile="DisplayDepartment.aspx.cs" Inherits="HRManager_DisplayDepartment" Title="Excell-on Consulting Services"
     ValidateRequest="false" EnableEventValidation="false" %>
 
 <%@ Register Src="~/Controls/PersonalInfoControl.ascx" TagName="PersonalInfoControl"
@@ -9,7 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
         <h1>
-            MODIFY DEPARTMENT INFORMATION</h1>
+            DEPARTMENT INFORMATION</h1>
     </div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
@@ -56,11 +56,11 @@
                                                 <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">Manage departments</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no">
+                                            <div class="step-no-off">
                                                 3</div>
-                                            <div class="step-dark-left">
+                                            <div class="step-light-left">
                                                 <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Modify">Modify details</a></div>
-                                            <div class="step-dark-right">
+                                            <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 4</div>
@@ -168,36 +168,39 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <th width="50%" align="right" style="text-align: right" class="content" valign="top">
-                                                                                Description :
+                                                                                Number Of Employees :
                                                                             </th>
-                                                                            <td align="left" valign="top" colspan="2">
-                                                                                <asp:TextBox ID="txtModifyDescription" runat="server" CssClass="form-textarea1" TextMode="MultiLine"></asp:TextBox>
+                                                                            <td align="left" valign="top">
+                                                                                <asp:Label ID="lblNumberEmployee" runat="server" CssClass="th-label"
+                                                                                    Text=""></asp:Label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <asp:LinkButton ID="lnkNumber" runat="server" CausesValidation="False" OnClick="lnkNumber_Click">View 
+                                                                                employees</asp:LinkButton>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th width="50%" align="right" style="text-align: right" class="content" valign="top">
-                                                                                &nbsp;
+                                                                                Description :
                                                                             </th>
-                                                                            <td align="left" valign="top">
-                                                                                <asp:LinkButton ID="lblRemove" CssClass="confirm" runat="server" CausesValidation="False"
-                                                                                    OnClick="lblRemove_Click">Remove this department</asp:LinkButton>
+                                                                            <td align="left" valign="top" colspan="2">
+                                                                                <asp:Label ID="lblDisplayDescription" runat="server" CssClass="th-label" Text=""></asp:Label>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td align="center" class="content" colspan="3">
-                                                                                <hr />
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th>
-                                                                                &nbsp;
-                                                                            </th>
-                                                                            <td align="center" class="content" colspan="2">
-                                                                                <asp:Button ID="btnChange" runat="server" ValidationGroup="grvRole" Text="" CssClass="form-change-left"
-                                                                                    OnClick="btnChange_Click" />
-                                                                                <asp:Button ID="btnCancel" runat="server" CausesValidation="false" Text="" CssClass="form-cancel"
-                                                                                    OnClick="btnCancel_Click" />
-                                                                            </td>
+                                                                            <asp:Panel ID="pnlLink" runat="server">
+                                                                                <th width="50%" align="right" style="text-align: right" class="content" valign="top">
+                                                                                    &nbsp;
+                                                                                </th>
+                                                                                <td colspan="3">
+                                                                                    <div style="float: left">
+                                                                                        <ul class="greyarrow">
+                                                                                            <li>
+                                                                                                <asp:HyperLink ID="hplnkDisplayModifyDepartment" runat="server" Text="Click here modify department"></asp:HyperLink></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </asp:Panel>
                                                                         </tr>
                                                                     </table>
                                                                 </div>

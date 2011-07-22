@@ -10,14 +10,13 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using Eproject.ECS.Bll;
 using Eproject.ECS.Entities;
+using Eproject.ECS.Bll;
 
-public partial class Administrator_DisplayAccount : System.Web.UI.Page
+public partial class ServiceManager_DisplayService : System.Web.UI.Page
 {
-    private EmployeeBusiness EB;
-    private AccountBusiness AB;
-    private Guid accountId;
+    private ServiceBusiness SB;
+    private Guid serviceId;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,8 +25,7 @@ public partial class Administrator_DisplayAccount : System.Web.UI.Page
         pnlYellow.Visible = false;
         pnlBlue.Visible = false;
 
-        EB = new EmployeeBusiness();
-        AB = new AccountBusiness();
+        SB = new ServiceBusiness();
 
         GetRouteData();
         if (!IsPostBack)
@@ -51,30 +49,21 @@ public partial class Administrator_DisplayAccount : System.Web.UI.Page
 
         if (!String.IsNullOrEmpty(id))
         {
-            accountId = new Guid(id);
+            serviceId = new Guid(id);
         }
     }
     private void loadData()
     {
         try
         {
-            Account account = AB.GetAccount(accountId);
-            Employee employee = EB.GetEmployee(account.Employee_Id);
+            Service service = SB.GetService(serviceId);
+            imgDisplay.ImageUrl = WebHelper.Instance.GetImageURL(service.Service_Image, 128, 128, false);
+            lblDisplayName.Text = service.Service_Name;
+            lblDisplayDescription.Text = service.Service_Description;
+            String charge = SecurityHelper.Instance.DecryptCryptography(service.Service_Charge, true);
+            lblDisplayCharge.Text = "$ " + charge + " (per day/ per employee)";
 
-            lblDisplayRole.Text = account.Role_Name;
-            lblDisplayName.Text = account.Account_UserName;
-            if (account.Account_IsLocked)
-                lblDisplayStatus.Text = "Locked";
-            else
-                lblDisplayStatus.Text = "Unlocked";
-            lblDisplayEmployeeName.Text = employee.Employee_FirtName + " " + employee.Employee_LastName;
-            lblDisplayEmployeeEmail.Text = employee.Employee_Email;
-
-            if (AB.IsAdmin(Page.User.Identity.Name))
-            {
-                pnlLink.Visible = true;
-                hplnkDisplayModifyAccount.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Modify/" + accountId.ToString();
-            }
+            hplnkDisplayModifyService.NavigateUrl = WebHelper.Instance.GetURL() + "ManageService/Service/Modify/" + serviceId.ToString();
         }
         catch (Exception ex)
         {
@@ -82,12 +71,15 @@ public partial class Administrator_DisplayAccount : System.Web.UI.Page
                 Session.Add("return", "null");
             else
                 Session["return"] = "null";
-            Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage");
+            Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Service/Manage");
         }
     }
-    protected void lnkViewDetail_Click(object sender, EventArgs e)
+    protected void lnkNumber_Click(object sender, EventArgs e)
     {
-        Account account = AB.GetAccount(accountId);
-        Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Display/" + account.Employee_Id.ToString());
+        if (Session["search"] == null)
+            Session.Add("search", serviceId.ToString());
+        else
+            Session["search"] = serviceId.ToString();
+        Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Company/Manage");
     }
 }

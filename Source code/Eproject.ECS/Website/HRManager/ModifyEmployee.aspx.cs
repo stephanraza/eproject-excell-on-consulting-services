@@ -155,6 +155,8 @@ public partial class HRManager_ModifyEmployee : System.Web.UI.Page
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
                 Employee employee = EB.GetEmployee(employeeId);
                 imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
             }
@@ -163,5 +165,24 @@ public partial class HRManager_ModifyEmployee : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage");
+    }
+    protected void lblRemove_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            EB.RemoveEmployee(employeeId);
+            if (Session["return"] == null)
+                Session.Add("return", "Eremove");
+            else
+                Session["return"] = "Eremove";
+            Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage");
+        }
+        catch (Exception ex)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = ex.Message;
+            hplnkRed.Text = "Close and continue";
+            hplnkRed.NavigateUrl = "";
+        }
     }
 }

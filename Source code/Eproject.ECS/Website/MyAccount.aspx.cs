@@ -96,7 +96,7 @@ public partial class MyAccount : System.Web.UI.Page
         {
             try
             {
-                EB.UpdateEmployee(employee.Employee_Id, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), null, null, null, null, null, null);
+                EB.UpdateEmployee(employee.Employee_Id,employee.Department_Id, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), null, null, null, null, null, null);
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Infomartion of name has been modified successfully.";
@@ -123,7 +123,7 @@ public partial class MyAccount : System.Web.UI.Page
             }
             try
             {
-                EB.UpdateEmployee(employee.Employee_Id, null, null, txtEmail.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), null, null, null);
+                EB.UpdateEmployee(employee.Employee_Id, employee.Department_Id, null, null, txtEmail.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), null, null, null);
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Infomartion of contact has been modified successfully.";
@@ -191,7 +191,7 @@ public partial class MyAccount : System.Web.UI.Page
                     else
                         data = null;
 
-                    EB.UpdateEmployee(employee.Employee_Id, null, null, null, null, null, radGender.Text.Trim(), null, data);
+                    EB.UpdateEmployee(employee.Employee_Id,employee.Department_Id , null, null, null, null, null, radGender.Text.Trim(), null, data);
 
                     pnlGreen.Visible = true;
                     lblSuccess.Text = "Infomartion of gender has been modified successfully.";
@@ -212,7 +212,7 @@ public partial class MyAccount : System.Web.UI.Page
         {
             if (IsValid)
             {
-                EB.UpdateEmployee(employee.Employee_Id, null, null, null, null, null, null, txtBirthday.Text.Trim(), null);
+                EB.UpdateEmployee(employee.Employee_Id, employee.Department_Id, null, null, null, null, null, null, txtBirthday.Text.Trim(), null);
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Infomartion of date of birth has been modified successfully.";
@@ -237,7 +237,7 @@ public partial class MyAccount : System.Web.UI.Page
                     System.Drawing.Image image = System.Drawing.Image.FromStream(fuAvatar.PostedFile.InputStream);
                     String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
 
-                    EB.UpdateEmployee(employee.Employee_Id, null, null, null, null, null, null, null, data);
+                    EB.UpdateEmployee(employee.Employee_Id, employee.Department_Id, null, null, null, null, null, null, null, data);
 
                     pnlGreen.Visible = true;
                     lblSuccess.Text = "Infomartion of avatar has been modified successfully.";

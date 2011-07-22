@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using Eproject.ECS.Bll;
 using Eproject.ECS.Entities;
 using System.IO;
+using System.Collections.Generic;
 
 public partial class HRManager_CreateEmployee : System.Web.UI.Page
 {
@@ -31,29 +32,40 @@ public partial class HRManager_CreateEmployee : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            ddlDepartment.Items.Add("Select department");
-            foreach (String item in DB.GetDepartmentNames())
-            {
-                ddlDepartment.Items.Add(item);
-            }
+            loadData();
+        }
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
+    }
+
+    private void loadData()
+    {
+        List<Department> list = DB.GetDepartments(false);
+        ddlDepartment.Items.Clear();
+        ddlDepartment.Items.Add("Select department");
+        foreach (Department dep in list)
+        {
+            ListItem item = new ListItem();
+            item.Text = dep.Department_Name;
+            item.Value = dep.Department_Id.ToString();
+            ddlDepartment.Items.Add(item);
         }
     }
+
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         if (IsValid)
         {
             try
-            {
-                String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
-                
+            {                
                 EmployeeBusiness EB = new EmployeeBusiness();
 
                 if (EB.IsExist(txtEmail.Text.Trim()))
                 {
                     pnlRed.Visible = true;
                     lblError.Text = "This email have already used.";
-                    Reset();
+                    hplnkRed.Text = "Please try again.";
+                    hplnkRed.NavigateUrl = "";
                     return;
                 }
 
@@ -74,68 +86,42 @@ public partial class HRManager_CreateEmployee : System.Web.UI.Page
                 }
 
                 String data = WebHelper.Instance.ImageToBase64(image, System.Drawing.Imaging.ImageFormat.Png);
-                EB.CreateEmployee(Guid.NewGuid(), ddlDepartment.Text.Trim(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), txtEmail.Text.Trim(), data);
+                EB.CreateEmployee(Guid.NewGuid(), new Guid(ddlDepartment.SelectedValue), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), radListGender.Text, txtDOB.Text.Trim(), txtAddress.Text.Trim(), txtPhoneNumber.Text.Trim(), txtEmail.Text.Trim(), data);
 
                 pnlGreen.Visible = true;
                 lblSuccess.Text = "Create new an employee successfully.";
-
-                loadPreview(txtEmail.Text.Trim());
-                
+                hplnkGreen.Text = "Go to Manage panel.";
+                hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage";
+                Reset();
             }
             catch (Exception ex)
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
-                Reset();
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
             }
 
         }
     }
-
-    private void loadPreview(String email)
+    protected void btnReset_Click(object sender, EventArgs e)
     {
-        pnlPreview.Visible = true;
-        String emailSelected = email;
-        Employee employee = EB.GetEmployee(emailSelected);
-
-        String url = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
-        if (url != null)
-        {
-            imgAvatar.ImageUrl = WebHelper.Instance.GetURL() + url;
-            imgAvatar.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id;
-        }
-        lblFirstName.Text = employee.Employee_FirtName;
-        lblLastName.Text = employee.Employee_LastName;
-        if (employee.Employee_Gender)
-            lblGender.Text = "Male";
-        else
-            lblGender.Text = "Female";
-        if (employee.Employee_DateOfBirth.ToShortDateString().Equals("1/1/1900"))
-            lblDOB.Text = "";
-        else
-            lblDOB.Text = employee.Employee_DateOfBirth.ToShortDateString();
-        lblAddress.Text = employee.Employee_Address;
-        lblPhoneNumber.Text = employee.Employee_PhoneNumber;
-        lblEmail.Text = employee.Employee_Email;
-
-        Department department = DB.GetDepartment(employee.Department_Id);
-        lblDepartmentName.Text = department.Department_Name;
-        lblDescription.Text = department.Department_Description;
+        Reset();
     }
 
-    public void Reset()
+    private void Reset()
     {
-        imgAvatar.ImageUrl = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/no_image.png";
-        imgAvatar.PostBackUrl = "";
-        lblFirstName.Text = "";
-        lblLastName.Text = "";
-        lblGender.Text = "";
-        lblDOB.Text = "";
-        lblAddress.Text = "";
-        lblPhoneNumber.Text = "";
-        lblEmail.Text = "";
-        lblDepartmentName.Text = "";
-        lblDescription.Text = "";
-        pnlPreview.Visible = false;
+        txtFirstName.Text = "";
+        txtLastName.Text = "";
+        radListGender.SelectedIndex = 0;
+        txtDOB.Text = "";
+        txtAddress.Text = "";
+        txtPhoneNumber.Text = "";
+        txtEmail.Text = "";
+        ddlDepartment.SelectedIndex = 0;
+    }
+    protected void Page_PreRender(object sender, System.EventArgs e)
+    {
+        this.ScriptManager1.RegisterPostBackControl(btnSubmit);
     }
 }

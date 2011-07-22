@@ -25,6 +25,9 @@ public partial class HRManager_CreateDepartment : System.Web.UI.Page
         pnlBlue.Visible = false;
 
         DB = new DepartmentBusiness();
+
+        String script = WebHelper.Instance.GetJqueryScript("App_Themes/js/jquery/custom_jquery.js");
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "MessageWarning", script, true);
     }
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -34,6 +37,8 @@ public partial class HRManager_CreateDepartment : System.Web.UI.Page
             {
                 pnlRed.Visible = true;
                 lblError.Text = "This department with the name '" + txtName.Text.Trim() + "' existed.";
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
                 return;
             }
 
@@ -41,6 +46,19 @@ public partial class HRManager_CreateDepartment : System.Web.UI.Page
 
             pnlGreen.Visible = true;
             lblSuccess.Text = "A new department has been created successfully.";
+            hplnkGreen.Text = "Go to Manage panel";
+            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Manage";
+            Reset();
         }
+    }
+
+    private void Reset()
+    {
+        txtName.Text = "";
+        txtDescription.Text = "";
+    }
+    protected void btnReset_Click(object sender, EventArgs e)
+    {
+        Reset();
     }
 }

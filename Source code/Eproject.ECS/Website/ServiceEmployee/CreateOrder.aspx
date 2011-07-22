@@ -56,63 +56,72 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
     	                <!--  start message-yellow -->
-    	                <asp:Panel ID="pnlYellow" runat="server" Visible="false">
-				            <div id="message-yellow">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="yellow-left">You have a new message. <a href="">Go to Inbox.</a></td>
-					            <td class="yellow-right"><asp:HyperLink ID="HyperLink1" runat="server" CssClass="close-yellow" ImageUrl="~/App_Themes/images/table/icon_close_yellow.gif"></asp:HyperLink></td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-yellow -->
-        				
-				        <!--  start message-red -->
-				        <asp:Panel ID="pnlRed" runat="server" Visible="false">
-				            <div id="message-red">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="red-left">
-                                    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-red">Close 
-                                    and try again.</a></td>
-					            <td class="red-right"><asp:HyperLink ID="HyperLink2" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
-				                </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-red -->
-        				
-				        <!--  start message-blue -->
-				        <asp:Panel ID="pnlBlue" runat="server" Visible="false">
-				            <div id="message-blue">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-					            <td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
-					            <td class="blue-right"><asp:HyperLink ID="HyperLink3" runat="server" CssClass="close-blue" ImageUrl="~/App_Themes/images/table/icon_close_blue.gif"></asp:HyperLink>
-					            </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-blue -->
-				        
-				        <!--  start message-green -->
-				        <asp:Panel ID="pnlGreen" runat="server" Visible="false">
-				            <div id="message-green">
-				            <table border="0" width="100%" cellpadding="0" cellspacing="0">
-				            <tr>
-				            <td class="green-left">
-                                    <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<a href="#" class="close-green" onclick="reset();">Add 
-                                    new one.</a></td>
-					            <td class="green-right"><asp:HyperLink ID="HyperLink5" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
-				                </td>
-				            </tr>
-				            </table>
-				            </div>
-				        </asp:Panel>
-				        <!--  end message-green -->
+                                        <asp:Panel ID="pnlYellow" runat="server" Visible="false">
+                                            <div id="message-yellow">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="yellow-left">
+                                                            <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+                                                            &nbsp;<asp:HyperLink ID="hplnkYellow" runat="server" CssClass="close-yellow"></asp:HyperLink>
+                                                        </td>
+                                                        <td class="yellow-right">
+                                                            <asp:HyperLink ID="hplnkYellowClose" runat="server" CssClass="close-yellow" ImageUrl="~/App_Themes/images/table/icon_close_yellow.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-yellow -->
+                                        <!--  start message-red -->
+                                        <asp:Panel ID="pnlRed" runat="server" Visible="false">
+                                            <div id="message-red">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="red-left">
+                                                            <asp:Label ID="lblError" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink
+                                                                ID="hplnkRed" runat="server" CssClass="close-red">Please try again.</asp:HyperLink>
+                                                        </td>
+                                                        <td class="red-right">
+                                                            <asp:HyperLink ID="hplnkRedClose" runat="server" CssClass="close-red" ImageUrl="~/App_Themes/images/table/icon_close_red.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-red -->
+                                        <!--  start message-blue -->
+                                        <asp:Panel ID="pnlBlue" runat="server" Visible="false">
+                                            <div id="message-blue">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="blue-left">
+                                                            Welcome back. <a href="">View my account.</a>
+                                                        </td>
+                                                        <td class="blue-right">
+                                                            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="close-blue" ImageUrl="~/App_Themes/images/table/icon_close_blue.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-blue -->
+                                        <!--  start message-green -->
+                                        <asp:Panel ID="pnlGreen" runat="server" Visible="false">
+                                            <div id="message-green">
+                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td class="green-left">
+                                                            <asp:Label ID="lblSuccess" runat="server" Text=""></asp:Label>&nbsp;<asp:HyperLink
+                                                                ID="hplnkGreen" runat="server" CssClass="close-green"></asp:HyperLink>
+                                                        </td>
+                                                        <td class="green-right">
+                                                            <asp:HyperLink ID="hplnkGreenClose" runat="server" CssClass="close-green" ImageUrl="~/App_Themes/images/table/icon_close_green.gif"></asp:HyperLink>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </asp:Panel>
+                                        <!--  end message-green -->
 		            <!-- start id-form -->   
                     <asp:Wizard ID="wizardCreate" runat="server" ActiveStepIndex="0" Width="100%"
                             SkipLinkText="" DisplaySideBar="False" EnableTheming="True" 
@@ -176,7 +185,7 @@
 		                                </tr>
 		                                <tr>
 		                                    <th valign="top">Bill Date :</th>
-		                                <td><asp:TextBox ID="txtBillDate" runat="server" CssClass="inp-form datePicker" 
+		                                <td><asp:TextBox ID="txtBillDate" runat="server" CssClass="inp-form datePickerService" 
                                                ></asp:TextBox>
                                                <br />
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
@@ -191,7 +200,7 @@
 		                                </tr>
 		                                <tr>
 		                                    <th valign="top">Payment Date :</th>
-		                                <td><asp:TextBox ID="txtPaymentDate" runat="server" CssClass="inp-form datePicker" 
+		                                <td><asp:TextBox ID="txtPaymentDate" runat="server" CssClass="inp-form datePickerService" 
                                                ></asp:TextBox>
                                                <br />
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" 
@@ -257,7 +266,7 @@
                                                 </tr>
                                                 <tr>
 	                                                <th valign="top">From Date :</th>
-                                                    <td><asp:TextBox ID="txtFromDate" runat="server" CssClass="inp-form datePicker" ValidationGroup="grvService" 
+                                                    <td><asp:TextBox ID="txtFromDate" runat="server" CssClass="inp-form datePickerService" ValidationGroup="grvService" 
                                                    ></asp:TextBox>
                                                    <br />
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server"
@@ -269,7 +278,7 @@
                                                 </tr>
                                                 <tr>
                                                         <th valign="top">To Date :</th>
-                                                    <td><asp:TextBox ID="txtToDate" runat="server" CssClass="inp-form datePicker" 
+                                                    <td><asp:TextBox ID="txtToDate" runat="server" CssClass="inp-form datePickerService" 
                                                    ></asp:TextBox>
                                                    <br />
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
@@ -322,17 +331,17 @@
 	                                        <tr>
                                             <td valign="top" align="center">
                                                 <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                                    CssClass="product-table" Width="90%" AllowSorting="True" 
+                                                    CssClass="product-table" Width="90%" AllowSorting="True" RowStyle-HorizontalAlign="Center"
                                                     onsorting="grvManage_Sorting" 
                                                     OnSelectedIndexChanged="grvManage_SelectedIndexChanged">
                                                     <Columns>
                                                         <asp:TemplateField HeaderText="&lt;a href&gt;Logo&lt;/a&gt;" 
                                                             SortExpression="Service_Image">
                                                             <AlternatingItemTemplate>
-                                                                <asp:ImageButton ID="ImageButton1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
+                                                                <asp:Image ID="Image1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
                                                             </AlternatingItemTemplate>
                                                             <ItemTemplate>
-                                                                <asp:ImageButton ID="ImageButton1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
+                                                                <asp:Image ID="Image1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="table-header-repeat line-left" />
                                                         </asp:TemplateField>
@@ -400,6 +409,7 @@
                                                         </asp:CommandField>
                                                     </Columns>
                                                     <AlternatingRowStyle CssClass="alternate-row" />
+                                                    <RowStyle HorizontalAlign="Center" />
                                                 </asp:GridView>
                                             </td>
                                             </tr>
@@ -422,7 +432,7 @@
                                         		
                                                     <!--  start related-act-inner -->
                                                     <div id="related-act-inner">
-                                                        <div style="text-align:center"><asp:ImageButton ID="imgAvatar" runat="server" 
+                                                        <div style="text-align:center"><asp:Image ID="imgAvatar" runat="server" 
                                                                 CausesValidation="False" ImageUrl="~/App_Themes/images/other/no_image.png" /></div>
                                                         <div class="clear"></div>
 	                                                    <div class="lines-dotted-short"></div>
@@ -491,78 +501,61 @@
                                         <div style="margin:0px 100px 0px 100px">
                                             <div style="padding:5px; border:solid 1px #CCC;">
 	                                  <div style="background:#ECECEC">
-	                                    <table border="0" align="center" cellpadding="2" cellspacing="2">
+	                                    <table border="0" align="center" cellpadding="2" cellspacing="2" width="100%">
 	                                      <tr>
-	                                        <td colspan="5" class="title" align="left" style="padding:10px 0px 10px 10px">
+	                                        <td colspan="3" class="title" align="left" style="padding:10px 0px 10px 10px">
                                                 Company<br />
 	                                          </td>
                                           </tr>
 	                                      <tr>
-	                                        <td colspan="5" >
+	                                        <td colspan="3" >
 	                                          <hr />
 	                                          <br />
-               	                              <p class="content" style="font-size:12px">- Infomation of the comapany that you choose.</p></td>
+               	                              <p class="content" style="font-size:12px">- Infomation of the comapany that you 
+                                                  choose.</p></td>
                                           </tr>
 	                                      <tr>
 	                                        <td align="center" valign="top" rowspan="5" style="width:200px">
-                                                <asp:ImageButton ID="imgbtnCompany" runat="server" />
+                                                <asp:Image ID="imgCompany" runat="server" />
 	                                        </td>
-	                                          <th class="content" valign="top" align="left">
+	                                          <th align="right" style="text-align: right;" class="content" valign="top">
                                                   Company Name :</th>
-	                                        <td align="left">
+	                                        <td align="left" style="text-align: left; width:50%">
                                                 <asp:Label ID="lblPreviewName" CssClass="content" runat="server"></asp:Label>
 	                                            </td>
-                                              <td align="left">
-                                                  &nbsp;</td>
-                                              <td align="left">
-                                                  &nbsp;</td>
                                           </tr>
 	                                        <tr>
-                                                <th class="content" valign="top" align="left">
+                                                <th align="right" style="text-align: right;" class="content" valign="top">
                                                     Phone Number :</th>
                                                 <td align="left">
                                                     <asp:Label ID="lblPreviewPhone" CssClass="content" runat="server"></asp:Label></td>
-                                                <td align="left">
-                                                    &nbsp;</td>
-                                                <td align="left">
-                                                    &nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <th class="content" valign="top" align="left">
+                                                <th align="right" style="text-align: right;" class="content" valign="top">
                                                     Email :</th>
                                                 <td align="left">
                                                     <asp:Label ID="lblPreviewEmail" CssClass="content" runat="server"></asp:Label></td>
-                                                <td align="left">
-                                                    &nbsp;</td>
-                                                <td align="left">
-                                                    &nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <th class="content" valign="top" align="left">
+                                                <th align="right" style="text-align: right;" class="content" valign="top">
                                                     Address :</th>
                                                 <td align="left">
                                                     <asp:Label ID="lblPreviewAddress" CssClass="content" runat="server"></asp:Label></td>
-                                                <td align="left">
-                                                    &nbsp;</td>
-                                                <td align="left">
-                                                    &nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <th class="content" valign="top" align="left">
+                                                <th align="right" style="text-align: right;" class="content" valign="top">
                                                     Description :</th>
-                                                <td align="left" colspan="2" rowspan="2" valign="top">
+                                                <td align="left" valign="top">
                                                     <asp:Label ID="lblPreviewDescription" CssClass="content" runat="server"></asp:Label></td>
-                                                <td align="left">
-                                                    &nbsp;</td>
                                             </tr>
 	                                      <tr>
-	                                        <td align="center" colspan="5" class="content">
+	                                        <td align="center" colspan="3" class="content">
                                                 <hr />
                                                    </td>
                                           </tr>
                                           
 	                                      <tr>
-	                                        <td align="center" colspan="5" class="content">
+	                                        <td align="center" colspan="3" class="content">
                                                 <asp:Button ID="btnChangeCompany" runat="server" CssClass="form-change" 
                                                     Text="Change Company" OnClick="btnChangeCompany_Click" />
                                                    </td>
@@ -580,64 +573,61 @@
                                         <div style="margin:0px 100px 0px 100px">
                                             <div style="padding:5px; border:solid 1px #CCC;">
 	                                          <div style="background:#ECECEC">
-	                                            <table border="0" align="center" cellpadding="2" cellspacing="2">
+	                                            <table border="0" align="center" cellpadding="2" cellspacing="2" width="100%">
 	                                              <tr>
-	                                                <td colspan="5" class="title" align="left" style="padding:10px 0px 10px 10px">
+	                                                <td colspan="3" class="title" align="left" style="padding:10px 0px 10px 10px">
                                                         Employee<br />
 	                                                  </td>
                                                   </tr>
 	                                              <tr>
-	                                                <td colspan="5" >
+	                                                <td colspan="3" >
 	                                                  <hr />
 	                                                  <br />
-               	                                      <p class="content" style="font-size:12px">- Infomation of the employee who makes bill.</p></td>
+               	                                      <p class="content" style="font-size:12px">- Infomation of the employee who makes 
+                                                          bill.</p></td>
                                                   </tr>
 	                                              <tr>
-	                                                <td align="center" valign="top" rowspan="3" style="width:200px">
-                                                        <asp:ImageButton ID="imgbtnEmployee" runat="server" />
+	                                                <td align="center" valign="top" rowspan="4" style="width:200px">
+                                                        <asp:Image ID="imgEmployee" runat="server" />
 	                                                </td>
-	                                                  <th class="content" valign="top" align="left">
+	                                                  <th align="right" style="text-align: right;" class="content" valign="top">
                                                           Employee Name :</th>
-	                                                <td align="left">
+	                                                <td align="left" style="text-align: left; width: 50%;">
                                                         <asp:Label ID="lblPreviewEmployeeName" CssClass="content" runat="server"></asp:Label>
 	                                                    </td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
                                                   </tr>
 	                                                <tr>
-                                                        <th class="content" valign="top" align="left">
+                                                        <th align="right" style="text-align: right;" class="content" valign="top">
                                                             Account :</th>
                                                         <td align="left">
                                                             <asp:Label ID="lblPreviewAccount" CssClass="content" runat="server"></asp:Label></td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="content" valign="top" align="left">
+                                                        <th align="right" style="text-align: right;" class="content" valign="top">
                                                             Email :</th>
                                                         <td align="left">
                                                             <asp:Label ID="lblPreviewEmployeeEmail" CssClass="content" runat="server"></asp:Label></td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
                                                     </tr>
 	                                              <tr>
-	                                                <td align="center" colspan="5" class="content">
-                                                        <hr />
+	                                                  <th align="right" class="content" style="text-align: right;" valign="top">
+                                                          &nbsp;</th>
+	                                                <td align="center" colspan="3" class="content">
+                                                        
                                                            </td>
                                                   </tr>
                                                   
 	                                              <tr>
-	                                                <td align="center" colspan="5" class="content">
-                                                        <asp:Button ID="btnChangeEmployee" runat="server" CssClass="form-change" 
-                                                            Text="Change Employee" OnClick="btnChangeEmployee_Click" />
+	                                                <td align="center" colspan="3" class="content">
+                                                        <hr />
                                                            </td>
                                                   </tr>
+                                                  
+                                                    <tr>
+                                                        <td align="center" class="content" colspan="3">
+                                                            <asp:Button ID="btnChangeEmployee" runat="server" CssClass="form-change" 
+                                                                OnClick="btnChangeEmployee_Click" Text="Change Employee" />
+                                                        </td>
+                                                    </tr>
                                                   
                                                 </table>
                                               </div>
@@ -650,90 +640,66 @@
                                         <div style="margin:0px 100px 0px 100px">
                                             <div style="padding:5px; border:solid 1px #CCC;">
 	                                          <div style="background:#ECECEC">
-	                                            <table border="0" align="center" cellpadding="2" cellspacing="2">
+	                                            <table border="0" align="center" cellpadding="2" cellspacing="2" width="100%">
 	                                              <tr>
-	                                                <td colspan="4" class="title" align="left" style="padding:10px 0px 10px 10px">
+	                                                <td colspan="3" class="title" align="left" style="padding:10px 0px 10px 10px">
                                                         Order<br />
 	                                                  </td>
                                                   </tr>
 	                                              <tr>
-	                                                <td colspan="5" >
+	                                                <td colspan="3" >
 	                                                  <hr />
 	                                                  <br />
                	                                      <p class="content" style="font-size:12px">- Infomation of the order.</p></td>
                                                   </tr>
 	                                              <tr>
-	                                                <td align="center" valign="top" rowspan="6">
+	                                                <td align="center" valign="top" rowspan="5">
                                                         &nbsp;
 	                                                </td>
-	                                                 <th class="content" valign="top" align="left">
+	                                                 <th align="right" style="text-align: right; width: 50%;" class="content" valign="top">
                                                           Bill Date :</th>
 	                                                <td align="left">
                                                         <asp:Label ID="lblBillDate" CssClass="content" runat="server"></asp:Label>
 	                                                    </td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
                                                   </tr>
 	                                                <tr>
-                                                        <th class="content" valign="top" align="left">
+                                                       <th align="right" style="text-align: right; width: 50%;" class="content" valign="top">
                                                             Payment Date :</th>
                                                         <td align="left">
                                                             <asp:Label ID="lblPaymentdate" CssClass="content" runat="server"></asp:Label></td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
                                                     </tr>
                                                     <tr>
-                                                        <th class="content" valign="top" align="left">
+                                                        <th align="right" style="text-align: right; width: 50%;" class="content" valign="top">
                                                             Description :</th>
-                                                        <td align="left" colspan="2" rowspan="2" valign="top">
+                                                        <td align="left" valign="top">
                                                             <asp:Label ID="lblOrderDescription" CssClass="content" runat="server"></asp:Label></td>
-                                                        <td align="left">
-                                                            &nbsp;</td>
                                                     </tr>
                                                   <tr>
-                                                        <th class="content" valign="top" align="left">
-                                                            &nbsp;</th>
+                                                        <th class="content" valign="top" align="right" 
+                                                            style="text-align: right; width: 50%;">
+                                                            Total Services :</th>
                                                         <td align="left">
-                                                            &nbsp;</td>
+                                                            <asp:Label ID="lblTotalService" runat="server" CssClass="content"></asp:Label>
+                                                        </td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="content" valign="top" align="left">
-                                                        Total Services :</th>
+                                                    <th align="right" style="text-align: right; width: 50%;" class="content" valign="top">
+                                                        Total Charges :</th>
                                                     <td align="left">
-                                                        <asp:Label ID="lblTotalService" runat="server" CssClass="content"></asp:Label>
+                                                        <asp:Label ID="lblTotalCharge" runat="server" CssClass="content"></asp:Label>
                                                     </td>
-                                                    <td align="left">
-                                                        &nbsp;</td>
-                                                    <td align="left">
-                                                        &nbsp;</td>
                                                 </tr>
 	                                              <tr>
-	                                                  <th align="left" class="content" valign="top">
-                                                          Total Charges :</th>
-	                                                <td align="left">
-                                                        <asp:Label ID="lblTotalCharge" runat="server" CssClass="content"></asp:Label>
-                                                           </td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
-                                                      <td align="left">
-                                                          &nbsp;</td>
-                                                  </tr>
-	                                              <tr>
-	                                                <td align="center" colspan="5" class="content">
+	                                                <td align="center" class="content" colspan="3">
                                                         <hr />
                                                            </td>
                                                   </tr>
-                                                  
-                                                    <tr>
-                                                        <td align="center" class="content" colspan="4">
-                                                            <asp:Button ID="btnChangeOrder" runat="server" CssClass="form-change" 
-                                                                Text="Change Order" OnClick="btnChangeOrder_Click" />
-                                                        </td>
-                                                    </tr>
+	                                              <tr>
+	                                                <td align="center" colspan="3" class="content">
+                                                        <asp:Button ID="btnChangeOrder" runat="server" CssClass="form-change" 
+                                                            OnClick="btnChangeOrder_Click" Text="Change Order" />
+                                                           </td>
+                                                  </tr>
                                                   
                                                 </table>
                                               </div>
@@ -751,7 +717,7 @@
                                             <tr>
                                             <td align="center">
                                             <asp:GridView ID="grvPrevew" runat="server" AutoGenerateColumns="False" 
-                                                CssClass="product-table" Width="90%" AllowSorting="True" 
+                                                CssClass="product-table" Width="90%" AllowSorting="True" RowStyle-HorizontalAlign="Center"
                                                 onsorting="grvManage_Sorting">
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="&lt;a href&gt;Logo&lt;/a&gt;" 
@@ -822,6 +788,7 @@
                                                     </asp:TemplateField>
                                                 </Columns>
                                                 <AlternatingRowStyle CssClass="alternate-row" />
+                                                <RowStyle HorizontalAlign="Center" />
                                             </asp:GridView>
                                             </td>
                                             </tr>

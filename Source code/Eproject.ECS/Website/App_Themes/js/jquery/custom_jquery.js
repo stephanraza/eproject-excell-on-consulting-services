@@ -109,7 +109,13 @@ $(document).ready(function () {
       yearRange: '1960:2011'
     });
 });
-
+$(document).ready(function () {
+    $( '.datePickerService' ).datepicker({
+       changeMonth: true,
+       changeYear: true,
+      yearRange: '2000:2050'
+    });
+});
 $(document).ready(function () {
 	$(".confirmDelete").click(function () {
     return confirm("Are you sure to delete permanently this data ?");

@@ -83,7 +83,6 @@ public partial class Administrator_ModifyAccount : System.Web.UI.Page
                 lblStatus.Text = "Unlocked";
                 lnkStatus.Text = "Lock";
             }
-            DisplayPanelPreview(accountId);
         }
         catch (Exception ex)
         {
@@ -94,36 +93,6 @@ public partial class Administrator_ModifyAccount : System.Web.UI.Page
             Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage");
         }
     }
-    private void DisplayPanelPreview(Guid accountId)
-    {
-        Account account = AB.GetAccount(accountId);
-        EB = new EmployeeBusiness();
-        Employee employee = EB.GetEmployee(account.Employee_Id);
-        DB = new DepartmentBusiness();
-        Department department = DB.GetDepartment(employee.Department_Id);
-
-        imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
-        lblUserName.Text = account.Account_UserName;
-        lblRole.Text = account.Role_Name;
-        hplnkModifyAccount.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Modify/" + account.Account_Id.ToString();
-        lblFirstName.Text = employee.Employee_FirtName;
-        lblLastName.Text = employee.Employee_LastName;
-        lblEmail.Text = employee.Employee_Email;
-        lblAddress.Text = employee.Employee_Address;
-        lblPhoneNumber.Text = employee.Employee_PhoneNumber;
-        if (employee.Employee_DateOfBirth.ToShortDateString().Equals("1/1/1900"))
-            lblDOB.Text = "";
-        else
-            lblDOB.Text = employee.Employee_DateOfBirth.ToShortDateString();
-        if (employee.Employee_Gender)
-            lblGender.Text = "Male";
-        else
-            lblGender.Text = "Female";
-        hplnkModifyProfile.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employee.Employee_Id.ToString();
-        lblDepartmentName.Text = department.Department_Name;
-        lblDescription.Text = department.Department_Description;
-        hplnkModifyDepartment.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Modify/" + department.Department_Id.ToString();
-    }
     protected void lnkReset_Click(object sender, EventArgs e)
     {
         if (lblPassword.Visible)
@@ -131,7 +100,6 @@ public partial class Administrator_ModifyAccount : System.Web.UI.Page
             lnkReset.Text = "Reset password";
             lblPassword.Text = "";
             lblPassword.Visible = false;
-            DisplayPanelPreview(accountId);
             return;
         }
         else
@@ -139,7 +107,6 @@ public partial class Administrator_ModifyAccount : System.Web.UI.Page
             lnkReset.Text = "Cancel";
             lblPassword.Visible = true;
             lblPassword.Text = "123456";
-            DisplayPanelPreview(accountId);
             return;
         }
     }
@@ -155,7 +122,6 @@ public partial class Administrator_ModifyAccount : System.Web.UI.Page
             lblStatus.Text = "Locked";
             lnkStatus.Text = "Unlock";
         }
-        DisplayPanelPreview(accountId);
     }
     protected void btnChange_Click(object sender, EventArgs e)
     {

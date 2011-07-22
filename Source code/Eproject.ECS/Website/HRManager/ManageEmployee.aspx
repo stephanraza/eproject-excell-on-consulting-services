@@ -390,7 +390,7 @@
                                                                     <asp:ImageButton ID="imgbtnEditAccount" runat="server" ToolTip="Edit account" CausesValidation="False"
                                                                         ImageUrl="~/App_Themes/images/table/table_icon_account.gif" OnClick="imgbtnEditAccount_Click" />
                                                                     <%}%>
-                                                                    <asp:ImageButton ID="imgbtnEditEmployee" runat="server" PostBackUrl='<%# GetEmployeeURL(Eval("Employee_Id")) %>'
+                                                                    <asp:ImageButton ID="imgbtnEditEmployee" runat="server" PostBackUrl='<%# GetEmployeeModifyURL(Eval("Employee_Id")) %>'
                                                                         ImageUrl="~/App_Themes/images/table/table_icon_edit.gif" CausesValidation="False"
                                                                         ToolTip="Edit employee" />
                                                                 </ItemTemplate>

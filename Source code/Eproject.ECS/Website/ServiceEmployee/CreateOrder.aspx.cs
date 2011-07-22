@@ -73,7 +73,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
             ddlAccount.Items.Add(item.Account_UserName);
         }
 
-        DataTable dataTable = CB.Company_ShowAllDisplay();
+        DataTable dataTable = CB.Company_ShowAllDisplay("");
         ddlCompanyName.Items.Clear();
         ddlCompanyName.Items.Add("Select company");
         for (int i = 0; i < dataTable.Rows.Count; i++)
@@ -118,17 +118,17 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
 
                 String urlCompany = "";
                 if (company["Company_Logo"].ToString().Equals(""))
-                    urlCompany = WebHelper.Instance.GetWebsitePath() + "App_Themes/images/other/no_image.png";
+                    urlCompany = WebHelper.Instance.GetURL() + "App_Themes/images/other/no_image.png";
                 else
                     urlCompany = WebHelper.Instance.GetImageURL(company["Company_Logo"].ToString(), 128, 128, false);
-                imgbtnCompany.ImageUrl = urlCompany;
+                imgCompany.ImageUrl = urlCompany;
                 lblPreviewName.Text = company["Company_Name"].ToString();
                 lblPreviewPhone.Text = company["Company_Phone"].ToString();
                 lblPreviewEmail.Text = company["Company_Email"].ToString();
                 lblPreviewAddress.Text = company["Company_Address"].ToString();
                 lblPreviewDescription.Text = company["Company_Description"].ToString();
 
-                imgbtnEmployee.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
+                imgEmployee.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
                 lblPreviewEmployeeName.Text = employee.Employee_FirtName + " " + employee.Employee_LastName;
                 lblPreviewAccount.Text = account.Account_UserName;
                 lblPreviewEmployeeEmail.Text = employee.Employee_Email;

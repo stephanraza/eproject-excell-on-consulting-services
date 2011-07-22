@@ -1,7 +1,8 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TrashDepartment.aspx.cs" Inherits="HRManager_TrashDepartment" Title="Excell-on Consulting Services"
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
+    CodeFile="TrashService.aspx.cs" Inherits="ServiceManager_TrashService" Title="Excell-on Consulting Services"
     ValidateRequest="false" EnableEventValidation="false" %>
-    
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
@@ -44,25 +45,25 @@
                                             <div class="step-no-off">
                                                 1</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Create">Create details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Create">Create details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 2</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Manage">Manage departments</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Manage">Manage services</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 3</div>
                                             <div class="step-light-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Modify">Modify details</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Modify">Modify details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no">
                                                 4</div>
                                             <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Department/Trash">Trash</a></div>
+                                                <a href="<%=ResolveUrl("~")%>ManageService/Service/Trash">Trash</a></div>
                                             <div class="step-dark-round">
                                                 &nbsp;</div>
                                             <div class="clear">
@@ -155,46 +156,60 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2" align="center">
-                                                    <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                                        CssClass="product-table" Width="90%"
-                                                        AllowSorting="True" OnSorting="grvManage_Sorting">
+                                                    <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" CssClass="product-table"
+                                                        Width="90%" AllowSorting="True" OnSorting="grvManage_Sorting">
                                                         <Columns>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" SortExpression="Department_Name">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Image&lt;/a&gt;" HeaderStyle-CssClass="table-header-check"
+                                                                SortExpression="">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                                                    <asp:Image ID="imgService" runat="server" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' />
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentName" runat="server" Text='<%# Eval("Department_Name") %>'></asp:Label>
+                                                                    <asp:Image ID="imgService" runat="server" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' />
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" SortExpression="Department_Description">
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Name&lt;/a&gt;" SortExpression="Service_Name">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentDescription" runat="server" Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                                                    <asp:Label ID="lblServiceName" runat="server" Text='<%# Eval("Service_Name") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
-                                                                    <asp:Label ID="lblDepartmentDescription" runat="server" Text='<%# Eval("Department_Description") %>'></asp:Label>
+                                                                    <asp:Label ID="lblServiceName" runat="server" Text='<%# Eval("Service_Name") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Charge ($)&lt;/a&gt;" SortExpression="Service_Charge">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblCharge" runat="server" Text='<%# Eval("Service_Charge") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblCharge" runat="server" Text='<%# Eval("Service_Charge") %>'></asp:Label>
+                                                                </AlternatingItemTemplate>
+                                                                <HeaderStyle CssClass="table-header-repeat line-left" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="&lt;a href&gt;Description&lt;/a&gt;" SortExpression="Service_Description">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Service_Description") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <AlternatingItemTemplate>
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Service_Description") %>'></asp:Label>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="&lt;a href&gt;Option&lt;/a&gt;">
                                                                 <ItemTemplate>
                                                                     <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
-                                                                        CausesValidation="False" ToolTip="Delete department permanently"
-                                                                        onclick="imgbtnDelete_Click" />
-                                                                    <asp:HiddenField ID="hfDepartmentId" runat="server" Value='<%# Eval("Department_Id") %>' />
-                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
-                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
-                                                                        ToolTip="Restore department" onclick="imgbtnRestore_Click" />
+                                                                        CausesValidation="False" ToolTip="Delete service permanently" OnClick="imgbtnDelete_Click" />
+                                                                    <asp:HiddenField ID="hfServiceId" runat="server" Value='<%# Eval("Service_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore" ImageUrl="~/App_Themes/images/table/table_icon_restore.gif"
+                                                                        CausesValidation="False" ToolTip="Restore service" OnClick="imgbtnRestore_Click" />
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
                                                                     <asp:ImageButton ID="imgbtnDelete" runat="server" CssClass="confirmDelete" ImageUrl="~/App_Themes/images/table/table_icon_delete.gif"
-                                                                        CausesValidation="False" ToolTip="Delete department permanently"
-                                                                        onclick="imgbtnDelete_Click" />
-                                                                    <asp:HiddenField ID="hfDepartmentId" runat="server" Value='<%# Eval("Department_Id") %>' />
-                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore"
-                                                                        ImageUrl="~/App_Themes/images/table/table_icon_restore.gif" CausesValidation="False"
-                                                                        ToolTip="Restore department" onclick="imgbtnRestore_Click" />
+                                                                        CausesValidation="False" ToolTip="Delete service permanently" OnClick="imgbtnDelete_Click" />
+                                                                    <asp:HiddenField ID="hfServiceId" runat="server" Value='<%# Eval("Service_Id") %>' />
+                                                                    <asp:ImageButton ID="imgbtnRestore" runat="server" CssClass="confirmRestore" ImageUrl="~/App_Themes/images/table/table_icon_restore.gif"
+                                                                        CausesValidation="False" ToolTip="Restore service" OnClick="imgbtnRestore_Click" />
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>
@@ -248,7 +263,6 @@
                                         <!-- end id-form  -->
                                     </td>
                                     <td>
-                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -283,4 +297,3 @@
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
-

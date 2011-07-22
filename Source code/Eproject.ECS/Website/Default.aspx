@@ -37,7 +37,7 @@
                 FailureText="Login was not successful. Please try again." 
                 onloggedin="frmLogin_LoggedIn">
                 <LayoutTemplate>
-                    <table border="0" cellpadding="0">
+                    <table border="0" cellpadding="0" class="id-form">
                         <tr>
                         <th>Username</th>
                             <td>
@@ -45,7 +45,7 @@
                                 <br />
                                 <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" 
                                     ControlToValidate="UserName" ErrorMessage="User Name is required." 
-                                    ToolTip="User Name is required." ValidationGroup="frmLogin" 
+                                    ToolTip="User Name is required." ValidationGroup="frmLogin" CssClass="content"
                                     Display="Dynamic">Enter your user name.</asp:RequiredFieldValidator>
                             </td>
                         </tr>
@@ -56,7 +56,7 @@
                                 <br />
                                 <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" 
                                     ControlToValidate="Password" ErrorMessage="Password is required." 
-                                    ToolTip="Password is required." ValidationGroup="frmLogin" 
+                                    ToolTip="Password is required." ValidationGroup="frmLogin" CssClass="content"
                                     Display="Dynamic">Enter your password.</asp:RequiredFieldValidator>
                             </td>
                         </tr>
@@ -67,7 +67,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="center" colspan="2" style="color:Red;">
+                            <td align="center" colspan="2" style="color:Red;" class="content">
                                 <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                             </td>
                         </tr>

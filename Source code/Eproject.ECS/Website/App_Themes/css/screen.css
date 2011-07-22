@@ -1745,3 +1745,14 @@ a:hover.back-login	{
 	text-indent: -3000px;
 	width: 80px;
 	}
+.styledselect_form_charge	{
+	border: none;
+	border-left: none;
+	color: #393939;
+	cursor: pointer;
+	display: block;
+	font-family: Arial;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	width: 158px;
+}
