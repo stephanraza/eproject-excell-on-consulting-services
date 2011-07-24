@@ -45,8 +45,12 @@
         routes.MapPageRoute("TrashService", "ManageService/Service/Trash", "~/ServiceManager/TrashService.aspx");
 
         routes.MapPageRoute("CreateOrder", "ManageService/Order/Create", "~/ServiceEmployee/CreateOrder.aspx");
-        routes.MapPageRoute("ManageOrder", "ManageService/Order/Manage", "~/ServiceEmployee/ManageOrder.aspx");
-        routes.MapPageRoute("ModifyOrder", "ManageService/Order/Modify", "~/ServiceEmployee/ModifyOrder.aspx");
+        routes.MapPageRoute("ManageOrder", "ManageService/Order/Manage/{id}", "~/ServiceEmployee/ManageOrder.aspx",
+            new RouteValueDictionary { { "id", "" } });
+        routes.MapPageRoute("ModifyOrder", "ManageService/Order/Modify/{id}", "~/ServiceEmployee/ModifyOrder.aspx",
+            new RouteValueDictionary { { "id", "" } });
+        routes.MapPageRoute("DisplayOrder", "ManageService/Order/Display/{id}", "~/ServiceEmployee/DisplayOrder.aspx",
+            new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("TrashOrder", "ManageService/Order/Trash", "~/ServiceEmployee/TrashOrder.aspx");        
 
         routes.MapPageRoute("CreateCustomer", "ManageService/Customer/Create", "~/ServiceEmployee/CreateCustomer.aspx");

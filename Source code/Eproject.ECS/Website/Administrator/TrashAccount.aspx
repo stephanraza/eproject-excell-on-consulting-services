@@ -47,11 +47,11 @@
                                                 <a href="<%=ResolveUrl("~")%>ManageSystem/Account/Create">Create details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no">
+                                            <div class="step-no-off">
                                                 2</div>
-                                            <div class="step-dark-left">
-                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Account/Manage">Manage accounts</a></div>
-                                            <div class="step-dark-right">
+                                            <div class="step-light-left">
+                                                <a href="<%=ResolveUrl("~")%>ManageSystem/Employee/Manage">Manage accounts</a></div>
+                                            <div class="step-light-right">
                                                 &nbsp;</div>
                                             <div class="step-no-off">
                                                 3</div>
@@ -59,11 +59,11 @@
                                                 <a href="<%=ResolveUrl("~")%>ManageSystem/Account/Modify">Modify details</a></div>
                                             <div class="step-light-right">
                                                 &nbsp;</div>
-                                            <div class="step-no-off">
+                                            <div class="step-no">
                                                 4</div>
-                                            <div class="step-light-left">
+                                            <div class="step-dark-left">
                                                 <a href="<%=ResolveUrl("~")%>ManageSystem/Account/Trash">Trash</a></div>
-                                            <div class="step-light-round">
+                                            <div class="step-dark-round">
                                                 &nbsp;</div>
                                             <div class="clear">
                                             </div>

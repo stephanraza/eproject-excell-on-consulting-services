@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Eproject.ECS.Entities;
+using System.Data.SqlClient;
 
 namespace Eproject.ECS.Dal
 {
@@ -64,7 +65,7 @@ namespace Eproject.ECS.Dal
         {
             List<OrderOfService> list = new List<OrderOfService>();
             List<Object> listObj = DBHelper.Instance.Select("OrderOfService", String.Format("OrderOfService_IsDelete = '{0}'", isDelete), null, -1, -1);
-            foreach (Object  item in listObj)
+            foreach (Object item in listObj)
             {
                 OrderOfService oos = (OrderOfService)item;
                 list.Add(oos);
@@ -102,7 +103,7 @@ namespace Eproject.ECS.Dal
         public List<OrderOfServiceDetail> GetOrderDetails(String where, bool isDelete)
         {
             List<OrderOfServiceDetail> list = new List<OrderOfServiceDetail>();
-            List<Object> listObj = DBHelper.Instance.Select("OrderOfServiceDetail", String.Format("{0} OrderOfServiceDetail_IsDelete = '{1}'",where, isDelete), null, -1, -1);
+            List<Object> listObj = DBHelper.Instance.Select("OrderOfServiceDetail", String.Format("{0} OrderOfServiceDetail_IsDelete = '{1}'", where, isDelete), null, -1, -1);
             foreach (Object item in listObj)
             {
                 OrderOfServiceDetail oosd = (OrderOfServiceDetail)item;
@@ -136,22 +137,110 @@ namespace Eproject.ECS.Dal
             return DBHelper.Instance.Delete("OrderOfService", String.Format("OrderOfService_Id = '{0}'", orderId));
         }
         /// <summary>
-        /// Delete order's details by order's id.
+        /// Delete order's detail.
         /// </summary>
         /// <param name="orderId">Id of order.</param>
-        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
-        public int DeleteOrderDetailByOrderId(Guid orderId)
-        {
-            return DBHelper.Instance.Delete("OrderOfServiceDetail", String.Format("OrderOfService_Id = '{0}'", orderId));
-        }
-        /// <summary>
-        /// Delete order's details by service's id.
-        /// </summary>
         /// <param name="serviceId">Id of service.</param>
         /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
-        public int DeleteOrderDetailByServiceId(Guid serviceId)
+        public int DeleteOrderDetail(String orderId, String serviceId)
         {
-            return DBHelper.Instance.Delete("OrderOfServiceDetail", String.Format("Service_Id = '{0}'", serviceId));
+            String where = "";
+            String order = "OrderOfService_Id = '{0}'";
+            String service = "Service_Id = '{0}'";
+            if (!String.IsNullOrEmpty(orderId))
+                order = String.Format(order, orderId);
+            else
+                order = "";
+            if (!String.IsNullOrEmpty(serviceId))
+                service = String.Format(service, serviceId);
+            else
+                service = "";
+
+            if (!String.IsNullOrEmpty(order) && !String.IsNullOrEmpty(service))
+                where = order + " AND " + service;
+            else if (!String.IsNullOrEmpty(order))
+                where = order;
+            else if (!String.IsNullOrEmpty(service))
+                where = service;
+            else
+                return -1;
+            return DBHelper.Instance.Delete("OrderOfServiceDetail", where);
+        }
+        /// <summary>
+        /// Update order's information.
+        /// </summary>
+        /// <param name="order">The order be updated.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int UpdateOrder(OrderOfService order)
+        {
+            return DBHelper.Instance.Update(order, String.Format("OrderOfService_Id = '{0}'", order.OrderOfService_Id.ToString()));
+        }
+        /// <summary>
+        /// Update order detail's information.
+        /// </summary>
+        /// <param name="orderDetail">The order's detail be updated.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int UpdateOrderDetail(OrderOfServiceDetail orderDetail)
+        {
+            return DBHelper.Instance.Update(orderDetail, String.Format("OrderOfService_Id = '{0}' AND Service_Id = '{1}'", orderDetail.OrderOfService_Id.ToString(), orderDetail.Service_Id.ToString()));
+        }
+        /// <summary>
+        /// Searching order by condition.
+        /// </summary>
+        /// <param name="where">Condition for searching.</param>
+        /// <param name="isDelete">True if these orders of oder is deleted, false otherwise.</param>
+        /// <returns>List object of order type.</returns>
+        public List<Order> SearchOrder(String where, bool isDelete)
+        {
+            String query = "SELECT oos.OrderOfService_Id, oos.Company_Id,"
+                           + " oos.Employee_Id, a.Account_UserName, c.Company_Name,"
+                           + " oos.OrderOfService_Description,oos.OrderOfService_PaymentMethod,"
+                           + " oos.OrderOfService_PaymentDate,oos.OrderOfService_BillDate,"
+                           + " oos.OrderOfService_Status,oos.OrderOfService_IsDelete"
+                           + " FROM Account a JOIN Employee e ON e.Employee_Id = a.Employee_Id"
+                           + " JOIN OrderOfService oos ON oos.Employee_Id = e.Employee_Id"
+                           + " JOIN Company c ON c.Company_Id = oos.Company_Id"
+                           + " WHERE oos.OrderOfService_IsDelete = '{0}' {1}";
+
+            query = String.Format(query, isDelete, where);
+            DBHelper.Instance.OpenConnection();
+            SqlDataReader reader = DBHelper.Instance.ExecuteReaderSQL(query);
+
+            List<Order> list = new List<Order>();
+
+            while (reader.Read())
+            {
+                Order order = new Order();
+                order.OrderOfService_Id = reader.GetGuid(0);
+                order.Company_Id = reader.GetGuid(1);
+                order.Employee_Id = reader.GetGuid(2);
+                order.Account_UserName = reader.GetString(3);
+                order.Company_Name = reader.GetString(4);
+                order.OrderOfService_Description = reader.GetString(5);
+                order.OrderOfService_PaymentMethod = reader.GetString(6);
+                order.OrderOfService_PaymentDate = reader.GetDateTime(7).ToShortDateString();
+                order.OrderOfService_BillDate = reader.GetDateTime(8).ToShortDateString();
+                switch (reader.GetInt32(9))
+                { 
+                    case 0:
+                        order.OrderOfService_Status = "Pending";
+                        break;
+                    case 99:
+                        order.OrderOfService_Status = "In Progress";
+                        break;
+                    case 1:
+                        order.OrderOfService_Status = "Resolved";
+                        break;
+                    default:
+                        order.OrderOfService_Status = "";
+                        break;
+                }
+
+                list.Add(order);
+            }
+            DBHelper.Instance.CloseConnection();
+
+            return list;
         }
     }
 }

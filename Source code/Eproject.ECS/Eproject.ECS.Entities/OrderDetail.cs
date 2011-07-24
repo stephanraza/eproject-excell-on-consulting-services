@@ -15,8 +15,8 @@ namespace Eproject.ECS.Entities
         public bool Service_IsDelete { get; set; }
 
         public Guid OrderOfService_Id { get; set; }
-        public DateTime OrderOfServiceDetail_FromDate { get; set; }
-        public DateTime OrderOfServiceDetail_ToDate { get; set; }
+        public String OrderOfServiceDetail_FromDate { get; set; }
+        public String OrderOfServiceDetail_ToDate { get; set; }
         public int OrderOfServiceDetail_NumberOfEmployee { get; set; }
         public String OrderOfServiceDetail_Price { get; set; }
         public bool OrderOfServiceDetail_IsDelete { get; set; }

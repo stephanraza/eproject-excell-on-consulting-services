@@ -63,6 +63,21 @@ namespace Eproject.ECS.Dal
             return listService;
         }
         /// <summary>
+        /// Get all services in database.
+        /// </summary>
+        /// <returns>A list of services.</returns>
+        public List<Service> GetServices()
+        {
+            List<Service> listService = new List<Service>();
+            List<Object> listObject = DBHelper.Instance.Select("Service", null, null, -1, -1);
+            foreach (Object item in listObject)
+            {
+                Service service = (Service)item;
+                listService.Add(service);
+            }
+            return listService;
+        }
+        /// <summary>
         /// Searching service.
         /// </summary>
         /// <param name="content">Content for searching.</param>

@@ -1647,6 +1647,14 @@ a:hover.back-login	{
 	font-size: 14px;
 	color: #000;
 	}
+.th-label-a	{
+	line-height: 28px;
+	padding: 0 15px 10px 0;
+	text-align: left;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #2e74b2;
+	}
 .inp-form-search	{
 	background: url(../images/forms/form_search.gif) right no-repeat;
 	border: none;
