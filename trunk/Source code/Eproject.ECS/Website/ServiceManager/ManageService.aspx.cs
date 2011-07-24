@@ -144,6 +144,8 @@ public partial class ServiceManager_ManageService : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = String.Format("Can not find data related to the '{0}', you should try again.", txtSearch.Text.Trim());
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     private void SearchByCharge()

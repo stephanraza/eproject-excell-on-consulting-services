@@ -209,7 +209,7 @@ namespace Eproject.ECS.Bll
 
                 // Check related datas
                 OrderBusiness OB = new OrderBusiness();
-                List<OrderOfService> list = OB.GetOrdersByEmployeeId(emId, false);
+                List<Order> list = OB.GetOrdersByEmployeeId(emId, false);
                 if (list.Count == 0)
                 {
                     // Delete account of this employee first.
@@ -218,7 +218,7 @@ namespace Eproject.ECS.Bll
                     if (account != null)
                         AB.DeleteAccount(account.Account_Id);
                     // Then delete orders of this employee
-                    foreach (OrderOfService item in list)
+                    foreach (Order item in list)
                     {
                         OB.DeleteOrder(item.OrderOfService_Id);
                     }
@@ -376,7 +376,7 @@ namespace Eproject.ECS.Bll
                 String conditionDate = " AND e.Employee_DateOfBirth BETWEEN '{0}' AND '{1}'";
                 if (String.IsNullOrEmpty(fromDate))
                     fromDate = "1/1/1900";
-                if (string.IsNullOrEmpty(toDate))
+                if (String.IsNullOrEmpty(toDate))
                     toDate = DateTime.Now.ToShortDateString();
                 conditionDate = String.Format(conditionDate, fromDate, toDate);
 

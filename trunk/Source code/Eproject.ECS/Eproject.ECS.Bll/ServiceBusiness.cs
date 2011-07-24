@@ -69,6 +69,21 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
+        /// Get all services in database.
+        /// </summary>
+        /// <returns>A list of services.</returns>
+        public List<Service> GetServices()
+        {
+            try
+            {
+                return SD.GetServices();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        /// <summary>
         /// Select service by name.
         /// </summary>
         /// <param name="name">Name of service.</param>
@@ -139,7 +154,7 @@ namespace Eproject.ECS.Bll
                 {
                     List<OrderOfServiceDetail> listDetailRemoved = OB.GetOrderDetailsByServiceId(serviceId, true);
                     if (listDetailRemoved.Count > 0)
-                        OB.DeleteOrderDetailByServiceId(serviceId);
+                        OB.DeleteOrderDetail(null, serviceId.ToString());
 
                     int result = SD.Delete(serviceId);
                     if (result == -1)
