@@ -25,14 +25,6 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //In my content page PageLoad()
-        MasterPage mstrPg = this.Master as MasterPage;
-        if (mstrPg != null)
-        {
-            //mstrPg.BodyTag.Attributes.Add("onload", "getInfo()");
-            //mstrPg.BodyTag.Attributes.Add("onprerender", "showDialog('gfdghfghf')");
-        }
-
         pnlRed.Visible = false;
         pnlGreen.Visible = false;
         pnlYellow.Visible = false;
@@ -45,7 +37,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
         CB = new CompanyBLL();
         OB = new OrderBusiness();
 
-        
+
         cvBillDate.ValueToCompare = DateTime.Now.Date.ToShortDateString();
         if (!IsPostBack)
             loadData();
@@ -133,19 +125,24 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 lblPreviewAccount.Text = account.Account_UserName;
                 lblPreviewEmployeeEmail.Text = employee.Employee_Email;
 
-                lblBillDate.Text = order.OrderOfService_BillDate.ToShortDateString();
-                lblPaymentdate.Text = order.OrderOfService_PaymentDate.ToShortDateString();
+                lblBillDate.Text = order.OrderOfService_BillDate;
+                lblPaymentdate.Text = order.OrderOfService_PaymentDate;
                 lblPreviewDescription.Text = order.OrderOfService_Description;
             }
             if (Session["listOrderDetail"] != null)
             {
                 List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];
 
-                lblTotalService.Text = listOrderDetail.Count.ToString();
-                int totalPrice = 0;
+                if (listOrderDetail.Count == 1)
+                    lblTotalService.Text = "1 service";
+                else if (listOrderDetail.Count > 1)
+                    lblTotalService.Text = listOrderDetail.Count.ToString() + " services";
+                else
+                    lblTotalService.Text = "";
+                double totalPrice = 0;
                 foreach (OrderDetail item in listOrderDetail)
                 {
-                    int price = Int32.Parse(item.OrderOfServiceDetail_Price);
+                    double price = Double.Parse(item.OrderOfServiceDetail_Price);
                     totalPrice += price;
                 }
                 lblTotalCharge.Text = "$ " + totalPrice.ToString();
@@ -158,6 +155,8 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Please try again.";
+            hplnkRed.NavigateUrl = "";
         }
     }
 
@@ -185,14 +184,14 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 ddlCompanyName.SelectedValue = company["Company_Id"].ToString();
                 ddlAccount.Text = account.Account_UserName;
                 ddlPaymentMethod.Text = order.OrderOfService_PaymentMethod;
-                txtBillDate.Text = order.OrderOfService_BillDate.ToShortDateString();
-                txtPaymentDate.Text = order.OrderOfService_PaymentDate.ToShortDateString();
+                txtBillDate.Text = order.OrderOfService_BillDate;
+                txtPaymentDate.Text = order.OrderOfService_PaymentDate;
                 txtDescription.Text = order.OrderOfService_Description;
-                if(order.OrderOfService_Status.Equals("Pending"))
+                if (order.OrderOfService_Status.Equals("Pending"))
                     ddlStatus.SelectedIndex = 0;
-                else if(order.OrderOfService_Status.Equals("In Progress"))
+                else if (order.OrderOfService_Status.Equals("In Progress"))
                     ddlStatus.SelectedIndex = 1;
-                else if(order.OrderOfService_Status.Equals("Resolved"))
+                else if (order.OrderOfService_Status.Equals("Resolved"))
                     ddlStatus.SelectedIndex = 2;
             }
         }
@@ -224,6 +223,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
             if (ddlService.SelectedIndex == 0)
             {
                 ResetPanel();
+                SelectServicesMode();
             }
             else
             {
@@ -241,9 +241,10 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                     {
                         btnAdd.Visible = false;
                         btnRemove.Visible = true;
-                        txtFromDate.Text = item.OrderOfServiceDetail_FromDate.ToShortDateString();
-                        txtToDate.Text = item.OrderOfServiceDetail_ToDate.ToShortDateString();
+                        txtFromDate.Text = item.OrderOfServiceDetail_FromDate;
+                        txtToDate.Text = item.OrderOfServiceDetail_ToDate;
                         txtNumberEmployee.Text = item.OrderOfServiceDetail_NumberOfEmployee.ToString();
+                        SelectServicesMode();
                         return;
                     }
                 }
@@ -254,6 +255,8 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Please try again.";
+            hplnkRed.NavigateUrl = "";
         }
     }
 
@@ -261,7 +264,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
     {
         txtFromDate.Text = "";
         txtToDate.Text = "";
-        txtNumberEmployee.Text= "";
+        txtNumberEmployee.Text = "";
         btnAdd.Visible = true;
         btnRemove.Visible = false;
     }
@@ -285,19 +288,21 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 orderDetail.Service_Id = service.Service_Id;
                 orderDetail.Service_Name = service.Service_Name;
                 orderDetail.Service_Image = service.Service_Image;
-                orderDetail.OrderOfServiceDetail_FromDate = DateTime.Parse(txtFromDate.Text.Trim());
-                orderDetail.OrderOfServiceDetail_ToDate = DateTime.Parse(txtToDate.Text.Trim());
+                orderDetail.OrderOfServiceDetail_FromDate = txtFromDate.Text.Trim();
+                orderDetail.OrderOfServiceDetail_ToDate = txtToDate.Text.Trim();
                 orderDetail.OrderOfServiceDetail_NumberOfEmployee = Int32.Parse(txtNumberEmployee.Text.Trim());
 
-                double days = (orderDetail.OrderOfServiceDetail_ToDate - orderDetail.OrderOfServiceDetail_FromDate).TotalDays;
-                int charge = Int32.Parse(SecurityHelper.Instance.DecryptCryptography(service.Service_Charge, true));
+                DateTime toDate = DateTime.Parse(orderDetail.OrderOfServiceDetail_ToDate);
+                DateTime fromDate = DateTime.Parse(orderDetail.OrderOfServiceDetail_FromDate);
+                double days = (toDate - fromDate).TotalDays;
+                double charge = Double.Parse(SecurityHelper.Instance.DecryptCryptography(service.Service_Charge, true));
                 int employee = orderDetail.OrderOfServiceDetail_NumberOfEmployee;
                 double price = days * charge * employee;
 
                 orderDetail.OrderOfServiceDetail_Price = price.ToString();
                 List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];
                 listOrderDetail.Add(orderDetail);
-                
+
                 grvManage.DataSource = listOrderDetail;
                 grvManage.DataBind();
                 ddlService.SelectedIndex = 0;
@@ -308,6 +313,8 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
             {
                 pnlRed.Visible = true;
                 lblError.Text = ex.Message;
+                hplnkRed.Text = "Please try again.";
+                hplnkRed.NavigateUrl = "";
             }
         }
     }
@@ -319,7 +326,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
     private void RemoveService(String name)
     {
         List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];
-        foreach (OrderDetail  item in listOrderDetail)
+        foreach (OrderDetail item in listOrderDetail)
         {
             if (item.Service_Name.Equals(name))
             {
@@ -348,8 +355,8 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                     order.Company_Id = new Guid(ddlCompanyName.SelectedValue);
                     order.Employee_Id = account.Employee_Id;
                     order.OrderOfService_PaymentMethod = ddlPaymentMethod.Text;
-                    order.OrderOfService_BillDate = DateTime.Parse(txtBillDate.Text);
-                    order.OrderOfService_PaymentDate = DateTime.Parse(txtPaymentDate.Text);
+                    order.OrderOfService_BillDate = txtBillDate.Text.Trim();
+                    order.OrderOfService_PaymentDate = txtPaymentDate.Text.Trim();
                     order.OrderOfService_Description = txtDescription.Text;
                     order.OrderOfService_Status = ddlStatus.Text;
                 } break;
@@ -358,6 +365,8 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 {
                     pnlRed.Visible = true;
                     lblError.Text = "You must choose at least 1 service to create new order.";
+                    hplnkRed.Text = "Please try again.";
+                    hplnkRed.NavigateUrl = "";
                     e.Cancel = true;
                 }
                 break;
@@ -383,24 +392,30 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 status = 99;
             else if (order.OrderOfService_Status.Equals("Resolved"))
                 status = 1;
-            OB.CreateOrder(orderId, order.Company_Id, order.Employee_Id, order.OrderOfService_Description, order.OrderOfService_PaymentMethod, order.OrderOfService_PaymentDate, order.OrderOfService_BillDate, status);
-            
+            OB.CreateOrder(orderId, order.Company_Id, order.Employee_Id, order.OrderOfService_Description, order.OrderOfService_PaymentMethod, DateTime.Parse(order.OrderOfService_PaymentDate), DateTime.Parse(order.OrderOfService_BillDate), status);
+
             List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];
             foreach (OrderDetail item in listOrderDetail)
             {
-                OB.CreateOrderDetail(orderId, item.Service_Id, item.OrderOfServiceDetail_FromDate, item.OrderOfServiceDetail_ToDate, item.OrderOfServiceDetail_NumberOfEmployee);
+                OB.CreateOrderDetail(orderId, item.Service_Id, DateTime.Parse(item.OrderOfServiceDetail_FromDate), DateTime.Parse(item.OrderOfServiceDetail_ToDate), item.OrderOfServiceDetail_NumberOfEmployee);
             }
 
-            if (Session.Count > 0)
-                Session.RemoveAll();
+            if (Session["order"] != null)
+                Session.Remove("order");
+            if (Session["listOrderDetail"] != null)
+                Session.Remove("listOrderDetail");
             wizardCreate.ActiveStepIndex = 0;
             pnlGreen.Visible = true;
             lblSuccess.Text = "An order has been already created successfully.";
+            hplnkGreen.Text = "Go to Manage panel.";
+            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageService/Order/Manage";
         }
         catch (Exception ex)
         {
             pnlRed.Visible = true;
             lblError.Text = ex.Message;
+            hplnkRed.Text = "Please try again.";
+            hplnkRed.NavigateUrl = "";
         }
     }
     protected void btnChangeCompany_Click(object sender, EventArgs e)

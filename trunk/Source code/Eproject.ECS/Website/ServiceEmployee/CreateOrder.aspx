@@ -1,6 +1,13 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="CreateOrder.aspx.cs" Inherits="ServiceEmployee_CreateOrder" Title="Excell-on Consulting Services" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="CreateOrder.aspx.cs" Inherits="ServiceEmployee_CreateOrder" Title="Excell-on Consulting Services"
+    ValidateRequest="false" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<script language="javascript" type="text/javascript">
+    function showDialog(content)
+    {
+        alert(content);
+    }
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
     <div id="page-heading"><h1>CREATE ORDER</h1></div>
@@ -170,6 +177,7 @@
 			                                <td>
                                                 <div class="inp-form">
 			                                    <asp:DropDownList ID="ddlPaymentMethod" runat="server" CssClass="styledselect_form">
+                                                    <asp:ListItem Selected="True">Select method</asp:ListItem>
                                                     <asp:ListItem>Cash</asp:ListItem>
                                                     <asp:ListItem>Card</asp:ListItem>
                                                     <asp:ListItem>Online</asp:ListItem>
@@ -331,9 +339,10 @@
 	                                        <tr>
                                             <td valign="top" align="center">
                                                 <asp:GridView ID="grvManage" runat="server" AutoGenerateColumns="False" 
-                                                    CssClass="product-table" Width="90%" AllowSorting="True" RowStyle-HorizontalAlign="Center"
+                                                    CssClass="product-table" Width="90%" AllowSorting="True"
                                                     onsorting="grvManage_Sorting" 
                                                     OnSelectedIndexChanged="grvManage_SelectedIndexChanged">
+                                                    <AlternatingRowStyle CssClass="alternate-row" />
                                                     <Columns>
                                                         <asp:TemplateField HeaderText="&lt;a href&gt;Logo&lt;/a&gt;" 
                                                             SortExpression="Service_Image">
@@ -408,7 +417,6 @@
                                                             <HeaderStyle CssClass="table-header-repeat line-left" />
                                                         </asp:CommandField>
                                                     </Columns>
-                                                    <AlternatingRowStyle CssClass="alternate-row" />
                                                     <RowStyle HorizontalAlign="Center" />
                                                 </asp:GridView>
                                             </td>
@@ -719,14 +727,15 @@
                                             <asp:GridView ID="grvPrevew" runat="server" AutoGenerateColumns="False" 
                                                 CssClass="product-table" Width="90%" AllowSorting="True" RowStyle-HorizontalAlign="Center"
                                                 onsorting="grvManage_Sorting">
+                                                <AlternatingRowStyle CssClass="alternate-row" />
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="&lt;a href&gt;Logo&lt;/a&gt;" 
                                                         SortExpression="Service_Image">
                                                         <AlternatingItemTemplate>
-                                                            <asp:ImageButton ID="ImageButton1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
+                                                            <asp:Image ID="Image1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
                                                         </AlternatingItemTemplate>
                                                         <ItemTemplate>
-                                                            <asp:ImageButton ID="ImageButton1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
+                                                            <asp:Image ID="Image1" ImageUrl='<%# GetURL(Eval("Service_Image")) %>' runat="server" />
                                                         </ItemTemplate>
                                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                                     </asp:TemplateField>
@@ -787,7 +796,6 @@
                                                         <HeaderStyle CssClass="table-header-repeat line-left" />
                                                     </asp:TemplateField>
                                                 </Columns>
-                                                <AlternatingRowStyle CssClass="alternate-row" />
                                                 <RowStyle HorizontalAlign="Center" />
                                             </asp:GridView>
                                             </td>
