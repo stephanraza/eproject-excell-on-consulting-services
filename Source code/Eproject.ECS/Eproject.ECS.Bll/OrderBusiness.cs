@@ -627,7 +627,7 @@ namespace Eproject.ECS.Bll
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return new List<Order>();
             }
         }
 
@@ -654,6 +654,220 @@ namespace Eproject.ECS.Bll
             }
             order.Total_Charge = totalPrice.ToString();
         }
+        /// <summary>
+        /// Get orders that be paid late.
+        /// </summary>
+        /// <param name="quantity">Quantity of these orders.</param>
+        /// <returns>List object of oder type.</returns>
+        public List<Order> GetOrdersLatePayments(int quantity)
+        {
+            try
+            {
+                String where = " AND oos.OrderOfService_PaymentDate <= '{0}'";
+                where = String.Format(where, DateTime.Now.ToShortDateString());
 
+                String conditionStatus = " AND oos.OrderOfService_Status != 1";
+                String orderBy = " ORDER BY oos.OrderOfService_PaymentDate ASC";
+                where = where + conditionStatus + orderBy;
+
+                List<Order> list = OD.SearchOrder(where, false);
+
+                if (list.Count > 0)
+                {
+                    if (list.Count > quantity)
+                    {
+                        for (int i = quantity; i < list.Count; i++)
+                        {
+                            list.Remove(list[i]);
+                        }
+                    }
+                    foreach (Order order in list)
+                    {
+                        CalculateServicesAndCharges(order, false);
+                    }
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<Order>();
+            }
+        }
+        /// <summary>
+        /// Get orders that be paid late.
+        /// </summary>
+        /// <returns>List object of oder type.</returns>
+        public List<Order> GetOrdersLatePayments()
+        {
+            try
+            {
+                String where = " AND oos.OrderOfService_PaymentDate <= '{0}'";
+                where = String.Format(where, DateTime.Now.ToShortDateString());
+
+                String conditionStatus = " AND oos.OrderOfService_Status != 1";
+                String orderBy = " ORDER BY oos.OrderOfService_PaymentDate ASC";
+                where = where + conditionStatus + orderBy;
+
+                List<Order> list = OD.SearchOrder(where, false);
+
+                if (list.Count > 0)
+                {
+                    foreach (Order order in list)
+                    {
+                        CalculateServicesAndCharges(order, false);
+                    }
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<Order>();
+            }
+        }
+        /// <summary>
+        /// Get the services were best used.
+        /// </summary>
+        /// <returns>Table of data related services.</returns>
+        public DataTable GetBestServices(int quantity)
+        {
+            try
+            {
+                DataTable dt = OD.GetBestServices();
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        if (i < quantity)
+                        {
+                            DataRow row = dt.Rows[i];
+                            row["Service_Charge"] = SecurityHelper.Instance.DecryptCryptography(row["Service_Charge"].ToString(), true);
+                        }
+                        else
+                            dt.Rows.Remove(dt.Rows[i]);
+                    }
+                }
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return new DataTable();
+            }
+        }
+        /// <summary>
+        /// Get the VIP clients.
+        /// </summary>
+        /// <returns>Table of data related clients.</returns>
+        public DataTable GetVIPClients(int quantity)
+        {
+            try
+            {
+                DataTable table = OD.GetVIPClients();
+                table.Columns.Add("PaymentValue", typeof(double));
+                table.Columns.Add("Payment", typeof(string));
+                foreach (DataRow item in table.Rows)
+                {
+                    Guid comId = new Guid(item["Company_Id"].ToString());
+                    double companyPayment = 0;
+                    List<Order> listOrder = GetOrdersByCompanyId(comId, false);
+                    foreach (Order order in listOrder)
+                    {
+                        companyPayment += Double.Parse(order.Total_Charge);
+                    }
+                    listOrder = GetOrdersByCompanyId(comId, true);
+                    foreach (Order order in listOrder)
+                    {
+                        companyPayment += Double.Parse(order.Total_Charge);
+                    }
+                    item["PaymentValue"] = companyPayment;
+                    item["Payment"] = companyPayment.ToString();
+                }
+                
+                if (table.Rows.Count > quantity)
+                {
+                    for (int i = quantity; i < table.Rows.Count; i++)
+                    {
+                        table.Rows.Remove(table.Rows[i]);
+                    }
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                return new DataTable();
+            }
+        }
+
+        public DataTable GetStatisticProfitOfYear(int year)
+        {
+            try
+            {
+                DataTable table = new DataTable();
+                table.Columns.Add("Month", typeof(String));
+                table.Columns.Add("Profit", typeof(String));
+                
+                // Add month
+                //String[] months = { "Jannuary", "February", "Mark", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+                String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                for (int i = 0; i < months.Length; i++)
+                {
+                    DataRow row = table.NewRow();
+                    row["Month"] = months.GetValue(i).ToString();
+                    row["Profit"] = GetProfitOfMonth(i + 1, year);
+                    table.Rows.Add(row);
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                return new DataTable();
+            }
+        }
+
+        private Double GetProfitOfMonth(int month, int year)
+        {
+            try
+            {
+                double totalProfit = 0;
+
+                String fromDate = month + "/1/" + year;
+                String toDate = month + "/" + DateTime.DaysInMonth(year, month) + "/" + year;
+
+                String conditionPaymentDate = " AND oos.OrderOfService_PaymentDate BETWEEN '{0}' AND '{1}'";
+                if (!String.IsNullOrEmpty(fromDate) && !String.IsNullOrEmpty(toDate))
+                    conditionPaymentDate = String.Format(conditionPaymentDate, fromDate, toDate);
+                else
+                    conditionPaymentDate = "";
+
+                String conditionStatus = " AND oos.OrderOfService_Status = 1";
+
+                String where = conditionPaymentDate + conditionStatus;
+
+                List<Order> list = OD.SearchOrder(where, false);
+
+                if (list.Count > 0)
+                {
+                    foreach (Order order in list)
+                    {
+                        CalculateServicesAndCharges(order, false);
+                        totalProfit += Double.Parse(order.Total_Charge);
+                    }
+                }
+                List<Order> listRemove = OD.SearchOrder(where, true);
+
+                if (listRemove.Count > 0)
+                {
+                    foreach (Order order in listRemove)
+                    {
+                        CalculateServicesAndCharges(order, true);
+                        totalProfit += Double.Parse(order.Total_Charge);
+                    }
+                }
+                return totalProfit;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
     }
 }

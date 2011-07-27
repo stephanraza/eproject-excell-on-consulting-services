@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Eproject.ECS.Entities;
+using System.Data.SqlClient;
 
 namespace Eproject.ECS.Dal
 {
@@ -111,6 +112,30 @@ namespace Eproject.ECS.Dal
         public int Update(Service service)
         {
             return DBHelper.Instance.Update(service, String.Format("Service_Id = '{0}'", service.Service_Id));
+        }
+        /// <summary>
+        /// Get number company using service.
+        /// </summary>
+        /// <param name="serviceId">Id of the service.</param>
+        /// <returns>Return the number of rows affected or return -1 if occur exception.</returns>
+        public int GetNumberCompanyUseService(Guid serviceId)
+        {
+            String query = " SELECT c.Company_Name  FROM [Service] s JOIN OrderOfServiceDetail oosd"
+                           + " ON oosd.Service_Id = s.Service_Id  JOIN OrderOfService oos"
+                           + " ON oosd.OrderOfService_Id = oos.OrderOfService_Id JOIN Company c"
+                           + " ON c.Company_Id = oos.Company_Id"
+                           + " AND s.Service_Id = '{0}'"
+                           + " GROUP BY c.Company_Name";
+
+            query = String.Format(query, serviceId.ToString());
+            DBHelper.Instance.OpenConnection();
+            SqlDataReader reader = DBHelper.Instance.ExecuteReaderSQL(query);
+            int result = 0;
+            while (reader.Read())
+                result++;
+            DBHelper.Instance.CloseConnection();
+
+            return result;
         }
     }
 }

@@ -1,45 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="CreateProduct.aspx.cs" Inherits="ServiceEmployee_CreateProduct" Title="Untitled Page" %>
+    CodeFile="CreateProduct.aspx.cs" Inherits="ServiceEmployee_CreateProduct" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
-        rel="stylesheet" type="text/css" />
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-	$(function() {
-		$( "#<%=txtManufactureDate.ClientID%>" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			yearRange: '1900:2011'
-		});
-		
-		$( "#<%=txtExpiryDate.ClientID%>" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			yearRange: '1900:2011'
-		});
-	});
-function btnReset_onclick() {
-
-}
-
-function btnReset_onclick() {
-
-}
-
-    </script>
-
-    <style type="text/css">
-        #btnReset
-        {
-            height: 26px;
-        }
-    </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
@@ -180,10 +142,12 @@ function btnReset_onclick() {
                                                     Category name :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="inp-form" AutoPostBack="True"
+                                                <div class="inp-form">
+                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="styledselect_form" AutoPostBack="True"
                                                         OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged">
                                                     </asp:DropDownList>
                                                     <asp:TextBox ID="txtCategory" runat="server" Visible="false" CssClass="inp-form"></asp:TextBox>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -194,8 +158,10 @@ function btnReset_onclick() {
                                                     Company name :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="inp-form" AutoPostBack="True">
+                                                <div class="inp-form">
+                                                    <asp:DropDownList ID="ddlCompany" runat="server" CssClass="styledselect_form" AutoPostBack="True">
                                                     </asp:DropDownList>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -218,10 +184,12 @@ function btnReset_onclick() {
                                                     Product Type :
                                                 </th>
                                                 <td>
-                                                    <asp:DropDownList ID="ddlProductType" runat="server" CssClass="inp-form">
+                                                <div class="inp-form">
+                                                    <asp:DropDownList ID="ddlProductType" runat="server" CssClass="styledselect_form">
                                                         <asp:ListItem Text="Service" Value="Service"></asp:ListItem>
                                                         <asp:ListItem Text="Product" Value="Product"></asp:ListItem>
                                                     </asp:DropDownList>
+                                                </div>
                                                 </td>
                                                 <td>
                                                 </td>
@@ -245,7 +213,7 @@ function btnReset_onclick() {
                                                     Manufacture Date :
                                                 </th>
                                                 <td>
-                                                    <asp:TextBox ID="txtManufactureDate" ValidationGroup="9" runat="server" CssClass="inp-form"></asp:TextBox>
+                                                    <asp:TextBox ID="txtManufactureDate" ValidationGroup="9" runat="server" CssClass="inp-form datePicker"></asp:TextBox>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -259,7 +227,7 @@ function btnReset_onclick() {
                                                     Expiry Date :
                                                 </th>
                                                 <td>
-                                                    <asp:TextBox ID="txtExpiryDate" ValidationGroup="9" runat="server" CssClass="inp-form"></asp:TextBox>
+                                                    <asp:TextBox ID="txtExpiryDate" ValidationGroup="9" runat="server" CssClass="inp-form datePicker"></asp:TextBox>
                                                 </td>
                                                 <td>
                                                     &nbsp;
@@ -284,7 +252,7 @@ function btnReset_onclick() {
                                                     Image :
                                                 </th>
                                                 <td>
-                                                    <asp:FileUpload ID="fuImage" runat="server" />
+                                                    <asp:FileUpload ID="fuImage" CssClass="file_1" runat="server" />
                                                 </td>
                                                 <td>
                                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="fuImage"

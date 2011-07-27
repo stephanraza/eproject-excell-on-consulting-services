@@ -40,7 +40,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <br />
 	                        </div>
 	                        <div class="clear"></div>
 				            
@@ -137,10 +136,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <br />
-					            <ul class="greyarrow"> 
-						            <li><asp:HyperLink ID="hplnkModifyDepartment" runat="server">Click here modify department</asp:HyperLink></li>
-					            </ul>
 				            </div>
 				            <div class="clear"></div>
             				

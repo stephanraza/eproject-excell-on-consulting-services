@@ -3,6 +3,9 @@
 <%@ Register src="~/Controls/Tags/HRManagerTag.ascx" tagname="HRManagerTag" tagprefix="ucHRManagerTag" %>
 <%@ Register src="~/Controls/ServiceManagerControl.ascx" tagname="ServiceManagerControl" tagprefix="ucServiceManagerControl" %>
 <%@ Register src="~/Controls/EmployeeControl.ascx" tagname="EmployeeControl" tagprefix="ucEmployeeControl" %>
+<%@ Register src="~/Controls/DashboardControl.ascx" tagname="DashboardControl" tagprefix="ucDashboardControl" %>
+<ucDashboardControl:DashboardControl ID="DashboardControl1" runat="server" />
+<div class="nav-divider">&nbsp;</div>
 <% String urlString = Request.Url.ToString();
    if(urlString.Contains("ManageSystem"))
    {%>   

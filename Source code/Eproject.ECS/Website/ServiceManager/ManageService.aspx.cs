@@ -84,6 +84,7 @@ public partial class ServiceManager_ManageService : System.Web.UI.Page
             foreach (Service item in list)
             {
                 item.Service_Charge = SecurityHelper.Instance.DecryptCryptography(item.Service_Charge, true);
+                item.Service_Charge = ToCurrency(Double.Parse(item.Service_Charge));
             }
         }
         grvManage.DataSource = list;
@@ -92,6 +93,10 @@ public partial class ServiceManager_ManageService : System.Web.UI.Page
     protected String GetURL(Object data)
     {
         return WebHelper.Instance.GetImageURL(data.ToString(), 87, 87, false);
+    }
+    private String ToCurrency(double value)
+    {
+        return value.ToString("c").Split('.').GetValue(0).ToString();
     }
     protected String GetServiceURL(Object data)
     {

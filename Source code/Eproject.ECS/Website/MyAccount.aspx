@@ -1,7 +1,6 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MyAccount.aspx.cs" Inherits="MyAccount" Title="Untitled Page" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MyAccount.aspx.cs" Inherits="MyAccount" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <title>Excell-on Consulting Services</title>	
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" Runat="Server">
 
@@ -350,7 +349,7 @@
                         <tr>
                           <th align="right" class="content" style="text-align:right" valign="top" width="50%">Date of birth :</th>
                           <td align="left" valign="top">
-                            &nbsp;<asp:TextBox ID="txtBirthday" CssClass="inp-form" runat="server" 
+                            &nbsp;<asp:TextBox ID="txtBirthday" CssClass="inp-form datePicker" runat="server" 
                                   ValidationGroup="grpBirthday"></asp:TextBox>
                               <br />
                                 <asp:CompareValidator ID="cvBirthday" runat="server" 
@@ -443,7 +442,7 @@
             		
 			            <!--  start related-act-inner -->
 			            <div id="related-act-inner">
-			                <div style="text-align:center"><asp:ImageButton ID="imgAvatar" runat="server" 
+			                <div style="text-align:center"><asp:Image ID="imgAvatar" runat="server" 
                                     CausesValidation="False" ImageUrl="~/App_Themes/images/other/no_image.png" /></div>
                                     
                             <div class="clear"></div>
@@ -469,11 +468,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <br />
-		                        <ul class="greyarrow"> 
-			                        <li>
-                                        <asp:HyperLink ID="hplnkModifyAccount" runat="server">Click here modify account</asp:HyperLink></li>
-		                        </ul>
 	                        </div>
 	                        <div class="clear"></div>
 				            
@@ -540,11 +534,7 @@
                                         <td valign="top"><asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
                                         </td>
                                     </tr>
-                                </table>                
-        					    <br />
-					            <ul class="greyarrow"> 
-						            <li><a href="">Click here modify profile</a> </li>
-					            </ul>
+                                </table>
 				            </div>
             				
 				            <div class="clear"></div>
@@ -570,10 +560,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <br />
-					            <ul class="greyarrow"> 
-						            <li><a href="">Click here modify department</a> </li>
-					            </ul>
 				            </div>
 				            <div class="clear"></div>
             				
@@ -609,12 +595,5 @@
 	    <th class="sized bottomright"></th>
     </tr>
     </table>
-	  <script type="text/javascript">
-		$("#<%=txtBirthday.ClientID%>" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			yearRange: '1960:2011'
-		});
-	</script>
 </asp:Content>
 

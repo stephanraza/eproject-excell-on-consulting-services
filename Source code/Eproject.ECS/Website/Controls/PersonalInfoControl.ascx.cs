@@ -57,6 +57,5 @@ public partial class Controls_PersonalInfoControl : System.Web.UI.UserControl
         hplnkModifyProfile.NavigateUrl = WebHelper.Instance.GetURL() + "Account";
         lblDepartmentName.Text = department.Department_Name;
         lblDescription.Text = department.Department_Description;
-        hplnkModifyDepartment.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Department/Manage/" + department.Department_Id;
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using Eproject.ECS.Entities;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Eproject.ECS.Dal
 {
@@ -110,6 +111,75 @@ namespace Eproject.ECS.Dal
                 list.Add(oosd);
             }
             return list;
+        }
+        /// <summary>
+        /// Get the services were best used.
+        /// </summary>
+        /// <returns>Table of data related services.</returns>
+        public DataTable GetBestServices()
+        {
+            String query = " SELECT oosd.Service_Id, s.[Service_Name], s.Service_Charge, COUNT(oosd.Service_Id)AS Orders"
+                         + " FROM OrderOfServiceDetail oosd, [Service] s"
+                         + " WHERE oosd.Service_Id=s.Service_Id"
+                         + " GROUP BY oosd.Service_Id, s.[Service_Name],s.Service_Charge"
+                         + " ORDER BY Orders DESC";
+            DBHelper.Instance.OpenConnection();
+            SqlDataReader reader = DBHelper.Instance.ExecuteReaderSQL(query);
+
+            DataTable newDataTable = new DataTable();
+            newDataTable.Columns.Add("Service_Id", typeof(Guid));
+            newDataTable.Columns.Add("Service_Name", typeof(string));
+            newDataTable.Columns.Add("Service_Charge", typeof(string));
+            newDataTable.Columns.Add("Orders", typeof(string));
+            while (reader.Read())
+            {
+                DataRow dr = newDataTable.NewRow();
+                dr["Service_Id"] = reader.GetGuid(0);
+                dr["Service_Name"] = reader.GetString(1);
+                dr["Service_Charge"] = reader.GetString(2);
+                int count = reader.GetInt32(3);
+                if (count == 0 || count == 1)
+                    dr["Orders"] = count + " order";
+                else if (count > 1)
+                    dr["Orders"] = count + " orders";
+                newDataTable.Rows.Add(dr);
+            }
+            DBHelper.Instance.CloseConnection();
+
+            return newDataTable;
+        }
+        /// <summary>
+        /// Get the VIP clients.
+        /// </summary>
+        /// <returns>Table of data related clients.</returns>
+        public DataTable GetVIPClients()
+        {
+            String query = " SELECT c.Company_Id, c.Company_Name, COUNT(c.Company_Id)AS Orders"
+                         + " FROM OrderOfService oos, Company c"
+                         + " WHERE oos.Company_Id=c.Company_Id"
+                         + " GROUP BY c.Company_Id, c.Company_Name";
+            DBHelper.Instance.OpenConnection();
+            SqlDataReader reader = DBHelper.Instance.ExecuteReaderSQL(query);
+
+            DataTable newDataTable = new DataTable();
+            newDataTable.Columns.Add("Company_Id", typeof(Guid));
+            newDataTable.Columns.Add("Company_Name", typeof(string));
+            newDataTable.Columns.Add("Orders", typeof(string));
+            while (reader.Read())
+            {
+                DataRow dr = newDataTable.NewRow();
+                dr["Company_Id"] = reader.GetGuid(0);
+                dr["Company_Name"] = reader.GetString(1);
+                int count = reader.GetInt32(2);
+                if (count == 0 || count == 1)
+                    dr["Orders"] = count + " order";
+                else if (count > 1)
+                    dr["Orders"] = count + " orders";
+                newDataTable.Rows.Add(dr);
+            }
+            DBHelper.Instance.CloseConnection();
+
+            return newDataTable;
         }
         /// <summary>
         /// Get all details of 1 order.

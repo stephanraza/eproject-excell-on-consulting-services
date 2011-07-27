@@ -16,6 +16,7 @@
         routes.MapPageRoute("DisplayAccount", "ManageSystem/Account/Display/{id}", "~/Administrator/DisplayAccount.aspx",
             new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("TrashAccount", "ManageSystem/Account/Trash", "~/Administrator/TrashAccount.aspx");
+        routes.MapPageRoute("Statistic", "DashBoard/Statistic", "~/Administrator/Statistic.aspx");
         
         routes.MapPageRoute("CreateDepartment", "ManageSystem/Department/Create", "~/HRManager/CreateDepartment.aspx");
         routes.MapPageRoute("ManageDepartment", "ManageSystem/Department/Manage/{id}", "~/HRManager/ManageDepartment.aspx",
@@ -79,6 +80,13 @@
             new RouteValueDictionary { { "id", "" } });
         routes.MapPageRoute("TrashProblem", "ManageService/Problem/Trash", "~/ServiceEmployee/TrashProblem.aspx");
 
+        routes.MapPageRoute("CreateDealer", "ManageService/Dealer/Create", "~/ServiceEmployee/CreateDealer.aspx");
+        routes.MapPageRoute("ManageDealer", "ManageService/Dealer/Manage/{return}", "~/ServiceEmployee/ManageDealer.aspx",
+            new RouteValueDictionary { { "return", "" } });
+        routes.MapPageRoute("ModifyDealer", "ManageService/Dealer/Modify/{id}", "~/ServiceEmployee/ModifyDealer.aspx",
+            new RouteValueDictionary { { "id", "" } });
+        routes.MapPageRoute("TrashDealer", "ManageService/Dealer/Trash", "~/ServiceEmployee/TrashDealer.aspx");
+        
         routes.MapPageRoute("CreateNews", "ManageWeb/News/Create", "~/Employee/CreateNews.aspx");
         routes.MapPageRoute("ManageNews", "ManageWeb/News/Manage", "~/Employee/ManageNews.aspx");
         routes.MapPageRoute("ModifyNews", "ManageWeb/News/Modify", "~/Employee/ModifyNews.aspx");

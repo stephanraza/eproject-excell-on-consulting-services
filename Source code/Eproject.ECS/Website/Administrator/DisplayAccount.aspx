@@ -198,17 +198,17 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <asp:Panel ID="pnlLink" runat="server" Visible="false">
-                                                                    <th width="50%" align="right" style="text-align: right" class="content" valign="top">
-                                                                        &nbsp;
-                                                                    </th>
-                                                                    <td colspan="3">
-                                                                        <div style="float: left">
-                                                                            <ul class="greyarrow">
-                                                                                <li>
-                                                                                    <asp:HyperLink ID="hplnkDisplayModifyAccount" runat="server" Text="Click here modify account"></asp:HyperLink></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
+                                                                        <th width="50%" align="right" style="text-align: right" class="content" valign="top">
+                                                                            &nbsp;
+                                                                        </th>
+                                                                        <td colspan="3">
+                                                                            <div style="float: left">
+                                                                                <ul class="greyarrow">
+                                                                                    <li>
+                                                                                        <asp:HyperLink ID="hplnkDisplayModifyAccount" runat="server" Text="Click here modify account"></asp:HyperLink></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </td>
                                                                     </asp:Panel>
                                                                 </tr>
                                                             </table>

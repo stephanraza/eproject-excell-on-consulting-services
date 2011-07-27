@@ -74,7 +74,32 @@ public partial class HRManager_DisplayEmployee : System.Web.UI.Page
             lblDisplayAddress.Text = employee.Employee_Address;
             lblDisplayPhoneNumber.Text = employee.Employee_PhoneNumber;
             lblDisplayEmail.Text = employee.Employee_Email;
-            lblDisplayAccount.Text = account.Account_UserName;
+
+            if (AB.IsAdmin(Page.User.Identity.Name))
+                lnkAccount.Visible = true;
+            else
+                lnkAccount.Visible = false;
+            if (account != null)
+            {
+                if (account.Account_IsDelete)
+                {
+                    lblDisplayAccount.Text = "";
+                    lnkAccount.Text = "Restore the account for this employee";
+                    lnkAccount.PostBackUrl = "";
+                }
+                else
+                {
+                    lblDisplayAccount.Text = account.Account_UserName;
+                    lnkAccount.Text = "View account's detail";
+                    lnkAccount.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Display/" + account.Account_Id.ToString();
+                }
+            }
+            else
+            {
+                lblDisplayAccount.Text = "";
+                lnkAccount.Text = "Create an account for this employee";
+                lnkAccount.PostBackUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Create/" + employeeId.ToString();
+            }
             lblDisplayDepartment.Text = department.Department_Name;
 
             hplnkDisplayModifyEmployee.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Modify/" + employeeId.ToString();
@@ -90,8 +115,24 @@ public partial class HRManager_DisplayEmployee : System.Web.UI.Page
     }
     protected void lnkAccount_Click(object sender, EventArgs e)
     {
-        Account account = AB.GetAccountOfEmployee(employeeId);
-        Response.Redirect(WebHelper.Instance.GetURL() + "ManageSystem/Account/Display/" + account.Account_Id.ToString());
+        try
+        {
+            Account account = AB.GetAccountOfEmployee(employeeId);
+
+            AB.RestoreAccount(account.Account_Id);
+            loadData();
+            pnlGreen.Visible = true;
+            lblSuccess.Text = "An account has been restored successfully.";
+            hplnkGreen.Text = "Go to Manage panel.";
+            hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage";
+        }
+        catch (Exception ex)
+        {
+            pnlRed.Visible = true;
+            lblError.Text = ex.Message;
+            hplnkRed.Text = "Close and continue.";
+            hplnkRed.NavigateUrl = "";
+        }
     }
     protected void lnkDepartment_Click(object sender, EventArgs e)
     {

@@ -1,8 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="ManageCompany.aspx.cs" Inherits="ServiceEmployee_ManageCompany" Title="Untitled Page" %>
+    CodeFile="ManageCompany.aspx.cs" Inherits="ServiceEmployee_ManageCompany" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">

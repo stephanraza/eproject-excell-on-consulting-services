@@ -53,11 +53,21 @@
   <ItemGroup>
     <Compile Include="AccountDAL.cs" />
     <Compile Include="AppConfiguration.cs" />
+    <Compile Include="CategoryDAL.cs" />
+    <Compile Include="CompanyDAL.cs" />
+    <Compile Include="CustomerDAL.cs" />
+    <Compile Include="CustomerOfCompanyDAL.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="DealerDAL.cs" />
     <Compile Include="DepartmentDAL.cs" />
     <Compile Include="EmployeeDAL.cs" />
+    <Compile Include="OrderDAL.cs" />
+    <Compile Include="ProblemDAL.cs" />
+    <Compile Include="ProblemOfCustomerDAL.cs" />
+    <Compile Include="ProductDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDAL.cs" />
+    <Compile Include="ServiceDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

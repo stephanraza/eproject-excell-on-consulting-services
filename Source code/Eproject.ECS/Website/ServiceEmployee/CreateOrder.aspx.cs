@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using Eproject.ECS.Bll;
 using Eproject.ECS.Entities;
 using System.Collections.Generic;
+using System.Globalization;
 
 public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
 {
@@ -85,6 +86,10 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
     {
 
     }
+    private String ToCurrency(double value)
+    {
+        return value.ToString("c").Split('.').GetValue(0).ToString();
+    }
     protected void wizardCreate_ActiveStepChanged(object sender, EventArgs e)
     {
         int index = wizardCreate.ActiveStepIndex;
@@ -142,10 +147,11 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 double totalPrice = 0;
                 foreach (OrderDetail item in listOrderDetail)
                 {
-                    double price = Double.Parse(item.OrderOfServiceDetail_Price);
+                    double price = Double.Parse(item.OrderOfServiceDetail_Price, NumberStyles.Currency);
                     totalPrice += price;
+                    item.OrderOfServiceDetail_Price = ToCurrency(price);
                 }
-                lblTotalCharge.Text = "$ " + totalPrice.ToString();
+                lblTotalCharge.Text = ToCurrency(totalPrice);
 
                 grvPrevew.DataSource = listOrderDetail;
                 grvPrevew.DataBind();
@@ -231,6 +237,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(service.Service_Image, 128, 128, false);
                 lblServiceName.Text = service.Service_Name;
                 lblCharge.Text = SecurityHelper.Instance.DecryptCryptography(service.Service_Charge, true);
+                lblCharge.Text = ToCurrency(Double.Parse(lblCharge.Text));
                 lblDescription.Text = service.Service_Description;
                 pnlInfo.Visible = true;
 
@@ -299,7 +306,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 int employee = orderDetail.OrderOfServiceDetail_NumberOfEmployee;
                 double price = days * charge * employee;
 
-                orderDetail.OrderOfServiceDetail_Price = price.ToString();
+                orderDetail.OrderOfServiceDetail_Price = ToCurrency(price);
                 List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];
                 listOrderDetail.Add(orderDetail);
 
@@ -374,10 +381,12 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
             default: break;
         }
     }
-    protected void grvManage_SelectedIndexChanged(object sender, EventArgs e)
+    protected void imgbtnRemove_Click(object sender, ImageClickEventArgs e)
     {
-        Label lblName = (Label)grvManage.Rows[grvManage.SelectedIndex].FindControl("lblName");
-        RemoveService(lblName.Text);
+        ImageButton ib = (ImageButton)sender;
+        HiddenField hf = (HiddenField)ib.FindControl("hfServiceName");
+
+        RemoveService(hf.Value);
     }
     protected void wizardCreate_FinishButtonClick(object sender, WizardNavigationEventArgs e)
     {
@@ -392,6 +401,7 @@ public partial class ServiceEmployee_CreateOrder : System.Web.UI.Page
                 status = 99;
             else if (order.OrderOfService_Status.Equals("Resolved"))
                 status = 1;
+            
             OB.CreateOrder(orderId, order.Company_Id, order.Employee_Id, order.OrderOfService_Description, order.OrderOfService_PaymentMethod, DateTime.Parse(order.OrderOfService_PaymentDate), DateTime.Parse(order.OrderOfService_BillDate), status);
 
             List<OrderDetail> listOrderDetail = (List<OrderDetail>)Session["listOrderDetail"];

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Eproject.ECS.Entities.Account" Collapsed="true">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIBAAAAAAAAIACAEAAAEAAAAAACAAAA=</HashCode>
+      <FileName>Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Category">
+    <Position X="7.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAIQAAAAAAAAAAAA=</HashCode>
+      <FileName>Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Company">
+    <Position X="4.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAQAAAAAAAAAAACAgAAAAAgAAAAIAIAAAAAAAAAIA=</HashCode>
+      <FileName>Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Contact">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAKAAAAAAAAAAAAAAAAAAAABAAAEAIABAAAAAAQA=</HashCode>
+      <FileName>Contact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Customer">
+    <Position X="4.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAAAAACCAA=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.CustomerOfCompany">
+    <Position X="2.25" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIgAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomerOfCompany.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Dealer">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMAAAAAAAAAQAAAAEAAAQCAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dealer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Department" Collapsed="true">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAACAAAAgAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Employee" Collapsed="true">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAIAAAAAAAAAAAAAAAAAkAkEAEAAAAAACBAAgAA=</HashCode>
+      <FileName>Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.EmployeeOfDepartment" Collapsed="true">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABAAIAAAAAAAAAAAAAACAAkAkEAEAAAAACCBAAgAA=</HashCode>
+      <FileName>EmployeeOfDepartment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.News">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAAAAAAAAAAAAAAIAAAAAEAACAAAAAAAAA=</HashCode>
+      <FileName>News.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Order" Collapsed="true">
+    <Position X="3.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIBAAAgAIAAAQAhAAAgACAAAAAAEAAAAAAEAAACAAAg=</HashCode>
+      <FileName>Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.OrderDetail" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQBAAAAAAAAAAAAQAAAEAAAAIgAAAAIAAAAAggAAAIA=</HashCode>
+      <FileName>OrderDetail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.OrderOfService" Collapsed="true">
+    <Position X="1.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIBAAAgAIAAAAAgAAAAACAAAAAAEAAAAAAEAAAAAAAg=</HashCode>
+      <FileName>OrderOfService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.OrderOfServiceDetail" Collapsed="true">
+    <Position X="7" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QABAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAgAAAAAA=</HashCode>
+      <FileName>OrderOfServiceDetail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Problem">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAEAAAAAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Problem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.ProblemOfCustomer">
+    <Position X="2.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQ=</HashCode>
+      <FileName>ProblemOfCustomer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Product">
+    <Position X="6" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEIAAIAAAAQAAIAAQAAAAAAAIAAAQAABAAAABAAAA=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Role" Collapsed="true">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Eproject.ECS.Entities.Service" Collapsed="true">
+    <Position X="7" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAQAAAEAAAAIAAAAAIAAAAAAAAAAIA=</HashCode>
+      <FileName>Service.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
