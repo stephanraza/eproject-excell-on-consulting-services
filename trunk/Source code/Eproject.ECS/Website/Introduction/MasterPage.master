@@ -1,0 +1,118 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Introduction_MasterPage" %>
+<%@ Register Src="~/Controls/Introduction/VIPClients.ascx" TagName="VIPClientsControl"
+    TagPrefix="ucVIPClientsControl" %>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Excell-on Consulting Services</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+
+    <script type="text/javascript" src="js/easySlider1.5.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="container">
+        <div class="container_h1">
+            <div class="header1">
+                <a href="/">
+                    <img src="images/logo.png" alt="logo" border="0" /></a>
+                <div class="header1sub">
+                    <p>
+                        Click here to live Support<br />
+                        Toll Free <span>1-866-123-675</span></p>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="container_m">
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html" class="active"><span>Home</span></a></li>
+                    <li><a href="about.html"><span>About</span></a></li>
+                    <li><a href="about.html"><span>Services</span></a></li>
+                    <li><a href="portfolio.html"><span>Pricing</span></a></li>
+                    <li><a href="portfolio.html"><span>Portfolio</span></a></li>
+                    <li><a href="contact.html"><span>Contact</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="slider_top">
+            <div class="header_text">
+                <asp:ContentPlaceHolder ID="cphHeaderText" runat="server">
+                </asp:ContentPlaceHolder>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="container_c">
+            <asp:ContentPlaceHolder ID="cphContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="container_f1">
+            <div class="footer1">
+                <div class="footer1_sub">
+                   <ucVIPClientsControl:VIPClientsControl ID="VIPClientsControl1" runat="server" />
+                </div>
+                <div class="footer1_sub">
+                    
+                </div>
+                <div class="footer1_sub">
+                    <h3>
+                        Quick contact</h3>
+                    <p>
+                        Feel free to contact me or please fill up below in the following details and I will
+                        be in touch shortly.</p>
+                    <div class="footer1_sub1b">
+                        <p class="contacts">
+                            Address:<br />
+                            Telephone:<br />
+                            Fax:<br />
+                            Others:<br />
+                            Email:</p>
+                    </div>
+                    <div class="footer1_sub1c">
+                        <p>
+                            1458 Sample Road, Greenvalley, 12<br />
+                            +123-1234-5678<br />
+                            +458-4578<br />
+                            +301 - 0125 - 01258<br />
+                            <a href="mailto:mail@yoursitename.com">mail@yoursitename.com</a></p>
+                    </div>
+                    <div class="clr">
+                    </div>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="container_f2">
+            <div class="footer2">
+                <div class="footer2left">
+                    <p>
+                        Copyright 2009. Your Site Name Dot Com. All Rights Reserved</p>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">RSS</a></li>
+                    </ul>
+                </div>
+                <div class="footer2right">
+                    <p class="footer">
+                        <strong>Design by DreamTemplate</strong></p>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

@@ -45,10 +45,15 @@ public partial class ServiceManager_TrashService : System.Web.UI.Page
             foreach (Service item in list)
             {
                 item.Service_Charge = SecurityHelper.Instance.DecryptCryptography(item.Service_Charge, true);
+                item.Service_Charge = ToCurrency(Double.Parse(item.Service_Charge));
             }
         }
         grvManage.DataSource = list;
         grvManage.DataBind();
+    }
+    private String ToCurrency(double value)
+    {
+        return value.ToString("c").Split('.').GetValue(0).ToString();
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {

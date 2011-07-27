@@ -1,15 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="CreateCompany.aspx.cs" Inherits="ServiceEmployee_CreateCompany" Title="Untitled Page" %>
+    CodeFile="CreateCompany.aspx.cs" Inherits="ServiceEmployee_CreateCompany" Title="Excell-on Consulting Services" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Excell-on Consulting Services</title>
-    <link href="<%=ResolveUrl("~")%>App_Themes/css/ui-lightness/jquery-ui-1.8.7.custom.css"
-        rel="stylesheet" type="text/css" />
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-
-    <script src="<%=ResolveUrl("~")%>App_Themes/js/jquery-ui-1.8.7.custom.min.js" type="text/javascript"></script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphContent" runat="Server">
     <div id="page-heading">
@@ -206,7 +198,7 @@
                                             Logo :
                                         </th>
                                         <td>
-                                            <asp:FileUpload ID="fuLogo" runat="server" />
+                                            <asp:FileUpload ID="fuLogo" CssClass="file_1" runat="server" />
                                         </td>
                                         <td>
                                             <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="fuLogo"

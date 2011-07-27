@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>home</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/easySlider1.5.js"></script>
+<script type="text/javascript" charset="utf-8">
+// <![CDATA[
+$(document).ready(function(){	
+	$("#slider").easySlider({
+		controlsBefore:	'<p id="controls">',
+		controlsAfter:	'</p>',
+		auto: true, 
+		continuous: true
+	});	
+});
+// ]]>
+</script>
+<style type="text/css">
+.gallery { width:913px; height:285px; margin:0 auto; }
+#slider { margin:0; padding:0; list-style:none; }
+#slider ul,
+#slider li { margin:0; padding:0; list-style:none; }
+/* 
+    define width and height of list item (slide)
+    entire slider area will adjust according to the parameters provided here
+*/
+#slider li { width:913px; height:285px; overflow:hidden; }
+p#controls { margin:0; padding:0; position:relative; }
+#prevBtn { display:block; margin:0; overflow:hidden; width:40px; height:40px; position:absolute; left:-25px; top:-150px; }
+#nextBtn { display:block; margin:0; overflow:hidden; width:40px; height:40px; position:absolute; left: 900px; top:-150px; }
+#prevBtn a { display:block; width:40px; height:40px; background:url(images/l_arrow.gif) no-repeat 0 0; }
+#nextBtn a { display:block; width:40px; height:40px; background:url(images/r_arrow.gif) no-repeat 0 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="container_h1">
+    <div class="header1"> <a href="/"><img src="images/logo.png" alt="logo" border="0" /></a>
+      <div class="header1sub">
+        <p>Click here to live Support<br />
+          Toll Free <span>1-866-123-675</span></p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="container_m">
+    <div class="menu">
+      <ul>
+        <li><a href="index.html" class="active"><span>Home</span></a></li>
+        <li><a href="about.html"><span>About</span></a></li>
+        <li><a href="about.html"><span>Services</span></a></li>
+        <li><a href="portfolio.html"><span>Pricing</span></a></li>
+        <li><a href="portfolio.html"><span>Portfolio</span></a></li>
+        <li><a href="contact.html"><span>Contact</span></a></li>
+      </ul>
+      <div class="search">
+        <form id="form1" name="form1" method="post" action="">
+          <input name="q" class="keywords" id="textfield" maxlength="50" value="Search:" type="text" />
+          <input name="b" src="images/search_btn.gif" class="button" type="image" />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="slider_top">
+    <div class="header_text">
+      <div class="gallery">
+        <div id="slider">
+          <ul>
+            <li>
+              <div class="div"> <img src="images/simple_img_1.jpg" alt="screen 1" width="603" height="262" border="0" class="screen"  />
+                <div class="left1">
+                  <h2>Coos.<br />
+                    Com </h2>
+                  <p> Sed congue, dui vel tristique mollis.</p>
+                  <p> Morbi eget sem. Nam mollis. </p>
+                  <p> Donec sed velit ut tellus rmentuinterdum.</p>
+                  <a href="#"><img src="images/simple_more_infrmation.gif" alt="picture" width="108" height="28" border="0" /></a> </div>
+              </div>
+            </li>
+            <li>
+              <div class="div"> <img src="images/simple_img_2.jpg" alt="screen 1" width="603" height="262" border="0" class="screen"  />
+                <div class="left1">
+                  <h2>Design <br />
+                    folio</h2>
+                  <p> Sed congue, dui vel tristique mollis.</p>
+                  <p> Morbi eget sem. Nam mollis. </p>
+                  <p> Donec sed velit ut tellus rmentuinterdum.</p>
+                  <a href="#"><img src="images/simple_more_infrmation.gif" alt="picture" width="108" height="28" border="0" /></a> </div>
+              </div>
+            </li>
+            <li>
+              <div class="div"> <img src="images/simple_img_3.jpg" alt="screen 1" width="603" height="262" border="0" class="screen"  />
+                <div class="left1">
+                  <h2>Color Design</h2>
+                  <p> Sed congue, dui vel tristique mollis.</p>
+                  <p> Morbi eget sem. Nam mollis. </p>
+                  <p> Donec sed velit ut tellus rmentuinterdum.</p>
+                  <a href="#"><img src="images/simple_more_infrmation.gif" alt="picture" width="108" height="28" border="0" /></a> </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="container_c">
+    <div class="content">
+      <div class="content_sub1">
+        <h2>Welcome to our website</h2>
+        <img src="images/image0.gif" width="164" height="164" alt="image" class="image" />
+        <div class="content_sub1a">
+          <p>Fusce vehicula dignissim ligula. Vestibulum sit amet neque eu neque suscipit consequat quis vel risus.</p>
+          <p><strong>Vestibulum vehicula purus nec dui accumsan fermentum.</strong><br />
+            Suspendisse potenti. Ut dapibus est id odio pretium blandit in eget leo. Aliquam erat volutpat. Curabitur blandit odio eget odio eleifend vel mattis augue convallis. Praesent fringilla, eros et tristique tempus, libero metus porttitor velit, at ultrices eros dolor placerat nunc. Fusce ac egestas ante.</p>
+          <a href="#"><img src="images/more_news.gif" width="68" height="25" alt="more news" class="morenews" /></a> </div>
+        <div class="clr"></div>
+        <h2>Favorite services</h2>
+        <p><strong>Vestibulum vehicula purus nec dui accumsan fermentum.</strong><br />
+          Suspendisse potenti. Ut dapibus est id odio pretium blandit in eget leo. Aliquam erat volutpat. Curabitur blandit odio eget odio eleifend vel mattis augue convallis. Praesent fringilla, eros et tristique tempus, libero metus porttitor velit, at ultrices eros dolor placerat nunc.</p>
+      </div>
+      <div class="content_sub2">
+        <h2>Latest Clients</h2>
+        <ul>
+          <li><a href="#"><img src="images/image1.gif" width="83" height="83" alt="image" class="image" /></a></li>
+          <li><a href="#"><img src="images/image2.gif" width="83" height="83" alt="image" class="image" /></a></li>
+          <li><a href="#"><img src="images/image3.gif" width="83" height="83" alt="image" class="image" /></a></li>
+          <li><a href="#"><img src="images/image4.gif" width="83" height="83" alt="image" class="last" /></a></li>
+        </ul>
+        <div class="clr"></div>
+        <h2>News &amp; Events</h2>
+        <p class="date">5th / April / 2009</p>
+        <p>Integer mauris. Cras iaculis viverra dolorqw. Nulla suscipit. Proin eu sapien ac sem fermentum sollicitudin.</p>
+        <p class="date">6th / April / 2009</p>
+        <p>Integer mauris. Cras iaculis viverra dolor. Nulla suscipit. Proin eu sapien ac sem fermentum sollicitudin.</p>
+        <a href="#"><img src="images/more_news.gif" width="68" height="25" alt="more news" class="morenews" /></a> </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  
+  
+  <div class="container_f1">
+    <div class="footer1">
+      <div class="footer1_sub">
+        <h3>Why Choose Us?</h3>
+        <img src="images/icon1.gif" width="50" height="50" alt="icon" class="icon" />
+        <div class="footer1_sub1a">
+          <p><strong>Many desktop publishing</strong><br />
+            packages and web page editors now use Lorem Ipsum <a href="#">[...]</a></p>
+        </div>
+        <div class="clr"></div>
+        <img src="images/icon2.gif" width="50" height="50" alt="icon" class="icon" />
+        <div class="footer1_sub1a">
+          <p><strong>Many desktop publishing</strong><br />
+            packages and web page editors now use Lorem Ipsum <a href="#">[...]</a></p>
+        </div>
+        <div class="clr"></div>
+        <img src="images/icon3.gif" width="50" height="50" alt="icon" class="icon" />
+        <div class="footer1_sub1a">
+          <p><strong>Many desktop publishing</strong><br />
+            packages and web page editors now use Lorem Ipsum <a href="#">[...]</a></p>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="footer1_sub">
+        <h3>Clients saying</h3>
+        <img src="images/userpic.gif" width="50" height="45" alt="user" class="icon" />
+        <div class="footer1_sub2a">
+          <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+          <p class="client">By -John S., webdesigner</p>
+        </div>
+        <div class="clr"></div>
+        <img src="images/userpic.gif" width="50" height="45" alt="user" class="icon" />
+        <div class="footer1_sub2a">
+          <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+          <p class="client">By -John S., webdesigner</p>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="footer1_sub">
+        <h3>Quick contact</h3>
+        <p>Feel free to contact me or please fill up below in the following details and I will be in touch shortly.</p>
+        <div class="footer1_sub1b">
+          <p class="contacts">Address:<br />
+            Telephone:<br />
+            Fax:<br />
+            Others:<br />
+            Email:</p>
+        </div>
+        <div class="footer1_sub1c">
+          <p>1458 Sample Road, Greenvalley, 12<br />
+            +123-1234-5678<br />
+            +458-4578<br />
+            +301 - 0125 - 01258<br />
+            <a href="mailto:mail@yoursitename.com">mail@yoursitename.com</a></p>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="container_f2">
+    <div class="footer2">
+      <div class="footer2left">
+        <p>Copyright 2009. Your Site Name Dot Com. All Rights Reserved</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">RSS</a></li>
+        </ul>
+      </div>
+      <div class="footer2right">
+        <p class="footer"><strong>Design by DreamTemplate</strong></p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -15,6 +15,13 @@
         <li>
         <%
           } %><a href="<%=ResolveUrl("~")%>ManageService/Customer/Create">Customers</a></li>
+<%if(urlString.Contains("/Dealer/"))
+        {%>   
+        <li class="sub_show">
+        <%}else{%>
+        <li>
+        <%
+          } %><a href="<%=ResolveUrl("~")%>ManageService/Dealer/Create">Dealers</a></li>
 <%if(urlString.Contains("/Order/"))
         {%>   
         <li class="sub_show">

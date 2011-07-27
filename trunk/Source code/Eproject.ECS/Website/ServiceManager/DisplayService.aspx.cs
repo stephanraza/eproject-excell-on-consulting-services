@@ -61,7 +61,9 @@ public partial class ServiceManager_DisplayService : System.Web.UI.Page
             lblDisplayName.Text = service.Service_Name;
             lblDisplayDescription.Text = service.Service_Description;
             String charge = SecurityHelper.Instance.DecryptCryptography(service.Service_Charge, true);
-            lblDisplayCharge.Text = "$ " + charge + " (per day/ per employee)";
+            lblDisplayCharge.Text = ToCurrency(Double.Parse(charge)) + " (per day/ per employee)";
+            int number = SB.GetNumberCompanyUseService(serviceId);
+            lblDisplayNumber.Text = number.ToString();
 
             hplnkDisplayModifyService.NavigateUrl = WebHelper.Instance.GetURL() + "ManageService/Service/Modify/" + serviceId.ToString();
         }
@@ -73,6 +75,10 @@ public partial class ServiceManager_DisplayService : System.Web.UI.Page
                 Session["return"] = "null";
             Response.Redirect(WebHelper.Instance.GetURL() + "ManageService/Service/Manage");
         }
+    }
+    private String ToCurrency(double value)
+    {
+        return value.ToString("c").Split('.').GetValue(0).ToString();
     }
     protected void lnkNumber_Click(object sender, EventArgs e)
     {

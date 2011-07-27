@@ -198,6 +198,21 @@ namespace Eproject.ECS.Bll
             }
         }
         /// <summary>
+        /// Get all employees in database.
+        /// </summary>
+        /// <returns>List of employees.</returns>
+        public List<Employee> GetEmployees(bool isDelete)
+        {
+            try
+            {
+                return ED.GetEmployees(isDelete);
+            }
+            catch (Exception ex)
+            {
+                return new List<Employee>();
+            }
+        }
+        /// <summary>
         /// Delete permanently an employee.
         /// </summary>
         /// <param name="emId">Id of the employee that you want to delete.</param>

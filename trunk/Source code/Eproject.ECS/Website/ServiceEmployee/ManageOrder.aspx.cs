@@ -62,6 +62,7 @@ public partial class ServiceEmployee_ManageOrder : System.Web.UI.Page
             ddlStatus.SelectedIndex = 0;
         }
         loadData();
+        Search();
     }
     private void GetRouteData()
     {
@@ -133,6 +134,10 @@ public partial class ServiceEmployee_ManageOrder : System.Web.UI.Page
                             listFilter.Add(item);
                     }
                 }
+                foreach (Order order in listFilter)
+                {
+                    order.Total_Charge = ToCurrency(Double.Parse(order.Total_Charge));
+                }
             }
             grvManage.DataSource = listFilter;
             grvManage.DataBind();
@@ -144,6 +149,36 @@ public partial class ServiceEmployee_ManageOrder : System.Web.UI.Page
             hplnkRed.Text = "Close and continue.";
             hplnkRed.NavigateUrl = "";
         }
+    }
+    private void Search()
+    {
+        String[] search = null;
+        if (Session["search"] != null)
+            search = Session["search"].ToString().Split('|');
+
+        if (search != null)
+        {
+            if (search[0].Equals("latePayments"))
+            {
+                List<Order> list = OB.GetOrdersLatePayments();
+                foreach (Order order in list)
+                {
+                    order.Total_Charge = ToCurrency(Double.Parse(order.Total_Charge));
+                }
+                pnlGreen.Visible = true;
+                lblSuccess.Text = "You have " + list.Count + " late payments.";
+                hplnkGreen.Text = "Close and continue.";
+                hplnkGreen.NavigateUrl = "";
+
+                grvManage.DataSource = list;
+                grvManage.DataBind();
+            }
+        }
+        Session.Remove("search");
+    }
+    private String ToCurrency(double value)
+    {
+        return value.ToString("c").Split('.').GetValue(0).ToString();
     }
     protected String GetCompanyURL(Object data)
     {

@@ -158,6 +158,7 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
                 lblSuccess.Text = "Create new an account successfully.";
                 hplnkGreen.Text = "Go to Manage panel.";
                 hplnkGreen.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Employee/Manage";
+                loadData();
                 Reset();
             }
             catch (Exception ex)
@@ -178,6 +179,7 @@ public partial class Administrator_CreateAccount : System.Web.UI.Page
 
     private void Reset()
     {
+        ResetPanelPreview();
         ddlEmployeeEmail.SelectedIndex = 0;
         ResetPanelPreview();
         ckbDefaultPassword.Checked = false;

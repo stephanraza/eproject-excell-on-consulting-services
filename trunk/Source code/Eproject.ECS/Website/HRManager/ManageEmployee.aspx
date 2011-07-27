@@ -293,12 +293,26 @@
                                                             <asp:TemplateField HeaderText="&lt;a href&gt;Account&lt;/a&gt;" HeaderStyle-CssClass="table-header-repeat line-left"
                                                                 SortExpression="Account_UserName">
                                                                 <ItemTemplate>
+                                                                <% if (IsAdmin())
+                                                                   {%>
                                                                     <asp:HyperLink ID="hplnkUserName" CssClass="close-green" runat="server" NavigateUrl='<%# GetAccountURL(Eval("Account_Id")) %>'
                                                                         Text='<%# Eval("Account_UserName") %>'></asp:HyperLink>
+                                                                    <%}
+                                                                   else
+                                                                   {%>
+                                                                   <asp:Label ID="lblUserName" runat="server" Text='<%# Eval("Account_UserName") %>'></asp:Label>
+                                                                    <%} %>                                                                    
                                                                 </ItemTemplate>
                                                                 <AlternatingItemTemplate>
+                                                                    <% if (IsAdmin())
+                                                                   {%>
                                                                     <asp:HyperLink ID="hplnkUserName" CssClass="close-green" runat="server" NavigateUrl='<%# GetAccountURL(Eval("Account_Id")) %>'
                                                                         Text='<%# Eval("Account_UserName") %>'></asp:HyperLink>
+                                                                    <%}
+                                                                   else
+                                                                   {%>
+                                                                   <asp:Label ID="lblUserName" runat="server" Text='<%# Eval("Account_UserName") %>'></asp:Label>
+                                                                    <%} %>
                                                                 </AlternatingItemTemplate>
                                                                 <HeaderStyle CssClass="table-header-repeat line-left" />
                                                             </asp:TemplateField>

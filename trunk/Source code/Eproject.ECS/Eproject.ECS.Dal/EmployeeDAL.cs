@@ -72,6 +72,22 @@ namespace Eproject.ECS.Dal
             return listEmployee;
         }
         /// <summary>
+        /// Get all employees in database.
+        /// </summary>
+        /// <returns>List of employees.</returns>
+        public List<Employee> GetEmployees(bool isDelete)
+        {
+            List<Employee> listEmployee = new List<Employee>();
+            List<Object> listObject = DBHelper.Instance.Select("Employee", String.Format("Employee_IsDelete='{0}'", isDelete), null, -1, -1);
+
+            foreach (Object item in listObject)
+            {
+                Employee employee = (Employee)item;
+                listEmployee.Add(employee);
+            }
+            return listEmployee;
+        }
+        /// <summary>
         /// Get all employees in department.
         /// </summary>
         /// <returns>List of employees.</returns>

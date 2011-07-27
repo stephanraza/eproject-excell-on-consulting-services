@@ -144,12 +144,12 @@
                                                         <div style="background: #ECECEC">
                                                             <table width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
                                                                 <tr>
-                                                                    <td colspan="4" class="title" align="left" style="padding: 10px 0px 10px 10px">
-                                                                        Service's Information<br />
+                                                                    <td colspan="3" class="title" align="left" style="padding: 10px 0px 10px 10px">
+                                                                        Service&#39;s Information<br />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center" class="content" colspan="4">
+                                                                    <td align="center" class="content" colspan="3">
                                                                         <hr />
                                                                     </td>
                                                                 </tr>
@@ -160,7 +160,7 @@
                                                                     <th align="right" style="text-align: right" class="content" valign="top">
                                                                         Service Name :
                                                                     </th>
-                                                                    <td align="left" valign="top" colspan="2">
+                                                                    <td align="left" valign="top">
                                                                         <asp:Label ID="lblDisplayName" runat="server" CssClass="th-label" Text=""></asp:Label>
                                                                     </td>
                                                                 </tr>
@@ -168,7 +168,7 @@
                                                                     <th align="right" style="text-align: right" class="content" valign="top">
                                                                         Service Charge :
                                                                     </th>
-                                                                    <td align="left" valign="top" colspan="2">
+                                                                    <td align="left" valign="top">
                                                                         <asp:Label ID="lblDisplayCharge" runat="server" CssClass="th-label" Text=""></asp:Label>
                                                                     </td>
                                                                 </tr>
@@ -179,16 +179,12 @@
                                                                     <td align="left" valign="top">
                                                                         <asp:Label ID="lblDisplayNumber" runat="server" CssClass="th-label" Text=""></asp:Label>
                                                                     </td>
-                                                                    <td>
-                                                                        <asp:LinkButton ID="lnkNumber" runat="server" Text="View companies" 
-                                                                            onclick="lnkNumber_Click"></asp:LinkButton>
-                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th align="right" style="text-align: right" class="content" valign="top">
                                                                         Descrption :
                                                                     </th>
-                                                                    <td align="left" valign="top" colspan="2">
+                                                                    <td align="left" valign="top">
                                                                         <asp:Label ID="lblDisplayDescription" runat="server" CssClass="th-label" Text=""></asp:Label>
                                                                     </td>
                                                                 </tr>

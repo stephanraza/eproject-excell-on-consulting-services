@@ -13,3 +13,8 @@ C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.dll
 C:\Users\user\Desktop\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\Eproject\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\Eproject\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\bin\Debug\Eproject.ECS.Entities.pdb
+C:\Users\user\Desktop\Eproject\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\user\Desktop\Eproject\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.dll
+C:\Users\user\Desktop\Eproject\Back up\eproject-excell-on-consulting-services\Source code\Eproject.ECS\Eproject.ECS.Entities\obj\Debug\Eproject.ECS.Entities.pdb

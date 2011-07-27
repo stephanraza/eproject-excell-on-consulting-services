@@ -52,7 +52,13 @@ public class getImageURL : System.Web.IHttpHandler {
                     if (file != null)
                     {
                         file.Close();
-                        File.Delete(filePath);
+                        DirectoryInfo di = new DirectoryInfo(WebHelper.Instance.GetWebsitePath() + @"Temp\");
+                        foreach (FileInfo item in di.GetFiles())
+                        {
+                            DateTime timeFile = item.CreationTime;
+                            if (timeFile.AddSeconds(10).CompareTo(DateTime.Now) <= 0)
+                                item.Delete();
+                        }
                     }
                 }
             }

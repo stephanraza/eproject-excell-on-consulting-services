@@ -56,11 +56,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountBusiness.cs" />
+    <Compile Include="BusinessHelper.cs" />
+    <Compile Include="CategoryBLL.cs" />
+    <Compile Include="CompanyBLL.cs" />
+    <Compile Include="CustomerBLL.cs" />
+    <Compile Include="CustomerOfCompanyBLL.cs" />
+    <Compile Include="DealerBLL.cs" />
     <Compile Include="DepartmentBusiness.cs" />
     <Compile Include="EmployeeBusiness.cs" />
+    <Compile Include="OrderBusiness.cs" />
+    <Compile Include="ProblemBLL.cs" />
+    <Compile Include="ProblemOfCustomerBLL.cs" />
+    <Compile Include="ProductBLL.cs" />
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleBusiness.cs" />
+    <Compile Include="ServiceBusiness.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

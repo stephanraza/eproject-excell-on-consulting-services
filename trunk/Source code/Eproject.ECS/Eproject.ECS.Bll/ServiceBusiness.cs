@@ -254,5 +254,21 @@ namespace Eproject.ECS.Bll
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Get number company using service.
+        /// </summary>
+        /// <param name="serviceId">Id of the service.</param>
+        /// <returns>Return the number of rows affected or return 0 if occur exception.</returns>
+        public int GetNumberCompanyUseService(Guid serviceId)
+        {
+            try
+            {
+                return SD.GetNumberCompanyUseService(serviceId);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
     }
 }

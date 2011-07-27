@@ -73,7 +73,6 @@ public partial class MyAccount : System.Web.UI.Page
         imgAvatar.ImageUrl = WebHelper.Instance.GetImageURL(employee.Employee_Avatar, 128, 128, false);
         lblUserName.Text = account.Account_UserName;
         lblRole.Text = account.Role_Name;
-        hplnkModifyAccount.NavigateUrl = WebHelper.Instance.GetURL() + "ManageSystem/Account/Modify/" + account.Account_Id.ToString();
         lblFirstName.Text = employee.Employee_FirtName;
         lblLastName.Text = employee.Employee_LastName;
         lblEmail.Text = employee.Employee_Email;

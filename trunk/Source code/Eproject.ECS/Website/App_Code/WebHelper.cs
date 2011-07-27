@@ -115,7 +115,7 @@ using System.Drawing;
                 String url = "";
                 String fileName = Guid.NewGuid().ToString();
 
-                System.IO.StreamWriter file = new System.IO.StreamWriter(GetWebsitePath() + fileName);
+                System.IO.StreamWriter file = new System.IO.StreamWriter(GetWebsitePath() + @"Temp\" + fileName);
                 file.Write(data);
 
                 file.Close();
